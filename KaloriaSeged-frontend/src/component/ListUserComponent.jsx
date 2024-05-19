@@ -31,7 +31,7 @@ const ListUserComponent = () => {
     function removeUser(id) {
         console.log(id);
 
-        deleteUser(id).then((response) => {
+        deleteUser(id).then(() => {
             getAllUsers();
         }).catch(error => {
             console.error(error);
