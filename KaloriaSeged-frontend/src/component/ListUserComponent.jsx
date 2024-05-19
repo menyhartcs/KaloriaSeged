@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {listUsers} from "../service/UserService.js";
+import {deleteUser, listUsers} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 
 const ListUserComponent = () => {
@@ -9,12 +9,16 @@ const ListUserComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
+        getAllUsers();
+    }, []);
+
+    function getAllUsers() {
         listUsers().then((response) => {
             setUsers(response.data);
         }).catch(error => {
             console.error(error);
         })
-    }, []);
+    }
 
     function addNewUser() {
         navigator("/add-user")
@@ -22,6 +26,16 @@ const ListUserComponent = () => {
 
     function updateUser(id) {
         navigator(`/edit-user/${id}`)
+    }
+
+    function removeUser(id) {
+        console.log(id);
+
+        deleteUser(id).then((response) => {
+            getAllUsers();
+        }).catch(error => {
+            console.error(error);
+        })
     }
 
     return (
@@ -45,9 +59,9 @@ const ListUserComponent = () => {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>
-                                <button className="btn btn-info" onClick={
-                                    () => updateUser(user.id)
-                                }>Update</button>
+                                <button className="btn btn-info" onClick={() => updateUser(user.id)}>Update</button>
+                                <button className="btn btn-danger" onClick={() => removeUser(user.id)}
+                                style={{marginLeft: "10px"}}>Delete</button>
                             </td>
                         </tr>)
                 }
