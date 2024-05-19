@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {createUser} from "../service/UserService.js";
+import React, {useEffect, useState} from "react";
+import {createUser, getUser, updateUser} from "../service/UserService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const UserComponent = () => {
@@ -16,16 +16,42 @@ const UserComponent = () => {
 
     const navigator = useNavigate();
 
-    function saveUser(e) {
+    useEffect(() =>{
+        if (id) {
+            getUser(id).then((response) => {
+                setName(response.data.name);
+                setEmail(response.data.email);
+            }).catch(error => {
+                console.error(error)
+            })
+        }
+
+    }, [id])
+
+    function saveOrUpdateUser(e) {
         e.preventDefault();
 
         if (validateForm()) {
+
             const user = {name, email}
             console.log(user)
-            createUser(user).then((response) => {
-                console.log(response.data)
-                navigator("/users")
-            })
+
+            if (id) {
+                updateUser(id, user).then((response) => {
+                    console.log(response.data);
+                    navigator("/users");
+                }).catch(error => {
+                    console.error(error);
+                })
+            } else {
+                createUser(user).then((response) => {
+                    console.log(response.data)
+                    navigator("/users")
+                }).catch(error => {
+                    console.error(error);
+                })
+            }
+
         }
 
     }
@@ -76,7 +102,8 @@ const UserComponent = () => {
                                 <label className="form-label">Name:</label>
                                 <input type="text"
                                        placeholder="Enter username"
-                                       name="name" value={name}
+                                       name="name"
+                                       value={name}
                                        className={`form-control ${errors.name ? "is-invalid" : ""}`}
                                        onChange={(e) => setName(e.target.value)}
                                 />
@@ -87,14 +114,15 @@ const UserComponent = () => {
                                 <label className="form-label">Email:</label>
                                 <input type="text"
                                        placeholder="Enter email address"
-                                       name="email" value={email}
+                                       name="email"
+                                       value={email}
                                        className={`form-control ${errors.email ? "is-invalid" : ""}`}
                                        onChange={(e) => setEmail(e.target.value)}
                                 />
                                 { errors.email && <div className="invalid-feedback">{ errors.email }</div> }
                             </div>
 
-                            <button className="btn btn-success" onClick={saveUser}>Submit</button>
+                            <button className="btn btn-success" onClick={saveOrUpdateUser}>Submit</button>
                         </form>
                     </div>
                 </div>
