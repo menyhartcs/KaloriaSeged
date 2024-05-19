@@ -20,6 +20,10 @@ const ListUserComponent = () => {
         navigator("/add-user")
     }
 
+    function updateUser(id) {
+        navigator(`/edit-user/${id}`)
+    }
+
     return (
         <div className="container">
             <h2 className="text-center">List of users</h2>
@@ -30,6 +34,7 @@ const ListUserComponent = () => {
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,6 +44,11 @@ const ListUserComponent = () => {
                             <td>{user.id}</td>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
+                            <td>
+                                <button className="btn btn-info" onClick={
+                                    () => updateUser(user.id)
+                                }>Update</button>
+                            </td>
                         </tr>)
                 }
                 </tbody>
