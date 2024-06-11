@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,4 +23,6 @@ public class User {
     private String name;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @OneToMany(mappedBy = "user")
+    private List<UserFoodLog> foodLogs;
 }

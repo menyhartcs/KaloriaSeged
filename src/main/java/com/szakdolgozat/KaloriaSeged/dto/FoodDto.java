@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,4 +19,5 @@ public class FoodDto {
     private Integer fat;
     private Integer carbohydrate;
     private Integer protein;
+    private List<UserFoodLogDto> foodLogDtos;
 }

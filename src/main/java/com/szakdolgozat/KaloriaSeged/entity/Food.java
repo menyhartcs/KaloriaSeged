@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,4 +29,6 @@ public class Food {
     private Integer carbohydrate;
     @Column(name = "protein")
     private Integer protein;
+    @OneToMany(mappedBy = "food")
+    private List<UserFoodLog> foodLogs;
 }
