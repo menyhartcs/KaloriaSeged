@@ -2,9 +2,11 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.szakdolgozat.KaloriaSeged.dto.FoodDto;
 import com.szakdolgozat.KaloriaSeged.entity.Food;
+import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.exception.ResourceNotFoundException;
 import com.szakdolgozat.KaloriaSeged.mapper.FoodMapper;
 import com.szakdolgozat.KaloriaSeged.repository.FoodRepository;
+import com.szakdolgozat.KaloriaSeged.repository.UserFoodLogRepository;
 import com.szakdolgozat.KaloriaSeged.service.FoodService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class FoodServiceImpl implements FoodService {
 
     private FoodRepository foodRepository;
+    private final UserFoodLogRepository userFoodLogRepository;
 
     @Override
     public FoodDto createFood(FoodDto foodDto) {
@@ -50,6 +53,12 @@ public class FoodServiceImpl implements FoodService {
         food.setProtein(updatedFood.getProtein());
 
         Food updatedFoodObj = foodRepository.save(food);
+
+        List<UserFoodLog> userFoodLogs = userFoodLogRepository.findByFoodId(foodId);
+        userFoodLogs.forEach(userFoodLog -> {
+                    userFoodLog.setFood(updatedFoodObj);
+                    userFoodLogRepository.save(userFoodLog);
+                });
 
         return FoodMapper.mapToFoodDto(updatedFoodObj);
     }

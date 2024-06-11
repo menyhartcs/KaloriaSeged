@@ -2,8 +2,10 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
+import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.exception.ResourceNotFoundException;
 import com.szakdolgozat.KaloriaSeged.mapper.UserMapper;
+import com.szakdolgozat.KaloriaSeged.repository.UserFoodLogRepository;
 import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private final UserFoodLogRepository userFoodLogRepository;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -48,12 +51,18 @@ public class UserServiceImpl implements UserService {
 
         User updatedUserObj = userRepository.save(user);
 
+        List<UserFoodLog> userFoodLogs = userFoodLogRepository.findByFoodId(userId);
+        userFoodLogs.forEach(userFoodLog -> {
+            userFoodLog.setUser(updatedUserObj);
+            userFoodLogRepository.save(userFoodLog);
+        });
+
         return UserMapper.mapToUserDto(updatedUserObj);
     }
 
     @Override
     public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
         userRepository.deleteById(userId);
     }
