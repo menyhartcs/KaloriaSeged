@@ -12,7 +12,9 @@ import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import com.szakdolgozat.KaloriaSeged.service.UserFoodLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,9 +26,22 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
     private final FoodRepository foodRepository;
 
     @Override
+    @Transactional
     public UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto) {
+//        User user = userRepository.findById(userFoodLogDto.getUser().getId())
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userFoodLogDto.getUser().getId()));
+//
+//        Food food = foodRepository.findById(userFoodLogDto.getFood().getId())
+//                .orElseThrow(() -> new ResourceNotFoundException("Food not found with id: " + userFoodLogDto.getFood().getId()));
+//
+//        UserFoodLog userFoodLog = new UserFoodLog();
+//        userFoodLog.setUser(user);
+//        userFoodLog.setFood(food);
+
         UserFoodLog userFoodLog = UserFoodLogMapper.mapToUserFoodLog(userFoodLogDto);
+
         UserFoodLog savedUserFoodLog = userFoodLogRepository.save(userFoodLog);
+
         return UserFoodLogMapper.mapToUserFoodLogDto(savedUserFoodLog);
     }
 
@@ -39,8 +54,16 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
 
     @Override
     public List<UserFoodLogDto> getAllUserFoodLogs() {
-        List<UserFoodLog> userFoodLogs = userFoodLogRepository.findAll();
-        return userFoodLogs.stream().map(UserFoodLogMapper::mapToUserFoodLogDto).toList();
+        return userFoodLogRepository.findAll().stream()
+                .map(UserFoodLogMapper::mapToUserFoodLogDto)
+                .toList();
+    }
+
+    @Override
+    public List<UserFoodLogDto> getUserFoodLogsByUserAndDate(Long userId, LocalDate date) {
+        return userFoodLogRepository.findByUserIdAndDate(userId, date).stream()
+                .map(UserFoodLogMapper::mapToUserFoodLogDto)
+                .toList();
     }
 
     @Override
@@ -48,20 +71,15 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
         UserFoodLog userFoodLog = userFoodLogRepository.findById(userFoodLogId)
                 .orElseThrow(() -> new ResourceNotFoundException("UserFoodLog does not exist with given id: " + userFoodLogId));
 
-        userFoodLog.setDate(updatedUserFoodLog.getDate());
-
-        Long userId = updatedUserFoodLog.getUserId();
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
-        userFoodLog.setUser(user);
-
-
-        Long foodId = updatedUserFoodLog.getFoodId();
+        Long foodId = updatedUserFoodLog.getFood().getId();
         Food food = foodRepository.findById(foodId)
                 .orElseThrow(() -> new ResourceNotFoundException("Food does not exist with given id: " + foodId));
+
         userFoodLog.setFood(food);
+        userFoodLog.setDate(updatedUserFoodLog.getDate());
 
         UserFoodLog updatedUserFoodLogObj = userFoodLogRepository.save(userFoodLog);
+
         return UserFoodLogMapper.mapToUserFoodLogDto(updatedUserFoodLogObj);
     }
 

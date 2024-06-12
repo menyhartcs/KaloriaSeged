@@ -16,5 +16,5 @@ public class UserDto {
     private Long id;
     private String name;
     private String email;
-    private List<UserFoodLogDto> foodLogDtos;
+    private List<UserFoodLogDto> foodLogs;
 }

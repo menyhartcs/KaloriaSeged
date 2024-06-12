@@ -19,5 +19,5 @@ public class FoodDto {
     private Integer fat;
     private Integer carbohydrate;
     private Integer protein;
-    private List<UserFoodLogDto> foodLogDtos;
+    private List<UserFoodLogDto> foodLogs;
 }

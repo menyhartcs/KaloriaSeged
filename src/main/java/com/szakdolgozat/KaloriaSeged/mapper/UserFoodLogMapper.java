@@ -1,35 +1,35 @@
 package com.szakdolgozat.KaloriaSeged.mapper;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
-import com.szakdolgozat.KaloriaSeged.entity.Food;
-import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
+
+import java.time.LocalDate;
 
 public class UserFoodLogMapper {
 
     public static UserFoodLogDto mapToUserFoodLogDto(UserFoodLog userFoodLog) {
-        return new UserFoodLogDto(
-                userFoodLog.getId(),
-                userFoodLog.getUser().getId(),
-                userFoodLog.getFood().getId(),
-                userFoodLog.getDate()
-        );
+        UserFoodLogDto userFoodLogDto = new UserFoodLogDto();
+        userFoodLogDto.setId(userFoodLog.getId());
+        userFoodLogDto.setUser(UserMapper.mapToUserDto(userFoodLog.getUser()));
+        userFoodLogDto.setFood(FoodMapper.mapToFoodDto(userFoodLog.getFood()));
+        if (userFoodLog.getDate() != null) {
+            userFoodLogDto.setDate(userFoodLog.getDate());
+        } else {
+            userFoodLogDto.setDate(LocalDate.now());
+        }
+        return userFoodLogDto;
     }
 
     public static UserFoodLog mapToUserFoodLog(UserFoodLogDto userFoodLogDto) {
         UserFoodLog userFoodLog = new UserFoodLog();
         userFoodLog.setId(userFoodLogDto.getId());
-
-        User user = new User();
-        user.setId(userFoodLogDto.getUserId());
-        userFoodLog.setUser(user);
-
-        Food food = new Food();
-        food.setId(userFoodLogDto.getFoodId());
-        userFoodLog.setFood(food);
-
-        userFoodLog.setDate(userFoodLogDto.getDate());
-
+        userFoodLog.setUser(UserMapper.mapToUser(userFoodLogDto.getUser()));
+        userFoodLog.setFood(FoodMapper.mapToFood(userFoodLogDto.getFood()));
+        if (userFoodLogDto.getDate() != null) {
+            userFoodLog.setDate(userFoodLogDto.getDate());
+        } else {
+            userFoodLog.setDate(LocalDate.now());
+        }
         return userFoodLog;
     }
 }

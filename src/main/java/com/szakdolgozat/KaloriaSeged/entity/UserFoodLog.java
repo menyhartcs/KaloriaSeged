@@ -20,10 +20,11 @@ public class UserFoodLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @ManyToOne
-    @JoinColumn(name = "food_id")
+    @JoinColumn(name = "food_id", nullable = false)
     private Food food;
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 }

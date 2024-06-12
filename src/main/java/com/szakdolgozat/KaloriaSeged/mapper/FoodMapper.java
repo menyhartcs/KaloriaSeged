@@ -3,7 +3,6 @@ package com.szakdolgozat.KaloriaSeged.mapper;
 import com.szakdolgozat.KaloriaSeged.dto.FoodDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.entity.Food;
-import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 
 import java.util.List;
 
@@ -25,17 +24,13 @@ public class FoodMapper {
     }
 
     public static Food mapToFood(FoodDto foodDto) {
-        List<UserFoodLog> foodLogs = foodDto.getFoodLogDtos().stream()
-                .map(UserFoodLogMapper::mapToUserFoodLog)
-                .toList();
-        return new Food(
-                foodDto.getId(),
-                foodDto.getName(),
-                foodDto.getCalorie(),
-                foodDto.getFat(),
-                foodDto.getCarbohydrate(),
-                foodDto.getProtein(),
-                foodLogs
-        );
+        Food food = new Food();
+        food.setId(foodDto.getId());
+        food.setName(foodDto.getName());
+        food.setCalorie(foodDto.getCalorie());
+        food.setFat(foodDto.getFat());
+        food.setCarbohydrate(foodDto.getCarbohydrate());
+        food.setProtein(foodDto.getProtein());
+        return food;
     }
 }

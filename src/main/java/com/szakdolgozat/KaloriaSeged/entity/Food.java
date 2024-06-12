@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,6 +30,6 @@ public class Food {
     private Integer carbohydrate;
     @Column(name = "protein")
     private Integer protein;
-    @OneToMany(mappedBy = "food")
-    private List<UserFoodLog> foodLogs;
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFoodLog> foodLogs = new ArrayList<>();
 }

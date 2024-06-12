@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class UserFoodLogDto {
 
     private Long id;
-    private Long userId;
-    private Long foodId;
+    private UserDto user;
+    private FoodDto food;
     private LocalDate date;
 }
