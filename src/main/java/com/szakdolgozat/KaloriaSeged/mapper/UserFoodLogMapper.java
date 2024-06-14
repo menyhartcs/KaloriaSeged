@@ -38,12 +38,19 @@ public class UserFoodLogMapper {
     private static FoodDto createFoodDto(UserFoodLog userFoodLog) {
         FoodDto foodDto = new FoodDto();
         foodDto.setId(userFoodLog.getFood().getId());
+        foodDto.setName(userFoodLog.getFood().getName());
+        foodDto.setCalorie(userFoodLog.getFood().getCalorie());
+        foodDto.setFat(userFoodLog.getFood().getFat());
+        foodDto.setCarbohydrate(userFoodLog.getFood().getCarbohydrate());
+        foodDto.setProtein(userFoodLog.getFood().getProtein());
         return foodDto;
     }
 
     private static UserDto createUserDto(UserFoodLog userFoodLog) {
         UserDto userDto = new UserDto();
         userDto.setId(userFoodLog.getUser().getId());
+        userDto.setName(userFoodLog.getUser().getName());
+        userDto.setEmail(userFoodLog.getUser().getEmail());
         return userDto;
     }
 
