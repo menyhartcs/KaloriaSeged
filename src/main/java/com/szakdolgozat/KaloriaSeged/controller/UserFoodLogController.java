@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/userFoodLogs")
+@RequestMapping("/userFoodLog")
 public class UserFoodLogController {
 
     private UserFoodLogService userFoodLogService;
