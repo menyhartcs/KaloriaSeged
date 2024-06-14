@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface UserFoodLogRepository extends JpaRepository<UserFoodLog, Long> {
     List<UserFoodLog> findByFoodId(Long foodId);
+    List<UserFoodLog> findByUserId(Long userId);
     List<UserFoodLog> findByUserIdAndDate(Long userId, LocalDate date);
 }

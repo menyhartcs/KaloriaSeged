@@ -9,7 +9,8 @@ public interface UserFoodLogService {
     UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto);
     UserFoodLogDto getUserFoodLogById(Long userFoodLogId);
     List<UserFoodLogDto> getAllUserFoodLogs();
-    List<UserFoodLogDto> getUserFoodLogsByUserAndDate(Long userId, LocalDate date);
+    List<UserFoodLogDto> getUserFoodLogsByUserIdAndDate(Long userId, LocalDate date);
+    List<UserFoodLogDto> getUserFoodLogsByUserId(Long userId);
     UserFoodLogDto updateUserFoodLog(Long userFoodLogId, UserFoodLogDto updatedUserFoodLog);
     void deleteUserFoodLog(Long userFoodLogId);
 }
