@@ -24,19 +24,27 @@ public class UserFoodLogMapper {
 
     public static UserFoodLogDto mapToUserFoodLogDto(UserFoodLog userFoodLog) {
         UserFoodLogDto userFoodLogDto = new UserFoodLogDto();
-        UserDto userDto = new UserDto();
-        userDto.setId(userFoodLog.getUser().getId());
-        FoodDto foodDto = new FoodDto();
-        foodDto.setId(userFoodLog.getFood().getId());
         userFoodLogDto.setId(userFoodLog.getId());
-        userFoodLogDto.setUser(userDto);
-        userFoodLogDto.setFood(foodDto);
+        userFoodLogDto.setUser(createUserDto(userFoodLog));
+        userFoodLogDto.setFood(createFoodDto(userFoodLog));
         if (userFoodLog.getDate() != null) {
             userFoodLogDto.setDate(userFoodLog.getDate());
         } else {
             userFoodLogDto.setDate(LocalDate.now());
         }
         return userFoodLogDto;
+    }
+
+    private static FoodDto createFoodDto(UserFoodLog userFoodLog) {
+        FoodDto foodDto = new FoodDto();
+        foodDto.setId(userFoodLog.getFood().getId());
+        return foodDto;
+    }
+
+    private static UserDto createUserDto(UserFoodLog userFoodLog) {
+        UserDto userDto = new UserDto();
+        userDto.setId(userFoodLog.getUser().getId());
+        return userDto;
     }
 
     public static UserFoodLog mapToUserFoodLog(UserFoodLogDto userFoodLogDto) {
