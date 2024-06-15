@@ -16,7 +16,8 @@ function App() {
             <BrowserRouter>
                 <HeaderComponent/>
                     <Routes>
-                        <Route path="/" element = { <ListUserComponent/> }></Route>
+                        <Route path="/" element = { <ListUserFoodLogComponent/> }></Route>
+
                         <Route path="/Users" element = { <ListUserComponent/> }></Route>
                         <Route path="/add-user" element = { <UserComponent/> }></Route>
                         <Route path="/edit-user/:id" element = { <UserComponent/> }></Route>
