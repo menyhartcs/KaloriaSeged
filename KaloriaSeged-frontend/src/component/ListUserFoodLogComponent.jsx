@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 import {deleteUserFoodLog, listUserFoodLogs} from "../service/UserFoodLogService.js";
+import ProteinChart from "./ProteinChart.jsx";
+import CarbohydrateChart from "./CarbohydrateChart.jsx";
+import FatChart from "./FatChart.jsx";
+import './Charts.css';
 
 const ListUserFoodLogComponent = () => {
 
@@ -67,10 +71,16 @@ const ListUserFoodLogComponent = () => {
                                 <ul>
                                     <li>{userFoodLog.food.id}</li>
                                     <li>{userFoodLog.food.name}</li>
-                                    <li>{userFoodLog.food.calorie}</li>
-                                    <li>{userFoodLog.food.fat}</li>
-                                    <li>{userFoodLog.food.carbohydrate}</li>
-                                    <li>{userFoodLog.food.protein}</li>
+                                    <li>Energia: {userFoodLog.food.calorie} kcal</li>
+                                    <li>Zsír: {userFoodLog.food.fat}g</li>
+                                    <li>Szénhidrát: {userFoodLog.food.carbohydrate}g</li>
+                                    <li>Fehérje: {userFoodLog.food.protein}g
+                                        <div className="charts-container">
+                                            <FatChart fat={userFoodLog.food.fat}/>
+                                            <CarbohydrateChart carbohydrate={userFoodLog.food.carbohydrate}/>
+                                            <ProteinChart protein={userFoodLog.food.protein}/>
+                                        </div>
+                                    </li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
