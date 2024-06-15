@@ -1,0 +1,6 @@
+.charts-container {
+    display: flex;
+    justify-content: space-around; /* Opciók: flex-start, flex-end, space-between, stb. */
+    align-items: center;
+    gap: 10px; /* Ha szükséges távolság a diagramok között */
+}
