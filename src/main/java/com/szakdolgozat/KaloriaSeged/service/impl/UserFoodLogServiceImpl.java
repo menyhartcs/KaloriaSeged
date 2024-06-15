@@ -67,6 +67,13 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
     }
 
     @Override
+    public List<UserFoodLogDto> getUserFoodLogsByDate(LocalDate date) {
+        return userFoodLogRepository.findByDate(date).stream()
+                .map(UserFoodLogMapper::mapToUserFoodLogDto)
+                .toList();
+    }
+
+    @Override
     public List<UserFoodLogDto> getUserFoodLogsByUserId(Long userId) {
         return userFoodLogRepository.findByUserId(userId).stream()
                 .map(UserFoodLogMapper::mapToUserFoodLogDto)
