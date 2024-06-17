@@ -4,7 +4,7 @@ import {deleteUserFoodLog, listUserFoodLogs, listUserFoodLogsByDate} from "../se
 import ProteinChart from "./ProteinChart.jsx";
 import CarbohydrateChart from "./CarbohydrateChart.jsx";
 import FatChart from "./FatChart.jsx";
-import './Charts.css';
+import '../style/Charts.css';
 import moment from 'moment';
 
 const ListUserFoodLogComponent = () => {
