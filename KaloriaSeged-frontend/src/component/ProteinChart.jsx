@@ -10,7 +10,7 @@ const ProteinChart = ({ protein }) => {
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [protein, 100-protein], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
+                data: [protein, 100-protein], // {protein} g fehérje bevitel, {100-protein} g hátravan a 100 g cél eléréséhez
                 backgroundColor: ['#00bfff', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -40,7 +40,7 @@ const ProteinChart = ({ protein }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 10 }}>19/100 (g)</p>
+                <p style={{ margin: 0, fontSize: 10 }}>{protein}/100 (g)</p>
             </div>
         </div>
     );

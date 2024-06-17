@@ -40,7 +40,7 @@ const CarbohydrateChart = ({ carbohydrate }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 10 }}>19/100 (g)</p>
+                <p style={{ margin: 0, fontSize: 10 }}>{carbohydrate}/100 (g)</p>
             </div>
         </div>
     );

@@ -86,8 +86,8 @@ const ListUserFoodLogComponent = () => {
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>user_id</th>
-                    <th>food_id</th>
+                    <th>User</th>
+                    <th>Food</th>
                     <th>Date</th>
                 </tr>
                 </thead>
