@@ -7,11 +7,13 @@ import FatChart from "./FatChart.jsx";
 import CalorieChart from "./CalorieChart.jsx";
 import '../style/Charts.css';
 import moment from 'moment';
+import axios from "axios";
 
 const ListUserFoodLogComponent = () => {
 
     const [userFoodLogs, setUserFoodLogs] = useState([])
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
+    const [analysisResult, setAnalysisResult] = useState("");
 
     const navigator = useNavigate();
 
@@ -45,6 +47,19 @@ const ListUserFoodLogComponent = () => {
 
     function updateUserFoodLog(id) {
         navigator(`/edit-userFoodLog/${id}`)
+    }
+
+    function analyzeUserFoodLog(prompt) {
+        // HTTP kérés küldése az axios segítségével
+        axios.post('http://localhost:8080/complete', { prompt })
+            .then(response => {
+                // Eredmény frissítése
+                setAnalysisResult(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+                setAnalysisResult("Error analyzing data");
+            });
     }
 
     function removeUserFoodLog(id) {
@@ -129,7 +144,24 @@ const ListUserFoodLogComponent = () => {
                                 <button className="btn btn-danger" onClick={() => removeUserFoodLog(userFoodLog.id)}
                                         style={{marginLeft: "10px"}}>Delete
                                 </button>
+                                <button className="btn btn-info"
+                                        onClick={() => analyzeUserFoodLog(
+                                            `Röviden elemezd az ételt:
+                                             Energia: ${userFoodLog.food.calorie}
+                                             Zsír: ${userFoodLog.food.fat}
+                                             Szénhidrát: ${userFoodLog.food.carbohydrate}
+                                             Fehérje: ${userFoodLog.food.protein}
+                                             és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
+                                        )}>Elemezd
+                                </button>
                             </td>
+                            {/* Eredmény kiírása */}
+                            {analysisResult && (
+                                <div className="analysis-result">
+                                    <h3>Analysis Result:</h3>
+                                    <p>{analysisResult}</p>
+                                </div>
+                            )}
                         </tr>)
                 }
                 </tbody>
