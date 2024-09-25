@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {createUserFoodLog, getUserFoodLog, updateUserFoodLog} from "../service/UserFoodLogService.js";
+import moment from "moment/moment.js";
 
 const UserFoodLogComponent = () => {
 
-    const [User, setUser] = useState([])
-    const [Food, setFood] = useState([])
-    const [date, setDate] = useState([])
+    const [User, setUser] = useState({})
+    const [Food, setFood] = useState({})
+    const [date, setDate] = useState(getCurrentDate)
 
     const {id} = useParams();
 
@@ -31,12 +32,16 @@ const UserFoodLogComponent = () => {
 
     }, [id])
 
+    function getCurrentDate() {
+        return moment().format('YYYY-MM-DD');
+    }
+
     function saveOrUpdateUserFoodLog(e) {
         e.preventDefault();
 
         if (validateForm()) {
 
-            const userFoodLog = {User, Food, date}
+            const userFoodLog = {user: User, food: Food, date}
             console.log(userFoodLog)
 
             if (id) {
@@ -64,38 +69,17 @@ const UserFoodLogComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim) {
-            errorsCopy.name = "";
+        if (User.id && User.id.trim()) {
+            errorsCopy.User = "";
         } else {
-            errorsCopy.name = "Name is required!";
+            errorsCopy.User = "User id is required!";
             valid = false;
         }
 
-        if (calorie.trim) {
-            errorsCopy.calorie = "";
+        if (Food.id && Food.id.trim()) {
+            errorsCopy.Food = "";
         } else {
-            errorsCopy.calorie = "Calorie is required!";
-            valid = false;
-        }
-
-        if (calorie.trim) {
-            errorsCopy.fat = "";
-        } else {
-            errorsCopy.fat = "Fat is required!";
-            valid = false;
-        }
-
-        if (calorie.trim) {
-            errorsCopy.carbohydrate = "";
-        } else {
-            errorsCopy.carbohydrate = "Carbohydrate is required!";
-            valid = false;
-        }
-
-        if (calorie.trim) {
-            errorsCopy.protein = "";
-        } else {
-            errorsCopy.protein = "Protein is required!";
+            errorsCopy.Food = "Food id is required!";
             valid = false;
         }
 
@@ -106,9 +90,9 @@ const UserFoodLogComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className="text-center">Update Food</h2>
+            return <h2 className="text-center">Update UserFoodLog</h2>
         } else {
-            <h2 className="text-center">Add Food</h2>
+            <h2 className="text-center">Add UserFoodLog</h2>
         }
     }
 
@@ -123,66 +107,30 @@ const UserFoodLogComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">Name:</label>
+                                <label className="form-label">User id:</label>
                                 <input type="text"
-                                       placeholder="Enter food name"
-                                       name="name"
-                                       value={name}
-                                       className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                                       onChange={(e) => setName(e.target.value)}
+                                       placeholder="Enter user id"
+                                       name="User"
+                                       value={User.id || ""}
+                                       className={`form-control ${errors.User ? "is-invalid" : ""}`}
+                                       onChange={(e) => setUser({...User, id: e.target.value})}
                                 />
-                                {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                                {errors.User && <div className="invalid-feedback">{errors.User}</div>}
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Calorie:</label>
+                                <label className="form-label">Food id:</label>
                                 <input type="text"
-                                       placeholder="Enter calorie"
-                                       name="calorie"
-                                       value={calorie}
-                                       className={`form-control ${errors.calorie ? "is-invalid" : ""}`}
-                                       onChange={(e) => setCalorie(e.target.value)}
+                                       placeholder="Enter food id"
+                                       name="Food"
+                                       value={Food.id || ""}
+                                       className={`form-control ${errors.Food ? "is-invalid" : ""}`}
+                                       onChange={(e) => setFood({...Food, id: e.target.value})}
                                 />
-                                {errors.calorie && <div className="invalid-feedback">{errors.calorie}</div>}
+                                {errors.Food && <div className="invalid-feedback">{errors.Food}</div>}
                             </div>
 
-                            <div className="form-group mb-2">
-                                <label className="form-label">Fat:</label>
-                                <input type="text"
-                                       placeholder="Enter fat"
-                                       name="fat"
-                                       value={fat}
-                                       className={`form-control ${errors.fat ? "is-invalid" : ""}`}
-                                       onChange={(e) => setFat(e.target.value)}
-                                />
-                                {errors.fat && <div className="invalid-feedback">{errors.fat}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Carbohydrate:</label>
-                                <input type="text"
-                                       placeholder="Enter carbohydrate"
-                                       name="carbohydrate"
-                                       value={carbohydrate}
-                                       className={`form-control ${errors.carbohydrate ? "is-invalid" : ""}`}
-                                       onChange={(e) => setCarbohydrate(e.target.value)}
-                                />
-                                {errors.carbohydrate && <div className="invalid-feedback">{errors.carbohydrate}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Protein:</label>
-                                <input type="text"
-                                       placeholder="Enter protein"
-                                       name="protein"
-                                       value={protein}
-                                       className={`form-control ${errors.protein ? "is-invalid" : ""}`}
-                                       onChange={(e) => setProtein(e.target.value)}
-                                />
-                                {errors.protein && <div className="invalid-feedback">{errors.protein}</div>}
-                            </div>
-
-                            <button className="btn btn-success" onClick={saveOrUpdateFood}>Submit</button>
+                            <button className="btn btn-success" onClick={saveOrUpdateUserFoodLog}>Submit</button>
                         </form>
                     </div>
                 </div>
