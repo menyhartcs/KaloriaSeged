@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OpenAIRequest {
-    private String model = "gpt-3.5-turbo-16k";
+    private String model = "gpt-4o-mini";
     private OpenAIMessage[] messages;
 
     public OpenAIRequest(String prompt) {
