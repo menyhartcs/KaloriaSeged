@@ -147,7 +147,6 @@ const UserFoodLogComponent = () => {
                                     className="form-control"
                                     value={date || getCurrentDate()}
                                     onChange={handleChangeDate}
-                                    // Esemény figyelése az Enter lenyomására
                                 />
                             </div>
 
