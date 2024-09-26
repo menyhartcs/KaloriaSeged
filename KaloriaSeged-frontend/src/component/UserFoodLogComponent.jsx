@@ -40,6 +40,11 @@ const UserFoodLogComponent = () => {
         return moment().format('YYYY-MM-DD');
     }
 
+    const handleChangeDate = (event) => {
+        const newDate = event.target.value;
+        setDate(newDate); // `selectedDate` állapot frissítése az új dátummal
+    };
+
     function saveOrUpdateUserFoodLog(e) {
         e.preventDefault();
 
@@ -132,6 +137,18 @@ const UserFoodLogComponent = () => {
                                        onChange={(e) => setFood({...Food, id: e.target.value})}
                                 />
                                 {errors.Food && <div className="invalid-feedback">{errors.Food}</div>}
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="dateInput" className="form-label">Select date:</label>
+                                <input
+                                    type="date"
+                                    id="dateInput"
+                                    className="form-control"
+                                    value={date || getCurrentDate()}
+                                    onChange={handleChangeDate}
+                                    // Esemény figyelése az Enter lenyomására
+                                />
                             </div>
 
                             <button className="btn btn-success" onClick={saveOrUpdateUserFoodLog}>Submit</button>
