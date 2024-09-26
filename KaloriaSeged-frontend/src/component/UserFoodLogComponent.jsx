@@ -22,9 +22,13 @@ const UserFoodLogComponent = () => {
     useEffect(() =>{
         if (id) {
             getUserFoodLog(id).then((response) => {
-                setUser(response.data.User);
-                setFood(response.data.Food);
-                setDate(response.data.date);
+                const userData = response.data.user || {};
+                const foodData = response.data.food || {};
+                const logDate = response.data.date || getCurrentDate();
+
+                setUser(userData);
+                setFood(foodData);
+                setDate(logDate);
             }).catch(error => {
                 console.error(error)
             })
@@ -69,14 +73,14 @@ const UserFoodLogComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (User.id && User.id.trim()) {
+        if (User.id) {
             errorsCopy.User = "";
         } else {
             errorsCopy.User = "User id is required!";
             valid = false;
         }
 
-        if (Food.id && Food.id.trim()) {
+        if (Food.id) {
             errorsCopy.Food = "";
         } else {
             errorsCopy.Food = "Food id is required!";
