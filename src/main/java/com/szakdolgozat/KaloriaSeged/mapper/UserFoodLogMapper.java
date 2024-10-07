@@ -51,6 +51,7 @@ public class UserFoodLogMapper {
         userDto.setId(userFoodLog.getUser().getId());
         userDto.setName(userFoodLog.getUser().getName());
         userDto.setEmail(userFoodLog.getUser().getEmail());
+        userDto.setEmail(userFoodLog.getUser().getPassword());
         return userDto;
     }
 

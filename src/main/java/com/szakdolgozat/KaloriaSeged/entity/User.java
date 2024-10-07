@@ -24,6 +24,8 @@ public class User {
     private String name;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @Column(name = "password", nullable = false)
+    private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFoodLog> foodLogs = new ArrayList<>();
 }

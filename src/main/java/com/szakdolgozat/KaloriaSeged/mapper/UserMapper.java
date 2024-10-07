@@ -16,6 +16,7 @@ public class UserMapper {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getPassword(),
                 foodLogDtos
         );
     }
@@ -25,6 +26,7 @@ public class UserMapper {
         user.setId(userDto.getId());
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
         return user;
     }
 }
