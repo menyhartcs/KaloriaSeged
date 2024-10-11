@@ -6,12 +6,14 @@ const UserLogInComponent = () => {
 
     const [name, setName] = useState([])
     const [email, setEmail] = useState([])
+    const [password, setPassword] = useState([])
 
     const {id} = useParams();
 
     const [errors, setErrors] = useState({
         name: "",
         email: "",
+        password: ""
     })
 
     const navigator = useNavigate();
@@ -21,6 +23,7 @@ const UserLogInComponent = () => {
             getUser(id).then((response) => {
                 setName(response.data.name);
                 setEmail(response.data.email);
+                setPassword(response.data.password);
             }).catch(error => {
                 console.error(error)
             })
@@ -28,30 +31,11 @@ const UserLogInComponent = () => {
 
     }, [id])
 
-    function saveOrUpdateUser(e) {
+    function loginUser(e) {
         e.preventDefault();
 
         if (validateForm()) {
-
-            const user = {name, email}
-            console.log(user)
-
-            if (id) {
-                updateUser(id, user).then((response) => {
-                    console.log(response.data);
-                    navigator("/users");
-                }).catch(error => {
-                    console.error(error);
-                })
-            } else {
-                createUser(user).then((response) => {
-                    console.log(response.data)
-                    navigator("/users")
-                }).catch(error => {
-                    console.error(error);
-                })
-            }
-
+            navigator(`/userFoodLog/${id}`)
         }
 
     }
@@ -61,18 +45,19 @@ const UserLogInComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim) {
-            errorsCopy.name = "";
-        } else {
-            errorsCopy.name = "Name is required!";
-            valid = false;
-        }
-
         if (email.trim) {
             errorsCopy.email = "";
         } else {
-            errorsCopy.email = "Email address is required!";
+            errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;
+        }
+
+        if (password.trim) {
+            errorsCopy.password = "";
+        } else {
+            errorsCopy.password = "Jelszó megadása kötelező!";
+            valid = false;
+
         }
 
         setErrors(errorsCopy);
@@ -84,7 +69,7 @@ const UserLogInComponent = () => {
         if (id) {
             return <h2 className="text-center">Update User</h2>
         } else {
-            <h2 className="text-center">Add User</h2>
+            <h2 className="text-center">Bejelentkezés</h2>
         }
     }
 
@@ -99,21 +84,9 @@ const UserLogInComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">Name:</label>
+                                <label className="form-label">Email cím:</label>
                                 <input type="text"
-                                       placeholder="Enter username"
-                                       name="name"
-                                       value={name}
-                                       className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                                       onChange={(e) => setName(e.target.value)}
-                                />
-                                {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Email:</label>
-                                <input type="text"
-                                       placeholder="Enter email address"
+                                       placeholder="Email cím"
                                        name="email"
                                        value={email}
                                        className={`form-control ${errors.email ? "is-invalid" : ""}`}
@@ -122,7 +95,19 @@ const UserLogInComponent = () => {
                                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                             </div>
 
-                            <button className="btn btn-success" onClick={saveOrUpdateUser}>Bejelentkezés</button>
+                            <div className="form-group mb-2">
+                                <label className="form-label">Jelszó:</label>
+                                <input type="text"
+                                       placeholder="Jelszó"
+                                       name="password"
+                                       value={password}
+                                       className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                                       onChange={(e) => setPassword(e.target.value)}
+                                />
+                                {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                            </div>
+
+                            <button className="btn btn-success" onClick={loginUser}>Bejelentkezés</button>
                             <br/><br/>
                             <a className="navbar-toggler" href="/UserSignUp">Regisztráció</a>
                         </form>
