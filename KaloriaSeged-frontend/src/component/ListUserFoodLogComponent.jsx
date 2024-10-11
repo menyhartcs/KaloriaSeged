@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {useNavigate} from "react-router-dom";
-import {deleteUserFoodLog, listUserFoodLogs, listUserFoodLogsByDate} from "../service/UserFoodLogService.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {
+    deleteUserFoodLog,
+    listUserFoodLogs,
+    listUserFoodLogsByDate,
+    listUserFoodLogsByUserIdAndDate
+} from "../service/UserFoodLogService.js";
 import ProteinChart from "./ProteinChart.jsx";
 import CarbohydrateChart from "./CarbohydrateChart.jsx";
 import FatChart from "./FatChart.jsx";
@@ -15,10 +20,16 @@ const ListUserFoodLogComponent = () => {
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
 
+    const {userId} = useParams();
+    console.log("userId=" + userId)
     const navigator = useNavigate();
 
     useEffect(() => {
-        getUserFoodLogsByDate(selectedDate);
+        if (userId === undefined) {
+            getUserFoodLogsByDate(selectedDate);
+        } else {
+            getUserFoodLogsByUserIdAndDate(userId, selectedDate);
+        }
     }, []);
 
     function getCurrentDate() {
@@ -35,6 +46,14 @@ const ListUserFoodLogComponent = () => {
 
     function getUserFoodLogsByDate(date) {
         listUserFoodLogsByDate(date).then((response) => {
+            setUserFoodLogs(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
+    function getUserFoodLogsByUserIdAndDate(userId, date) {
+        listUserFoodLogsByUserIdAndDate(userId, date).then((response) => {
             setUserFoodLogs(response.data);
         }).catch(error => {
             console.error(error);
@@ -79,7 +98,11 @@ const ListUserFoodLogComponent = () => {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            getUserFoodLogsByDate(selectedDate);
+            if (userId === undefined) {
+                getUserFoodLogsByDate(selectedDate);
+            } else {
+                getUserFoodLogsByUserIdAndDate(userId, selectedDate);
+            }
         }
     };
 
