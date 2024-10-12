@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class ValidationService {
 
     private UserRepository userRepository;
-    private BCrypt bCrypt;
 
     public boolean isValidLogIn(String email, String rawPassword) {
         User user = userRepository.findByEmail(email);
