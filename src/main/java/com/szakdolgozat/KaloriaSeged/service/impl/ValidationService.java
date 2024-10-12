@@ -1,5 +1,6 @@
 package com.szakdolgozat.KaloriaSeged.service.impl;
 
+import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
 import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
@@ -21,14 +22,15 @@ public class ValidationService {
         return false;
     }
 
-    public void registerUser(User user) {
+    // TODO re-think the registration logic placement
+    public void registerUser(UserDto user) {
         if (!isValidSignUp(user)) {
             throw new RegistrationException("Regisztrációs hiba.");
         }
         user.setPassword(encodePassword(user.getPassword()));
     }
 
-    private boolean isValidSignUp(User user) {
+    public boolean isValidSignUp(UserDto user) {
         return user.getName() != null
                 && user.getEmail() != null
                 && user.getPassword() != null

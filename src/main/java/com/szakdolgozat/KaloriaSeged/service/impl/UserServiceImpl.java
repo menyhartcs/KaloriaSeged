@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUser(userDto);
+        // TODO re-think the registration logic placement
         validationService.registerUser(user);
         User savedUser = userRepository.save(user);
         return UserMapper.mapToUserDto(savedUser);
