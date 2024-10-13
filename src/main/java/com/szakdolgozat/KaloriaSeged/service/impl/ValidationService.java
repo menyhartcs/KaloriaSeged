@@ -23,18 +23,20 @@ public class ValidationService {
     }
 
     public void registerUser(UserDto user) {
-        if (!isValidSignUp(user)) {
-            throw new RegistrationException("Regisztrációs hiba.");
+        if (isValidSignUp(user)) {
+            user.setPassword(encodePassword(user.getPassword()));
         }
-        user.setPassword(encodePassword(user.getPassword()));
     }
 
     public boolean isValidSignUp(UserDto user) {
-        if (user != null) {
-            return isNameValid(user.getName()) && isEmailValid(user.getEmail()) && isPasswordValid(user.getPassword());
-        } else {
+        return isAllFieldsValid(user);
+    }
+
+    private boolean isAllFieldsValid(UserDto user) {
+        if (user.getName().trim().isEmpty() && user.getEmail().trim().isEmpty() && user.getPassword().trim().isEmpty()) {
             throw new RegistrationException("Minden mező kitöltése kötelező!");
         }
+        return isNameValid(user.getName()) && isEmailValid(user.getEmail()) && isPasswordValid(user.getPassword());
     }
 
     private boolean isNameValid(String name) {
