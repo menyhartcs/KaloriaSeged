@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
 import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
 import com.szakdolgozat.KaloriaSeged.util.RegistrationRequest;
@@ -19,12 +20,17 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest registrationRequest) {
-        UserDto user = userService.getUserByEmail(registrationRequest.getEmail());
-        if (!validationService.isValidSignUp(user)) {
-            return ResponseEntity.badRequest().body("A felhasználónév már foglalt!");
+        UserDto user = new UserDto();
+        user.setEmail(registrationRequest.getEmail());
+        user.setName(registrationRequest.getName());
+        user.setPassword(registrationRequest.getPassword());
+
+        try {
+            validationService.registerUser(user);
+        } catch (RegistrationException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        // TODO re-think the registration logic placement
         userService.createUser(user);
 
         return ResponseEntity.ok("Sikeres regisztráció!");
