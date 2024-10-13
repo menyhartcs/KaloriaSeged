@@ -1,9 +1,9 @@
 package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
-import com.szakdolgozat.KaloriaSeged.entity.User;
+import com.szakdolgozat.KaloriaSeged.exception.LoginException;
 import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
-import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
+import com.szakdolgozat.KaloriaSeged.util.LoginRequest;
 import lombok.AllArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,17 @@ public class ValidationService {
 
     private UserServiceImpl userServiceImpl;
 
-    public boolean isValidLogIn(String email, String rawPassword) {
-        UserDto user = userServiceImpl.getUserByEmail(email);
-        if (user != null) {
-            return checkPassword(rawPassword, user.getPassword());
+    public void loginUser(LoginRequest loginRequest) {
+        UserDto user = userServiceImpl.getUserByEmail(loginRequest.getEmail());
+        if (user == null) {
+            throw new LoginException("Hibás adatok!");
         }
-        return false;
+        if (loginRequest.getPassword() == null || loginRequest.getPassword().trim().isEmpty()) {
+            throw new RegistrationException("Jelszó megadása kötelező!");
+        }
+        if (!checkPassword(loginRequest.getPassword(), user.getPassword())) {
+            throw new LoginException("Hibás jelszó!");
+        }
     }
 
     public void registerUser(UserDto user) {
