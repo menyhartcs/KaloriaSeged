@@ -26,13 +26,14 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         UserDto user = userService.getUserByEmail(loginRequest.getEmail());
-        if (validationService.isValidLogIn(user.getEmail(), user.getPassword())) {
-            String token = jwtUtil.generateToken(user);
-            return ResponseEntity.ok(new AuthResponse(token));
+        try {
+            validationService.loginUser(loginRequest);
+        } catch ( Exception e ) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        String token = jwtUtil.generateToken(user);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
-
 
 }
 
