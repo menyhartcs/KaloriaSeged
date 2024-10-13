@@ -12,17 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidationService {
 
-    private UserRepository userRepository;
+    private UserServiceImpl userServiceImpl;
 
     public boolean isValidLogIn(String email, String rawPassword) {
-        User user = userRepository.findByEmail(email);
+        UserDto user = userServiceImpl.getUserByEmail(email);
         if (user != null) {
             return checkPassword(rawPassword, user.getPassword());
         }
         return false;
     }
 
-    // TODO re-think the registration logic placement
     public void registerUser(UserDto user) {
         if (!isValidSignUp(user)) {
             throw new RegistrationException("Regisztrációs hiba.");
@@ -31,10 +30,35 @@ public class ValidationService {
     }
 
     public boolean isValidSignUp(UserDto user) {
-        return user.getName() != null
-                && user.getEmail() != null
-                && user.getPassword() != null
-                && userRepository.findByEmail(user.getEmail()) == null;
+        if (user != null) {
+            return isNameValid(user.getName()) && isEmailValid(user.getEmail()) && isPasswordValid(user.getPassword());
+        } else {
+            throw new RegistrationException("Minden mező kitöltése kötelező!");
+        }
+    }
+
+    private boolean isNameValid(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new RegistrationException("Név megadása kötelező!");
+        }
+        return true;
+    }
+
+    private boolean isEmailValid(String email) {
+        if(email == null || email.trim().isEmpty()) {
+            throw new RegistrationException("Email cím megadása kötelező!");
+        }
+        if (userServiceImpl.getUserByEmail(email) != null) {
+            throw new RegistrationException("Ez az email cím már regisztrálva van!");
+        }
+        return true;
+    }
+
+    private boolean isPasswordValid(String password) {
+        if (password == null || password.trim().isEmpty()) {
+            throw new RegistrationException("Jelszó megadása kötelező!");
+        }
+        return true;
     }
 
     private String encodePassword(String rawPassword) {
