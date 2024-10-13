@@ -20,13 +20,10 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private final UserFoodLogRepository userFoodLogRepository;
-    private final ValidationService validationService;
 
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUser(userDto);
-        // TODO re-think the registration logic placement
-        validationService.registerUser(user);
         User savedUser = userRepository.save(user);
         return UserMapper.mapToUserDto(savedUser);
     }
