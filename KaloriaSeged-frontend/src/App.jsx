@@ -31,6 +31,7 @@ function App() {
                         <Route path="/edit-food/:id" element = { <FoodComponent/> }></Route>
 
                         <Route path="/UserFoodLogs" element = { <ListUserFoodLogComponent/> }></Route>
+                        <Route path="/userFoodLog/searchByUserIdAndDate" element = { <ListUserFoodLogComponent/> }></Route>
                         <Route path="/add-userFoodLog" element = { <UserFoodLogComponent/> }></Route>
                         <Route path="/edit-userFoodLog/:id" element = { <UserFoodLogComponent/> }></Route>
                     </Routes>
