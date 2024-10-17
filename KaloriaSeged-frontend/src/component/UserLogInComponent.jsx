@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {createUser, getUser, updateUser} from "../service/UserService.js";
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useState} from "react";
+import {getUserByEmail, loginUser} from "../service/UserService.js";
+import {useNavigate} from "react-router-dom";
+import moment from "moment/moment.js";
 
 const UserLogInComponent = () => {
 
-    const [name, setName] = useState([])
-    const [email, setEmail] = useState([])
-    const [password, setPassword] = useState([])
-
-    const {id} = useParams();
+    const [name, setName] = useState([]);
+    const [id, setId] = useState([]);
+    const [email, setEmail] = useState([]);
+    const [password, setPassword] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(getCurrentDate);
 
     const [errors, setErrors] = useState({
+        id: "",
         name: "",
         email: "",
         password: ""
@@ -18,26 +20,41 @@ const UserLogInComponent = () => {
 
     const navigator = useNavigate();
 
-    useEffect(() =>{
-        if (id) {
-            getUser(id).then((response) => {
-                setName(response.data.name);
-                setEmail(response.data.email);
-                setPassword(response.data.password);
-            }).catch(error => {
-                console.error(error)
-            })
+    async function fetchUserDataByEmail(email) {
+        try {
+            const response = await getUserByEmail(email);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
         }
+    }
 
-    }, [id])
+    function getCurrentDate() {
+        return moment().format('YYYY-MM-DD');
+    }
 
-    function loginUser(e) {
+    async function authenticateUser(e) {
         e.preventDefault();
 
-        if (validateForm()) {
-            navigator(`/userFoodLog/${id}`)
-        }
+        if (!validateForm()) return;
 
+        try {
+            const userData = await fetchUserDataByEmail(email);
+
+            const user = {
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                password: password
+            };
+
+            await loginUser(user);
+            console.log("Successful login");
+            navigator(`/userFoodLog/searchByUserIdAndDate?userId=${user.id}&date=${selectedDate}`);
+        } catch (error) {
+            console.error("Login failed", error);
+        }
     }
 
     function validateForm() {
@@ -97,7 +114,7 @@ const UserLogInComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Jelszó:</label>
-                                <input type="text"
+                                <input type="password"
                                        placeholder="Jelszó"
                                        name="password"
                                        value={password}
@@ -107,7 +124,7 @@ const UserLogInComponent = () => {
                                 {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                             </div>
 
-                            <button className="btn btn-success" onClick={loginUser}>Bejelentkezés</button>
+                            <button className="btn btn-success" onClick={authenticateUser}>Bejelentkezés</button>
                             <br/><br/>
                             <a className="navbar-toggler" href="/UserSignUp">Regisztráció</a>
                         </form>
