@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {
     deleteUserFoodLog,
     listUserFoodLogs,
@@ -13,6 +13,7 @@ import CalorieChart from "./CalorieChart.jsx";
 import '../style/Charts.css';
 import moment from 'moment';
 import axios from "axios";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const ListUserFoodLogComponent = () => {
 
@@ -20,15 +21,18 @@ const ListUserFoodLogComponent = () => {
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
 
-    const {userId} = useParams();
+    const [searchParams] = useSearchParams();
+    const userId = searchParams.get('userId');
+    const date = searchParams.get('date');
     console.log("userId=" + userId)
+    console.log("date=" + date)
     const navigator = useNavigate();
 
     useEffect(() => {
-        if (userId === undefined) {
+        if (isNullOrUndef(userId)) {
             getUserFoodLogsByDate(selectedDate);
         } else {
-            getUserFoodLogsByUserIdAndDate(userId, selectedDate);
+            getUserFoodLogsByUserIdAndDate(userId, date);
         }
     }, []);
 
