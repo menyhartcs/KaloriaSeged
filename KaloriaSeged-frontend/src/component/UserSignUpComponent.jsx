@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createUser, getUser, updateUser} from "../service/UserService.js";
+import {createUser, getUserById, updateUser} from "../service/UserService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const UserSignUpComponent = () => {
@@ -20,7 +20,7 @@ const UserSignUpComponent = () => {
 
     useEffect(() =>{
         if (id) {
-            getUser(id).then((response) => {
+            getUserById(id).then((response) => {
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setPassword(response.data.password);
