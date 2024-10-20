@@ -49,7 +49,11 @@ const UserLogInComponent = () => {
                 password: password
             };
 
-            await loginUser(user);
+            const response = await loginUser(user);
+            const token = response.data.token;
+
+            localStorage.setItem("token", token);
+
             console.log("Successful login");
             navigator(`/userFoodLog/searchByUserIdAndDate?userId=${user.id}&date=${selectedDate}`);
         } catch (error) {
