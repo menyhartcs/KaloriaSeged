@@ -18,19 +18,6 @@ const UserSignUpComponent = () => {
 
     const navigator = useNavigate();
 
-    useEffect(() =>{
-        if (id) {
-            getUserById(id).then((response) => {
-                setName(response.data.name);
-                setEmail(response.data.email);
-                setPassword(response.data.password);
-            }).catch(error => {
-                console.error(error)
-            })
-        }
-
-    }, [id])
-
     function registerUser(e) {
         e.preventDefault();
 
@@ -38,22 +25,12 @@ const UserSignUpComponent = () => {
 
             const user = {name, email, password}
             console.log(user)
-
-            if (id) {
-                updateUser(id, user).then((response) => {
-                    console.log(response.data);
-                    navigator("/users");
-                }).catch(error => {
-                    console.error(error);
-                })
-            } else {
-                createUser(user).then((response) => {
-                    console.log(response.data)
-                    navigator("/users")
-                }).catch(error => {
-                    console.error(error);
-                })
-            }
+            createUser(user).then((response) => {
+                console.log(response.data)
+                navigator("/users")
+            }).catch(error => {
+                console.error(error);
+            })
 
         }
 
@@ -134,7 +111,7 @@ const UserSignUpComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Jelszó:</label>
-                                <input type="text"
+                                <input type="password"
                                        placeholder="Jelszó"
                                        name="password"
                                        value={password}
