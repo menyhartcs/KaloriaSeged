@@ -20,16 +20,6 @@ const UserLogInComponent = () => {
 
     const navigator = useNavigate();
 
-    async function fetchUserDataByEmail(email) {
-        try {
-            const response = await getUserByEmail(email);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
     function getCurrentDate() {
         return moment().format('YYYY-MM-DD');
     }
@@ -40,8 +30,6 @@ const UserLogInComponent = () => {
         if (!validateForm()) return;
 
         try {
-
-            // const userData = await fetchUserDataByEmail(email);
 
             const user = {
                 email: email,
