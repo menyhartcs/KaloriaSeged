@@ -45,7 +45,7 @@ public class Configuration {
 
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(
-                    "/registration*",
+                    "/registration/register*",
                     "/api/login*").permitAll();
             request.anyRequest().authenticated();
         });
