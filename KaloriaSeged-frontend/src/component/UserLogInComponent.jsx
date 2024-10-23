@@ -40,12 +40,11 @@ const UserLogInComponent = () => {
         if (!validateForm()) return;
 
         try {
-            const userData = await fetchUserDataByEmail(email);
+
+            // const userData = await fetchUserDataByEmail(email);
 
             const user = {
-                id: userData.id,
-                name: userData.name,
-                email: userData.email,
+                email: email,
                 password: password
             };
 
