@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebSecurity
@@ -27,12 +32,21 @@ public class Configuration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
 
+        http.cors(cors -> cors.configurationSource(request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOrigins(List.of("http://localhost:3000"));  // A front-end URL-je
+            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+            config.setAllowedHeaders(List.of("*"));
+            config.setAllowCredentials(true);  // Hitelesítési adatokat is átenged
+            return config;
+        }));
+
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(
                     "/registration*",
-                    "/login*").permitAll();
+                    "/api/login*").permitAll();
             request.anyRequest().authenticated();
         });
 
