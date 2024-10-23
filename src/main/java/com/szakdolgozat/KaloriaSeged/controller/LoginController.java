@@ -23,7 +23,7 @@ public class LoginController {
     private ValidationService validationService;
     private JWTUtil jwtUtil;
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         UserDto user = userService.getUserByEmail(loginRequest.getEmail());
         try {
