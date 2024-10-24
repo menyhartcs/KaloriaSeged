@@ -1,12 +1,33 @@
 import axios from "axios";
 
-const REST_API_BASE_URL = 'http://localhost:8080/userFoodLog';
+const axiosClient = axios.create({
+    baseURL: 'http://localhost:8080',
+});
 
-export const listUserFoodLogs = () => axios.get(REST_API_BASE_URL);
-export const listUserFoodLogsByDate = (date) => axios.get(REST_API_BASE_URL + "/searchByDate?date="+ date);
+axiosClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
+const REST_API_BASE_URL = '/userFoodLog';
+
+export const listUserFoodLogs = () => axiosClient.get(REST_API_BASE_URL);
+
+export const listUserFoodLogsByDate = (date) => axiosClient.get(REST_API_BASE_URL + "/searchByDate?date=" + date);
+
 export const listUserFoodLogsByUserIdAndDate = (userId, date) =>
-    axios.get(REST_API_BASE_URL + "/searchByUserIdAndDate?userId=" + userId + "&" + "date=" + date);
-export const createUserFoodLog = (userFoodLog) => axios.post(REST_API_BASE_URL, userFoodLog);
-export const getUserFoodLog = (userFoodLogId) => axios.get(REST_API_BASE_URL + "/" + userFoodLogId);
-export const updateUserFoodLog = (userFoodLogId, userFoodLog) => axios.put(REST_API_BASE_URL + "/" + userFoodLogId, userFoodLog);
-export const deleteUserFoodLog = (userFoodLogId) => axios.delete(REST_API_BASE_URL + "/" + userFoodLogId);
+    axiosClient.get(REST_API_BASE_URL + "/searchByUserIdAndDate?userId=" + userId + "&date=" + date);
+
+export const createUserFoodLog = (userFoodLog) => axiosClient.post(REST_API_BASE_URL, userFoodLog);
+
+export const getUserFoodLog = (userFoodLogId) => axiosClient.get(REST_API_BASE_URL + "/" + userFoodLogId);
+
+export const updateUserFoodLog = (userFoodLogId, userFoodLog) =>
+    axiosClient.put(REST_API_BASE_URL + "/" + userFoodLogId, userFoodLog);
+
+export const deleteUserFoodLog = (userFoodLogId) => axiosClient.delete(REST_API_BASE_URL + "/" + userFoodLogId);
