@@ -3,7 +3,6 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
