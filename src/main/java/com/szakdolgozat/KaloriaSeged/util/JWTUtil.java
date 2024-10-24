@@ -19,7 +19,7 @@ public class JWTUtil {
 
     public String generateToken(UserDto user) {
         return Jwts.builder()
-                .setSubject(user.getName())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours expiration
                 .signWith(SECRET_KEY)
