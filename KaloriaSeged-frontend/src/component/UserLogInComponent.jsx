@@ -40,9 +40,10 @@ const UserLogInComponent = () => {
             const token = response.data.token;
 
             localStorage.setItem("token", token);
+            localStorage.setItem("email", user.email);
 
             console.log("Successful login");
-            navigator(`/userFoodLog/searchByUserIdAndDate?userId=${user.id}&date=${selectedDate}`);
+            navigator("/UserFoodLogs");
         } catch (error) {
             console.error("Login failed", error);
         }
