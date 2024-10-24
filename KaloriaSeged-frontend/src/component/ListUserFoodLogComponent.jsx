@@ -14,16 +14,22 @@ import '../style/Charts.css';
 import moment from 'moment';
 import axios from "axios";
 import {isNullOrUndef} from "chart.js/helpers";
+import {getUserByEmail} from "../service/UserService.js";
 
 const ListUserFoodLogComponent = () => {
 
     const [userFoodLogs, setUserFoodLogs] = useState([])
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
+    const [user, setUser] = useState([])
 
     const [searchParams] = useSearchParams();
-    const userId = searchParams.get('userId');
-    const date = searchParams.get('date');
+    const userEmail = localStorage.getItem("email");
+    getUserByEmail(userEmail).then((response) => {
+        setUser(response.data);
+    });
+    const userId = user.id;
+    const date = getCurrentDate();
     console.log("userId=" + userId)
     console.log("date=" + date)
     const navigator = useNavigate();
