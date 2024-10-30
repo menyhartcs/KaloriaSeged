@@ -15,6 +15,7 @@ import moment from 'moment';
 import axios from "axios";
 import {isNullOrUndef} from "chart.js/helpers";
 import {getUserByEmail} from "../service/UserService.js";
+import {analyze} from "../service/AnalyzerService.js";
 
 const ListUserFoodLogComponent = () => {
 
@@ -22,25 +23,28 @@ const ListUserFoodLogComponent = () => {
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
     const [user, setUser] = useState([])
-
-    const [searchParams] = useSearchParams();
-    const userEmail = localStorage.getItem("email");
-    getUserByEmail(userEmail).then((response) => {
-        setUser(response.data);
-    });
-    const userId = user.id;
-    const date = getCurrentDate();
-    console.log("userId=" + userId)
-    console.log("date=" + date)
     const navigator = useNavigate();
 
     useEffect(() => {
+        const userEmail = localStorage.getItem("email");
+        getUserByEmail(userEmail).then((response) => {
+            setUser(response.data);
+        });
+    }, []);
+
+    const userId = user.id;
+    const date = getCurrentDate();
+
+    useEffect(() => {
+        console.log("userId=" + userId);
+        console.log("date=" + date);
+
         if (isNullOrUndef(userId)) {
             getUserFoodLogsByDate(selectedDate);
         } else {
             getUserFoodLogsByUserIdAndDate(userId, date);
         }
-    }, []);
+    }, [userId, selectedDate]);
 
     function getCurrentDate() {
         return moment().format('YYYY-MM-DD');
@@ -80,15 +84,14 @@ const ListUserFoodLogComponent = () => {
 
     function analyzeUserFoodLog(prompt) {
         // HTTP kérés küldése az axios segítségével
-        axios.post('http://localhost:8080/complete', { prompt })
-            .then(response => {
-                // Eredmény frissítése
-                setAnalysisResult(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-                setAnalysisResult("Error analyzing data");
-            });
+        analyze(prompt).then(response => {
+            // Eredmény frissítése
+            setAnalysisResult(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+            setAnalysisResult("Error analyzing data");
+        });
     }
 
     function removeUserFoodLog(id) {
@@ -188,6 +191,7 @@ const ListUserFoodLogComponent = () => {
                                         )}>Elemezd
                                 </button>
                             </td>
+                            <td>
                             {/* Eredmény kiírása */}
                             {analysisResult && (
                                 <div className="analysis-result">
@@ -195,6 +199,7 @@ const ListUserFoodLogComponent = () => {
                                     <p>{analysisResult}</p>
                                 </div>
                             )}
+                            </td>
                         </tr>)
                 }
                 </tbody>
