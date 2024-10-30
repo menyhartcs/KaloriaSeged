@@ -1,18 +1,15 @@
 package com.szakdolgozat.KaloriaSeged.config;
 
 import com.szakdolgozat.KaloriaSeged.util.JwtAuthenticationFilter;
-import jakarta.servlet.Filter;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
@@ -46,7 +43,8 @@ public class Configuration {
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(
                     "/registration/register*",
-                    "/api/login*").permitAll();
+                    "/api/login*",
+                    "/complete").permitAll();
             request.anyRequest().authenticated();
         });
 
