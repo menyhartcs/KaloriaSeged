@@ -98,7 +98,11 @@ const ListUserFoodLogComponent = () => {
         console.log(id);
 
         deleteUserFoodLog(id).then(() => {
-            getAllUserFoodLogs();
+            if (isNullOrUndef(userId)) {
+                getUserFoodLogsByDate(selectedDate);
+            } else {
+                getUserFoodLogsByUserIdAndDate(userId, date);
+            }
         }).catch(error => {
             console.error(error);
         })
@@ -111,7 +115,7 @@ const ListUserFoodLogComponent = () => {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            if (userId === undefined) {
+            if (isNullOrUndef(userId)) {
                 getUserFoodLogsByDate(selectedDate);
             } else {
                 getUserFoodLogsByUserIdAndDate(userId, selectedDate);
