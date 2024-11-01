@@ -10,6 +10,7 @@ import ListUserFoodLogComponent from "./component/ListUserFoodLogComponent.jsx";
 import UserFoodLogComponent from "./component/UserFoodLogComponent.jsx";
 import UserLogInComponent from "./component/UserLogInComponent.jsx";
 import UserSignUpComponent from "./component/UserSignUpComponent.jsx";
+import UserLogOutComponent from "./component/UserLogOutComponent.jsx";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/" element = { <ListUserFoodLogComponent/> }></Route>
 
                         <Route path="/UserLogIn" element = { <UserLogInComponent/> }></Route>
+                        <Route path="/UserLogOut" element = { <UserLogOutComponent/> }></Route>
                         <Route path="/UserSignUp" element = { <UserSignUpComponent/> }></Route>
                         <Route path="/Users" element = { <ListUserComponent/> }></Route>
                         <Route path="/add-user" element = { <UserComponent/> }></Route>
