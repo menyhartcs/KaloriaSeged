@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {isNullOrUndef} from "chart.js/helpers";
+import {getUserByEmail} from "../service/UserService.js";
 
 const HeaderComponent = () => {
     const [email, setEmail] = useState(localStorage.getItem("email"));
+    const [name, setName] = useState();
     const [token, setToken] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
@@ -19,13 +21,25 @@ const HeaderComponent = () => {
     }, [email, token]);
 
 
+    useEffect(() => {
+        if (email) {
+            getUserByEmail(email).then((response) => {
+                setName(response.data.name);
+            });
+        }
+    }, [email]);
+
     function showLoginOrLogout() {
-        console.log("email: ", email)
-        console.log("token: ", token)
+
         if (isNullOrUndef(email) && isNullOrUndef(token)) {
             return <a className="navbar-toggler" href="/UserLogIn">Bejelentkezés/Regisztráció</a>
         }
-        return <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
+        return (
+            <>
+                <a className="navbar-brand" href="/">{name}</a>
+                <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
+            </>
+        )
     }
 
     return (
