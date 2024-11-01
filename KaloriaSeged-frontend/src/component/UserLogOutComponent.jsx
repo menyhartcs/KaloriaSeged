@@ -10,12 +10,9 @@ const UserLogOutComponent = () => {
         localStorage.removeItem("token")
     }
     return (
-        <div className="container">
-            <br/><br/>
-            <div className="row">
-                <div className="card col-md-6 offset-md-3 offset-md-3">
-                    <h1 className="text-center">Sikeres kijelentkezés!</h1>
-                </div>
+        <div className="d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
+            <div className="text-center">
+                <h1>Sikeres kijelentkezés!</h1>
             </div>
         </div>
     )
