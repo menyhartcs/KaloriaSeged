@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {createUser, getUserByEmail, getUserById, updateUser} from "../service/UserService.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const UserComponent = () => {
 
+    const [id, setId] = useState([])
     const [name, setName] = useState([])
+    const [password, setPassword] = useState([])
     const [email, setEmail] = useState([])
     const [gender, setGender] = useState([])
     const [height, setHeight] = useState([])
@@ -12,7 +14,9 @@ const UserComponent = () => {
     const [age, setAge] = useState([])
 
     const [errors, setErrors] = useState({
+        id: "",
         name: "",
+        password: "",
         email: "",
         gender: "",
         height: "",
@@ -27,12 +31,15 @@ const UserComponent = () => {
 
     useEffect(() =>{
         getUserByEmail(currentEmail).then((response) => {
+            setId(response.data.id);
             setName(response.data.name);
             setEmail(response.data.email);
+            setPassword(response.data.password);
             setGender(response.data.gender);
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
+            console.log(response.data)
         }).catch(error => {
             console.error(error)
         })
@@ -43,24 +50,24 @@ const UserComponent = () => {
 
         if (validateForm()) {
 
-            const user = {name, email}
+            const user = {
+                id,
+                name,
+                password,
+                email,
+                gender,
+                height,
+                weight,
+                age
+            }
             console.log(user)
 
-            if (id) {
-                updateUser(id, user).then((response) => {
-                    console.log(response.data);
-                    navigator("/users");
-                }).catch(error => {
-                    console.error(error);
-                })
-            } else {
-                createUser(user).then((response) => {
-                    console.log(response.data)
-                    navigator("/users")
-                }).catch(error => {
-                    console.error(error);
-                })
-            }
+            updateUser(id, user).then((response) => {
+                console.log(response.data);
+                navigator("/UserProfile");
+            }).catch(error => {
+                console.error(error);
+            })
 
         }
 
