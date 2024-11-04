@@ -2,6 +2,7 @@ package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
+import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private ValidationService validationService;
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        validationService.registerUser(userDto);
         UserDto savedUser = userService.createUser(userDto);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
