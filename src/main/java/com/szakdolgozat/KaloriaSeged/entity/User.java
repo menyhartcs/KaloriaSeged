@@ -29,11 +29,11 @@ public class User {
     @Column(name = "gender")
     private String gender;
     @Column(name = "height")
-    private int height;
+    private Integer height;
     @Column(name = "weight")
-    private int weight;
+    private Integer weight;
     @Column(name = "age")
-    private int age;
+    private Integer age;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFoodLog> foodLogs = new ArrayList<>();
 }
