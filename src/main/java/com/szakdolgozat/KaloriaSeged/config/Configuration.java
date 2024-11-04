@@ -44,7 +44,8 @@ public class Configuration {
             request.requestMatchers(
                     "/registration/register*",
                     "/api/login*",
-                    "/complete").permitAll();
+                    "/complete",
+                    "/user*").permitAll();
             request.anyRequest().authenticated();
         });
 
