@@ -17,6 +17,10 @@ public class UserMapper {
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getGender(),
+                user.getHeight(),
+                user.getWeight(),
+                user.getAge(),
                 foodLogDtos
         );
     }
@@ -27,6 +31,10 @@ public class UserMapper {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
+        user.setGender(userDto.getGender());
+        user.setHeight(userDto.getHeight());
+        user.setWeight(userDto.getWeight());
+        user.setAge(userDto.getAge());
         return user;
     }
 }

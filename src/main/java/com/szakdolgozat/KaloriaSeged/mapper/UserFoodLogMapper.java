@@ -9,19 +9,6 @@ import java.time.LocalDate;
 
 public class UserFoodLogMapper {
 
-//    public static UserFoodLogDto mapToUserFoodLogDto(UserFoodLog userFoodLog) {
-//        UserFoodLogDto userFoodLogDto = new UserFoodLogDto();
-//        userFoodLogDto.setId(userFoodLog.getId());
-//        userFoodLogDto.setUser(UserMapper.mapToUserDto(userFoodLog.getUser()));
-//        userFoodLogDto.setFood(FoodMapper.mapToFoodDto(userFoodLog.getFood()));
-//        if (userFoodLog.getDate() != null) {
-//            userFoodLogDto.setDate(userFoodLog.getDate());
-//        } else {
-//            userFoodLogDto.setDate(LocalDate.now());
-//        }
-//        return userFoodLogDto;
-//    }
-
     public static UserFoodLogDto mapToUserFoodLogDto(UserFoodLog userFoodLog) {
         UserFoodLogDto userFoodLogDto = new UserFoodLogDto();
         userFoodLogDto.setId(userFoodLog.getId());
@@ -52,6 +39,10 @@ public class UserFoodLogMapper {
         userDto.setName(userFoodLog.getUser().getName());
         userDto.setEmail(userFoodLog.getUser().getEmail());
         userDto.setPassword(userFoodLog.getUser().getPassword());
+        userDto.setGender(userFoodLog.getUser().getGender());
+        userDto.setHeight(userFoodLog.getUser().getHeight());
+        userDto.setWeight(userFoodLog.getUser().getWeight());
+        userDto.setAge(userFoodLog.getUser().getAge());
         return userDto;
     }
 

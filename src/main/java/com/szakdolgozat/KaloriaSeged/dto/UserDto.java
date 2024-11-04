@@ -17,5 +17,9 @@ public class UserDto {
     private String name;
     private String email;
     private String password;
+    private String gender;
+    private String height;
+    private String weight;
+    private String age;
     private List<UserFoodLogDto> foodLogs;
 }
