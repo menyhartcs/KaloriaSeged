@@ -36,6 +36,7 @@ const HeaderComponent = () => {
         }
         return (
             <>
+                <a className="navbar-toggler" href="/CalorieCalculator">Kalória kalkulátor</a>
                 <a className="navbar-brand" href="/UserProfile">{name}</a>
                 <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
             </>
