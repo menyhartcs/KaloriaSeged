@@ -144,13 +144,14 @@ const CalorieCalculatorComponent = () => {
 
                                 <label className="form-label ms-3 me-2">Napi aktivitás:</label>
                                 <select name="activity" id="activity"
+                                        defaultValue="1.2"
                                         value={activity}
                                         onChange={(e) => setActivity(e.target.value)}>
-                                    <option value="1.2">Mozgásszegény életmód</option>
-                                    <option value="1.375">Könnyű aktivitás</option>
-                                    <option value="1.55">Mérsékelt aktivitás</option>
-                                    <option value="1.725">Nagyon aktív</option>
-                                    <option value="1.9">Extra aktív</option>
+                                    <option value="1">Ülő életmód</option>
+                                    <option value="2">Enyhén aktív</option>
+                                    <option value="3">Közepesen aktív</option>
+                                    <option value="4">Nagyon aktív</option>
+                                    <option value="5">Extra aktív</option>
                                 </select>
                             </div>
 
