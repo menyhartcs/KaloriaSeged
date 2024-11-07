@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {createUser, getUserByEmail, getUserById, updateUser} from "../service/UserService.js";
+import {getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 
-const UserComponent = () => {
+const UserProfileComponent = () => {
 
     const [id, setId] = useState([])
     const [name, setName] = useState([])
@@ -195,4 +195,4 @@ const UserComponent = () => {
     )
 }
 
-export default UserComponent
+export default UserProfileComponent
