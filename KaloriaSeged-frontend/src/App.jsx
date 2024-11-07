@@ -12,6 +12,7 @@ import UserLogInComponent from "./component/UserLogInComponent.jsx";
 import UserSignUpComponent from "./component/UserSignUpComponent.jsx";
 import UserLogOutComponent from "./component/UserLogOutComponent.jsx";
 import UserProfileComponent from "./component/UserProfileComponent.jsx";
+import CalorieCalculatorComponent from "./component/CalorieCalculatorComponent.jsx";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
                         <Route path="/UserLogOut" element = { <UserLogOutComponent/> }></Route>
                         <Route path="/UserSignUp" element = { <UserSignUpComponent/> }></Route>
                         <Route path="/UserProfile" element = { <UserProfileComponent/> }></Route>
+                        <Route path="/CalorieCalculator" element = { <CalorieCalculatorComponent/> }></Route>
                         <Route path="/Users" element = { <ListUserComponent/> }></Route>
                         <Route path="/add-user" element = { <UserComponent/> }></Route>
                         <Route path="/edit-user/:id" element = { <UserComponent/> }></Route>
