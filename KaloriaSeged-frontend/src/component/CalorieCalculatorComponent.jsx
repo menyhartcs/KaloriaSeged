@@ -12,7 +12,7 @@ const CalorieCalculatorComponent = () => {
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
     const [age, setAge] = useState([])
-    const [activity, setActivity] = useState([])
+    const [activity, setActivity] = useState()
 
     const [errors, setErrors] = useState({
         id: "",
@@ -47,17 +47,35 @@ const CalorieCalculatorComponent = () => {
     function calculate(e) {
         e.preventDefault();
 
-        let bmr;
         if (validateForm()) {
-
-
-
+            let bmr;
+            let activityMultiplier;
+            switch (activity) {
+                case "1":
+                    activityMultiplier = 1.2;
+                    break;
+                case "2":
+                    activityMultiplier=1.375;
+                    break;
+                case "3":
+                    activityMultiplier=1.55;
+                    break;
+                case "4":
+                    activityMultiplier=1.725;
+                    break;
+                case "5":
+                    activityMultiplier=1.9;
+                    break;
+                default:
+                    activityMultiplier=1.2
+            }
             if (gender === "M") {
-                bmr = Math.round((10 * weight + 6.25 * height - 5 * age + 5) * activity)
+                bmr = Math.round((10 * weight + 6.25 * height - 5 * age + 5) * activityMultiplier)
+                console.log(activity)
             }
 
             if (gender === "F") {
-                bmr = Math.round(10 * weight + 6.25 * height - 5 * age - 161)
+                bmr = Math.round((10 * weight + 6.25 * height - 5 * age - 161) * activityMultiplier)
             }
 
             console.log("BMR: " + bmr)
