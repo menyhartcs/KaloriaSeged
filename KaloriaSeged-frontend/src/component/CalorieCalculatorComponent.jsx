@@ -122,24 +122,20 @@ const CalorieCalculatorComponent = () => {
                     }
                     <div className="card-body">
                         <ul>
-                            <li>ülő típus – minimális vagy semmilyen mozgás esetén, a BMR-t 1,2 koefficienssel szorozd
-                                meg
+                            <li>Ülő életmód – minimális vagy semmilyen mozgás esetén
                             </li>
                             <li>
-                                enyhén aktív típus – ha hetente 1-3 alkalommal sportolsz, a BMR-t szorozd meg 1,375-tel
+                                Enyhén aktív – ha hetente 1-3 alkalommal sportolsz
                             </li>
                             <li>
-                                közepesen aktív típus – ha heti 3-5-ször sportolsz, a BMR-t 1,55
-                                koefficienssel szorozd meg
+                                Közepesen aktív – ha heti 3-5-ször sportolsz
                             </li>
                             <li>
-                                nagyon aktív típus – ha rendszeresen sportolsz a hét 6-7 napján, a BMR-t
-                                1,725 koefficienssel szorozd meg
+                                Nagyon aktív – ha rendszeresen sportolsz a hét 6-7 napján
                             </li>
                             <li>
-                                extra aktív típus – ha professzionális sportoló vagy és rendszeresen
-                                6-7 alkalommal edzel vagy nehéz fizikai munkát végzel, a BMR-t 1,9
-                                szorozd meg
+                                Extra aktív típus – ha professzionális sportoló vagy és rendszeresen
+                                6-7 alkalommal edzel vagy nehéz fizikai munkát végzel
                             </li>
                         </ul>
                         <form>
