@@ -7,7 +7,7 @@ Chart.register(ArcElement, Tooltip, Legend);
 const FatChart = ({ user, consumedFat }) => {
     const maxFat = user.fat;
     const chartDataDescription = `${consumedFat}/${maxFat} (g)`
-    consumedFat = (maxFat < consumedFat) ? maxFat : consumedFat
+    consumedFat = Math.min(consumedFat, maxFat);
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [

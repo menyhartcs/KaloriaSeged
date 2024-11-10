@@ -7,7 +7,7 @@ Chart.register(ArcElement, Tooltip, Legend);
 const CarbohydrateChart = ({ user, consumedCarbohydrate }) => {
     const maxCarbohydrate = user.carbohydrate;
     const chartDataDescription = `${consumedCarbohydrate}/${maxCarbohydrate} (g)`
-    consumedCarbohydrate = (maxCarbohydrate < consumedCarbohydrate) ? maxCarbohydrate : consumedCarbohydrate
+    consumedCarbohydrate = Math.min(consumedCarbohydrate, maxCarbohydrate);
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [

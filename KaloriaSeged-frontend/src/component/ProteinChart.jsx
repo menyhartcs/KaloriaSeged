@@ -7,7 +7,7 @@ Chart.register(ArcElement, Tooltip, Legend);
 const ProteinChart = ({ user, consumedProtein }) => {
     const maxProtein = user.protein;
     const chartDataDescription = `${consumedProtein}/${maxProtein} (g)`
-    consumedProtein = (maxProtein < consumedProtein) ? maxProtein : consumedProtein
+    consumedProtein = Math.min(consumedProtein, maxProtein);
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [
