@@ -4,17 +4,19 @@ import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from '
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const CalorieChart = ({ user, calorie }) => {
-    const maxCalorie = user.calorie;  // Például a napi kalóriabevitel célértéke
+const CalorieChart = ({ user, consumedCalorie }) => {
+    const maxCalorie = user.calorie;
+    const chartDataDescription = `${consumedCalorie}/${maxCalorie} kcal`
+    consumedCalorie = (maxCalorie < consumedCalorie) ? maxCalorie : consumedCalorie
     const data = {
         labels: ['Kalória'],
         datasets: [
             {
                 label: 'Kalória bevitel',
-                data: [calorie],
-                backgroundColor: '#32CD32', // Kevésbé rikító zöld szín
+                data: [consumedCalorie],
+                backgroundColor: '#32CD32',
                 borderWidth: 1,
-                barThickness: 50, // Adjust the thickness of the bar
+                barThickness: 50,
             },
         ],
     };
@@ -26,7 +28,7 @@ const CalorieChart = ({ user, calorie }) => {
                 enabled: true
             },
             legend: {
-                display: false // Legenda kikapcsolása
+                display: false
             },
         },
         scales: {
@@ -52,7 +54,7 @@ const CalorieChart = ({ user, calorie }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 16 }}>{calorie}/{maxCalorie} kcal</p>
+                <p style={{ margin: 0, fontSize: 16 }}>{chartDataDescription}</p>
             </div>
         </div>
     );

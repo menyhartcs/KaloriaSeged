@@ -4,14 +4,16 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const FatChart = ({ user, fat }) => {
+const FatChart = ({ user, consumedFat }) => {
     const maxFat = user.fat;
+    const chartDataDescription = `${consumedFat}/${maxFat} (g)`
+    consumedFat = (maxFat < consumedFat) ? maxFat : consumedFat
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [fat, maxFat-fat], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
+                data: [consumedFat, maxFat-consumedFat], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
                 backgroundColor: ['#FF69B4', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -41,7 +43,7 @@ const FatChart = ({ user, fat }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 10 }}>{fat}/{maxFat} (g)</p>
+                <p style={{ margin: 0, fontSize: 10 }}>{chartDataDescription}</p>
             </div>
         </div>
     );
