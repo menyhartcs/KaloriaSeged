@@ -12,6 +12,10 @@ const UserProfileComponent = () => {
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
     const [age, setAge] = useState([])
+    const [userCalorie, setUserCalorie] = useState([])
+    const [userProtein, setUserProtein] = useState([])
+    const [userCarbohydrate, setUserCarbohydrate] = useState([])
+    const [userFat, setUserFat] = useState([])
 
     const [errors, setErrors] = useState({
         id: "",
@@ -21,7 +25,11 @@ const UserProfileComponent = () => {
         gender: "",
         height: "",
         weight: "",
-        age: ""
+        age: "",
+        userCalorie: "",
+        userProtein: "",
+        userCarbohydrate: "",
+        userFat: ""
     })
 
     const navigator = useNavigate();
@@ -39,6 +47,10 @@ const UserProfileComponent = () => {
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
+            setUserCalorie(response.data.userCalorie);
+            setUserProtein(response.data.userProtein);
+            setUserCarbohydrate(response.data.userCarbohydrate);
+            setUserFat(response.data.userFat);
             console.log(response.data)
         }).catch(error => {
             console.error(error)
@@ -58,7 +70,11 @@ const UserProfileComponent = () => {
                 gender,
                 height,
                 weight,
-                age
+                age,
+                userCalorie,
+                userProtein,
+                userCarbohydrate,
+                userFat
             }
             console.log(user)
 
