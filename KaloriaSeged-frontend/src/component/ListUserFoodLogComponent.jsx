@@ -168,10 +168,10 @@ const ListUserFoodLogComponent = () => {
                                     <li>Szénhidrát: {userFoodLog.food.carbohydrate}g</li>
                                     <li>Fehérje: {userFoodLog.food.protein}g
                                         <div className="charts-container">
-                                            <FatChart fat={userFoodLog.food.fat}/>
-                                            <CarbohydrateChart carbohydrate={userFoodLog.food.carbohydrate}/>
-                                            <ProteinChart protein={userFoodLog.food.protein}/>
-                                            <CalorieChart calorie={userFoodLog.food.calorie}/>
+                                            <FatChart user={user} fat={userFoodLog.food.fat}/>
+                                            <CarbohydrateChart user={user} carbohydrate={userFoodLog.food.carbohydrate}/>
+                                            <ProteinChart user={user} protein={userFoodLog.food.protein}/>
+                                            <CalorieChart user={user} calorie={userFoodLog.food.calorie}/>
                                         </div>
                                     </li>
                                 </ul>
