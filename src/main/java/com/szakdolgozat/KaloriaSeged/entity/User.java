@@ -34,6 +34,14 @@ public class User {
     private Integer weight;
     @Column(name = "age")
     private Integer age;
+    @Column(name = "calorie")
+    private Integer calorie;
+    @Column(name = "protein")
+    private Integer protein;
+    @Column(name = "carbohydrate")
+    private Integer carbohydrate;
+    @Column(name = "fat")
+    private Integer fat;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFoodLog> foodLogs = new ArrayList<>();
 }
