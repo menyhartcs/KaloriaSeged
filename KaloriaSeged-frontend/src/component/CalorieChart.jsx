@@ -4,8 +4,8 @@ import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from '
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const CalorieChart = ({ calorie }) => {
-    const maxCalorie = 2000;  // Például a napi kalóriabevitel célértéke
+const CalorieChart = ({ user, calorie }) => {
+    const maxCalorie = user.calorie;  // Például a napi kalóriabevitel célértéke
     const data = {
         labels: ['Kalória'],
         datasets: [

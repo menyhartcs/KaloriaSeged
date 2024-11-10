@@ -4,13 +4,14 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const ProteinChart = ({ protein }) => {
+const ProteinChart = ({ user, protein }) => {
+    const maxProtein = user.protein;
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [protein, 100-protein], // {protein} g fehérje bevitel, {100-protein} g hátravan a 100 g cél eléréséhez
+                data: [protein, maxProtein-protein], // {protein} g fehérje bevitel, {100-protein} g hátravan a 100 g cél eléréséhez
                 backgroundColor: ['#00bfff', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -40,7 +41,7 @@ const ProteinChart = ({ protein }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 10 }}>{protein}/100 (g)</p>
+                <p style={{ margin: 0, fontSize: 10 }}>{protein}/{maxProtein} (g)</p>
             </div>
         </div>
     );

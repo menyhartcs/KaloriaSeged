@@ -4,13 +4,14 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const CarbohydrateChart = ({ carbohydrate }) => {
+const CarbohydrateChart = ({ user, carbohydrate }) => {
+    const maxCarbohydrate = user.carbohydrate;
     const data = {
         labels: ['Fehérje', 'Hátralévő'],
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [carbohydrate, 100-carbohydrate], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
+                data: [carbohydrate, maxCarbohydrate-carbohydrate], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
                 backgroundColor: ['#FFA500', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -40,7 +41,7 @@ const CarbohydrateChart = ({ carbohydrate }) => {
                 textAlign: 'center',
                 pointerEvents: 'none',
             }}>
-                <p style={{ margin: 0, fontSize: 10 }}>{carbohydrate}/100 (g)</p>
+                <p style={{ margin: 0, fontSize: 10 }}>{carbohydrate}/{maxCarbohydrate} (g)</p>
             </div>
         </div>
     );
