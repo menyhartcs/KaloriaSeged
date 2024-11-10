@@ -20,6 +20,9 @@ import {analyze} from "../service/AnalyzerService.js";
 const ListUserFoodLogComponent = () => {
 
     const [userFoodLogs, setUserFoodLogs] = useState([])
+    const [consumedNutrients, setConsumedNutrients] = useState({
+        calorie: 0, protein: 0, carbohydrate: 0, fat: 0
+    });
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
     const [user, setUser] = useState([])
@@ -44,7 +47,25 @@ const ListUserFoodLogComponent = () => {
         } else {
             getUserFoodLogsByUserIdAndDate(userId, date);
         }
+
     }, [userId, selectedDate]);
+
+    useEffect(() => {
+        if (userFoodLogs.length > 0) {
+            const summedNutrients = userFoodLogs.reduce((dictionary, log) => {
+                const food = log.food || {};
+                return {
+                    calorie: dictionary.calorie + (food.calorie || 0),
+                    protein: dictionary.protein + (food.protein || 0),
+                    carbohydrate: dictionary.carbohydrate + (food.carbohydrate || 0),
+                    fat: dictionary.fat + (food.fat || 0)
+                };
+            }, { calorie: 0, protein: 0, carbohydrate: 0, fat: 0 });
+
+            setConsumedNutrients(summedNutrients);
+            console.log("Bevitt tápanyagok:", summedNutrients);
+        }
+    }, [userFoodLogs]);
 
     function getCurrentDate() {
         return moment().format('YYYY-MM-DD');
@@ -168,10 +189,10 @@ const ListUserFoodLogComponent = () => {
                                     <li>Szénhidrát: {userFoodLog.food.carbohydrate}g</li>
                                     <li>Fehérje: {userFoodLog.food.protein}g
                                         <div className="charts-container">
-                                            <FatChart user={user} fat={userFoodLog.food.fat}/>
-                                            <CarbohydrateChart user={user} carbohydrate={userFoodLog.food.carbohydrate}/>
-                                            <ProteinChart user={user} protein={userFoodLog.food.protein}/>
-                                            <CalorieChart user={user} calorie={userFoodLog.food.calorie}/>
+                                            <FatChart user={user} consumedFat={consumedNutrients.fat}/>
+                                            <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
+                                            <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
+                                            <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
                                         </div>
                                     </li>
                                 </ul>
