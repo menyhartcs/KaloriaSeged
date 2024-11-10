@@ -7,13 +7,15 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 const CalorieChart = ({ user, consumedCalorie }) => {
     const maxCalorie = user.calorie;
     const chartDataDescription = `${consumedCalorie}/${maxCalorie} kcal`
-    consumedCalorie = (maxCalorie < consumedCalorie) ? maxCalorie : consumedCalorie
+    consumedCalorie = Math.min(consumedCalorie, maxCalorie);
+    const percentageFilled = (consumedCalorie / maxCalorie) * 100;
+
     const data = {
         labels: ['Kalória'],
         datasets: [
             {
                 label: 'Kalória bevitel',
-                data: [consumedCalorie],
+                data: [percentageFilled],
                 backgroundColor: '#32CD32',
                 borderWidth: 1,
                 barThickness: 50,
@@ -35,7 +37,7 @@ const CalorieChart = ({ user, consumedCalorie }) => {
             x: {
                 display: false, // Remove the x-axis
                 beginAtZero: true,
-                max: maxCalorie,
+                max: 100,
             },
             y: {
                 display: false, // Remove the y-axis
@@ -44,7 +46,7 @@ const CalorieChart = ({ user, consumedCalorie }) => {
     };
 
     return (
-        <div style={{ position: 'relative', width: '100%', height: '50px', backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}>
+        <div style={{ position: 'relative', width: '100px', height: '50px', backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}>
             <Bar data={data} options={options} />
             <div style={{
                 position: 'absolute',
