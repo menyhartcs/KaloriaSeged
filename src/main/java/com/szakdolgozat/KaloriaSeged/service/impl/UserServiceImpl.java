@@ -62,6 +62,10 @@ public class UserServiceImpl implements UserService {
         user.setHeight(updatedUser.getHeight());
         user.setWeight(updatedUser.getWeight());
         user.setAge(updatedUser.getAge());
+        user.setCalorie(updatedUser.getCalorie());
+        user.setProtein(updatedUser.getProtein());
+        user.setCarbohydrate(updatedUser.getCarbohydrate());
+        user.setFat(updatedUser.getFat());
 
         User updatedUserObj = userRepository.save(user);
 
