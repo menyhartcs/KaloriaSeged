@@ -43,6 +43,10 @@ public class UserFoodLogMapper {
         userDto.setHeight(userFoodLog.getUser().getHeight());
         userDto.setWeight(userFoodLog.getUser().getWeight());
         userDto.setAge(userFoodLog.getUser().getAge());
+        userDto.setCalorie(userFoodLog.getUser().getCalorie());
+        userDto.setProtein(userFoodLog.getUser().getProtein());
+        userDto.setCarbohydrate(userFoodLog.getUser().getCarbohydrate());
+        userDto.setFat(userFoodLog.getUser().getFat());
         return userDto;
     }
 

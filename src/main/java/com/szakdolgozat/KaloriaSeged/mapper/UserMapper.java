@@ -21,6 +21,10 @@ public class UserMapper {
                 user.getHeight(),
                 user.getWeight(),
                 user.getAge(),
+                user.getCalorie(),
+                user.getProtein(),
+                user.getCarbohydrate(),
+                user.getFat(),
                 foodLogDtos
         );
     }
@@ -35,6 +39,10 @@ public class UserMapper {
         user.setHeight(userDto.getHeight());
         user.setWeight(userDto.getWeight());
         user.setAge(userDto.getAge());
+        user.setCalorie(userDto.getCalorie());
+        user.setProtein(userDto.getProtein());
+        user.setCarbohydrate(userDto.getCarbohydrate());
+        user.setFat(userDto.getFat());
         return user;
     }
 }
