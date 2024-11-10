@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createUser, getUserByEmail, getUserById, updateUser} from "../service/UserService.js";
+import {getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 
 const CalorieCalculatorComponent = () => {
@@ -12,10 +12,10 @@ const CalorieCalculatorComponent = () => {
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
     const [age, setAge] = useState([])
-    const [userCalorie, setUserCalorie] = useState([])
-    const [userProtein, setUserProtein] = useState([])
-    const [userCarbohydrate, setUserCarbohydrate] = useState([])
-    const [userFat, setUserFat] = useState([])
+    const [calorie, setCalorie] = useState([])
+    const [protein, setProtein] = useState([])
+    const [carbohydrate, setCarbohydrate] = useState([])
+    const [fat, setFat] = useState([])
     const [activity, setActivity] = useState()
     const [result, setResult] = useState()
 
@@ -48,10 +48,10 @@ const CalorieCalculatorComponent = () => {
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
-            setUserCalorie(response.data.userCalorie);
-            setUserProtein(response.data.userProtein);
-            setUserCarbohydrate(response.data.userCarbohydrate);
-            setUserFat(response.data.userFat);
+            setCalorie(response.data.userCalorie);
+            setProtein(response.data.userProtein);
+            setCarbohydrate(response.data.userCarbohydrate);
+            setFat(response.data.userFat);
             console.log(response.data)
         }).catch(error => {
             console.error(error)
@@ -64,10 +64,10 @@ const CalorieCalculatorComponent = () => {
         if (validateForm()) {
             let bmr;
             let activityMultiplier;
-            let calorie;
-            let protein;
-            let carbohydrate;
-            let fat;
+            let calculatedCalorie;
+            let calculatedProtein;
+            let calculatedCarbohydrate;
+            let calculatedFat;
             switch (activity) {
                 case "1":
                     activityMultiplier = 1.2;
@@ -89,32 +89,67 @@ const CalorieCalculatorComponent = () => {
             }
             if (gender === "M") {
                 bmr = 10 * weight + 6.25 * height - 5 * age + 5
-                calorie = Math.round(bmr * activityMultiplier)
-                protein = Math.round(1.6 * weight)
-                fat = Math.round(0.25 * calorie / 9)
-                carbohydrate = Math.round((calorie - protein * 4 - fat * 9) / 4)
+                calculatedCalorie = Math.round(bmr * activityMultiplier)
+                calculatedProtein = Math.round(1.6 * weight)
+                calculatedFat = Math.round(0.25 * calculatedCalorie / 9)
+                calculatedCarbohydrate = Math.round((calculatedCalorie - calculatedProtein * 4 - calculatedFat * 9) / 4)
             }
 
             if (gender === "F") {
-                bmr = Math.round((10 * weight + 6.25 * height - 5 * age - 161) * activityMultiplier)
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161
+                calculatedCalorie = Math.round(bmr * activityMultiplier)
+                calculatedProtein = Math.round(1.6 * weight)
+                calculatedFat = Math.round(0.25 * calculatedCalorie / 9)
+                calculatedCarbohydrate = Math.round((calculatedCalorie - calculatedProtein * 4 - calculatedFat * 9) / 4)
             }
+
+            setCalorie(calculatedCalorie)
+            setProtein(calculatedProtein)
+            setCarbohydrate(calculatedCarbohydrate)
+            setFat(calculatedFat)
 
             setResult(`
             <table style="border: 1px solid black; border-collapse: collapse; width: 100%;">
-                <tr><th>Kalória</th><td>${calorie} kcal</td></tr>
-                <tr><th>Fehérje</th><td>${protein} g</td></tr>
-                <tr><th>Szénhidrát</th><td>${carbohydrate} g</td></tr>
-                <tr><th>Zsír</th><td>${fat} g</td></tr>
+                <tr><th>Kalória</th><td>${calculatedCalorie} kcal</td></tr>
+                <tr><th>Fehérje</th><td>${calculatedProtein} g</td></tr>
+                <tr><th>Szénhidrát</th><td>${calculatedCarbohydrate} g</td></tr>
+                <tr><th>Zsír</th><td>${calculatedFat} g</td></tr>
             </table>
         `);
             console.log("BMR: " + bmr)
-            console.log("calorie: " + calorie)
-            console.log("protein: " + protein)
-            console.log("fat: " + fat)
-            console.log("carbohydrate: " + carbohydrate)
+            console.log("calorie: " + calculatedCalorie)
+            console.log("protein: " + calculatedProtein)
+            console.log("fat: " + calculatedFat)
+            console.log("carbohydrate: " + calculatedCarbohydrate)
 
         }
 
+    }
+
+    function setDailyGoal() {
+
+        const user = {
+            id,
+            name,
+            password,
+            email,
+            gender,
+            height,
+            weight,
+            age,
+            calorie,
+            protein,
+            carbohydrate,
+            fat
+        }
+        console.log("Init user: ", user)
+
+        updateUser(id, user).then((response) => {
+            console.log("Response: ", response.data);
+            navigator("/CalorieCalculator");
+        }).catch(error => {
+            console.error(error);
+        })
     }
 
     function validateForm() {
@@ -242,6 +277,7 @@ const CalorieCalculatorComponent = () => {
                             <div className="col-md-6">
                                 <h5>Eredmény:</h5>
                                 <div dangerouslySetInnerHTML={{__html: result}}></div>
+                                <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként</button>
                             </div>
                         </div>
                     </div>
