@@ -18,6 +18,7 @@ const REST_API_BASE_URL = '/food';
 
 export const listFoods = () => axiosClient.get(REST_API_BASE_URL);
 export const createFood = (food) => axiosClient.post(REST_API_BASE_URL, food);
-export const getFood = (foodId) => axiosClient.get(REST_API_BASE_URL + "/" + foodId);
+export const getFoodById = (foodId) => axiosClient.get(REST_API_BASE_URL + "/id/" + foodId);
+export const getFoodByName = (name) => axiosClient.get(REST_API_BASE_URL + "/name/" + name);
 export const updateFood = (foodId, food) => axiosClient.put(REST_API_BASE_URL + "/" + foodId, food);
 export const deleteFood = (foodId) => axiosClient.delete(REST_API_BASE_URL + "/" + foodId);
