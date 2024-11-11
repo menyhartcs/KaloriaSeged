@@ -36,6 +36,15 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public FoodDto getFoodByName(String name) {
+        Food food = foodRepository.findByName(name);
+        if (food == null) {
+            return null;
+        }
+        return FoodMapper.mapToFoodDto(food);
+    }
+
+    @Override
     public List<FoodDto> getAllFoods() {
         List<Food> foods = foodRepository.findAll();
         return foods.stream().map(FoodMapper::mapToFoodDto).collect(Collectors.toList());

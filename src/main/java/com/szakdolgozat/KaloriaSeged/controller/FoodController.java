@@ -23,9 +23,15 @@ public class FoodController {
         return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<FoodDto> getFoodById(@PathVariable("id") Long foodId) {
         FoodDto foodDto = foodService.getFoodById(foodId);
+        return ResponseEntity.ok(foodDto);
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<FoodDto> getFoodById(@PathVariable("name") String name) {
+        FoodDto foodDto = foodService.getFoodByName(name);
         return ResponseEntity.ok(foodDto);
     }
 
