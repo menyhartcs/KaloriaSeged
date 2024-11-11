@@ -145,7 +145,7 @@ const ListUserFoodLogComponent = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container main-content">
             <h2 className="text-center">Étkezési napló</h2>
             <div className="mb-3">
                 <label htmlFor="dateInput" className="form-label">Select current date:</label>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createFood, getFood, updateFood} from "../service/FoodService.js";
+import {createFood, getFoodById, updateFood} from "../service/FoodService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const FoodComponent = () => {
@@ -24,7 +24,7 @@ const FoodComponent = () => {
 
     useEffect(() =>{
         if (id) {
-            getFood(id).then((response) => {
+            getFoodById(id).then((response) => {
                 setName(response.data.name);
                 setCalorie(response.data.calorie);
                 setFat(response.data.fat);

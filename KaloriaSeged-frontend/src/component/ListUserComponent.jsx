@@ -53,7 +53,7 @@ const ListUserComponent = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container main-content">
             <h2 className="text-center">List of users</h2>
 
             <input
