@@ -5,7 +5,8 @@ import {useNavigate} from "react-router-dom";
 const ListUserComponent = () => {
 
     const [users, setUsers] = useState([])
-
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const navigator = useNavigate();
 
     useEffect(() => {
@@ -15,9 +16,22 @@ const ListUserComponent = () => {
     function getAllUsers() {
         listUsers().then((response) => {
             setUsers(response.data);
+            setFilteredUsers(response.data);
         }).catch(error => {
             console.error(error);
         })
+    }
+
+    function searchUsers(query) {
+        setSearchQuery(query);
+        if (query === "") {
+            setFilteredUsers(users);
+        } else {
+            const filtered = users.filter(user =>
+                user.name.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredUsers(filtered);
+        }
     }
 
     function addNewUser() {
@@ -41,6 +55,15 @@ const ListUserComponent = () => {
     return (
         <div className="container">
             <h2 className="text-center">List of users</h2>
+
+            <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Keresés felhasználó neve alapján"
+                value={searchQuery}
+                onChange={(e) => searchUsers(e.target.value)}
+            />
+
             <button className="btn btn-dark mb-2" onClick={addNewUser}>Add User</button>
             <table className="table table-striped table-bordered">
                 <thead>
@@ -53,7 +76,7 @@ const ListUserComponent = () => {
                 </thead>
                 <tbody>
                 {
-                    users.map(user =>
+                    filteredUsers.map(user =>
                         <tr key={user.id}>
                             <td>{user.id}</td>
                             <td>{user.name}</td>
@@ -61,7 +84,8 @@ const ListUserComponent = () => {
                             <td>
                                 <button className="btn btn-info" onClick={() => updateUser(user.id)}>Update</button>
                                 <button className="btn btn-danger" onClick={() => removeUser(user.id)}
-                                style={{marginLeft: "10px"}}>Delete</button>
+                                        style={{marginLeft: "10px"}}>Delete
+                                </button>
                             </td>
                         </tr>)
                 }
