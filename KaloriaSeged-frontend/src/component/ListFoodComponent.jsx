@@ -5,19 +5,34 @@ import {useNavigate} from "react-router-dom";
 const ListFoodComponent = () => {
 
     const [foods, setFoods] = useState([])
-
+    const [filteredFoods, setFilteredFoods] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const navigator = useNavigate();
 
     useEffect(() => {
         getAllFoods();
     }, []);
 
+
     function getAllFoods() {
         listFoods().then((response) => {
             setFoods(response.data);
+            setFilteredFoods(response.data);
         }).catch(error => {
             console.error(error);
         })
+    }
+
+    function searchFoods(query) {
+        setSearchQuery(query);
+        if (query === "") {
+            setFilteredFoods(foods);
+        } else {
+            const filtered = foods.filter(food =>
+                food.name.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredFoods(filtered);
+        }
     }
 
     function addNewFood() {
@@ -39,9 +54,18 @@ const ListFoodComponent = () => {
     }
 
     return (
-        <div className="container">
-            <h2 className="text-center">List of foods</h2>
-            <button className="btn btn-dark mb-2" onClick={addNewFood}>Add Food</button>
+        <div className="container main-content">
+            <h2 className="text-center">Elérhető ételek listája</h2>
+
+            <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Keresés étel neve alapján"
+                value={searchQuery}
+                onChange={(e) => searchFoods(e.target.value)}
+            />
+
+            <button className="btn btn-dark mb-2" onClick={addNewFood}>Étel hozzáadása</button>
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -56,7 +80,7 @@ const ListFoodComponent = () => {
                 </thead>
                 <tbody>
                 {
-                    foods.map(food =>
+                    filteredFoods.map(food =>
                         <tr key={food.id}>
                             <td>{food.id}</td>
                             <td>{food.name}</td>
@@ -67,7 +91,8 @@ const ListFoodComponent = () => {
                             <td>
                                 <button className="btn btn-info" onClick={() => updateFood(food.id)}>Update</button>
                                 <button className="btn btn-danger" onClick={() => removeFood(food.id)}
-                                style={{marginLeft: "10px"}}>Delete</button>
+                                        style={{marginLeft: "10px"}}>Delete
+                                </button>
                             </td>
                         </tr>)
                 }
