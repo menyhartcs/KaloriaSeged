@@ -146,7 +146,7 @@ const ListUserFoodLogComponent = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center">List of UserFoodLogs</h2>
+            <h2 className="text-center">Étkezési napló</h2>
             <div className="mb-3">
                 <label htmlFor="dateInput" className="form-label">Select current date:</label>
                 <input
@@ -159,6 +159,12 @@ const ListUserFoodLogComponent = () => {
                 />
             </div>
             <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Add UserFoodLog</button>
+            <div className="charts-container">
+                <FatChart user={user} consumedFat={consumedNutrients.fat}/>
+                <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
+                <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
+                <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
+            </div>
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -187,14 +193,7 @@ const ListUserFoodLogComponent = () => {
                                     <li>Energia: {userFoodLog.food.calorie} kcal</li>
                                     <li>Zsír: {userFoodLog.food.fat}g</li>
                                     <li>Szénhidrát: {userFoodLog.food.carbohydrate}g</li>
-                                    <li>Fehérje: {userFoodLog.food.protein}g
-                                        <div className="charts-container">
-                                            <FatChart user={user} consumedFat={consumedNutrients.fat}/>
-                                            <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
-                                            <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
-                                            <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
-                                        </div>
-                                    </li>
+                                    <li>Fehérje: {userFoodLog.food.protein}g</li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
@@ -217,13 +216,13 @@ const ListUserFoodLogComponent = () => {
                                 </button>
                             </td>
                             <td>
-                            {/* Eredmény kiírása */}
-                            {analysisResult && (
-                                <div className="analysis-result">
-                                    <h3>Analysis Result:</h3>
-                                    <p>{analysisResult}</p>
-                                </div>
-                            )}
+                                {/* Eredmény kiírása */}
+                                {analysisResult && (
+                                    <div className="analysis-result">
+                                        <h3>Analysis Result:</h3>
+                                        <p>{analysisResult}</p>
+                                    </div>
+                                )}
                             </td>
                         </tr>)
                 }
