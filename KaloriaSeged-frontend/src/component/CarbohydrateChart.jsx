@@ -1,11 +1,13 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import {isNullOrUndef} from "chart.js/helpers";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const CarbohydrateChart = ({ user, consumedCarbohydrate }) => {
-    const maxCarbohydrate = user.carbohydrate;
+    const defaultCarbohydrate = 250
+    const maxCarbohydrate = isNullOrUndef(user.carbohydrate) ? defaultCarbohydrate : user.carbohydrate;
     const chartDataDescription = `${consumedCarbohydrate}/${maxCarbohydrate} (g)`
     consumedCarbohydrate = Math.min(consumedCarbohydrate, maxCarbohydrate);
     const data = {

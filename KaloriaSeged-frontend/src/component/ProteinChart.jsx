@@ -1,11 +1,13 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import {isNullOrUndef} from "chart.js/helpers";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const ProteinChart = ({ user, consumedProtein }) => {
-    const maxProtein = user.protein;
+    const defaultProtein = 120
+    const maxProtein = isNullOrUndef(user.protein) ? defaultProtein : user.protein;
     const chartDataDescription = `${consumedProtein}/${maxProtein} (g)`
     consumedProtein = Math.min(consumedProtein, maxProtein);
     const data = {

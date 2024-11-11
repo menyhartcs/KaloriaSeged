@@ -1,11 +1,13 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+import {isNullOrUndef} from "chart.js/helpers";
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const CalorieChart = ({ user, consumedCalorie }) => {
-    const maxCalorie = user.calorie;
+    const defaultCalorie = 2000
+    const maxCalorie = isNullOrUndef(user.calorie) ? defaultCalorie : user.calorie;
     const chartDataDescription = `${consumedCalorie}/${maxCalorie} kcal`
     consumedCalorie = Math.min(consumedCalorie, maxCalorie);
     const percentageFilled = (consumedCalorie / maxCalorie) * 100;

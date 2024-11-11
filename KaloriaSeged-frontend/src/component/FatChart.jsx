@@ -1,11 +1,13 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import {isNullOrUndef} from "chart.js/helpers";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const FatChart = ({ user, consumedFat }) => {
-    const maxFat = user.fat;
+    const defaultFat = 55
+    const maxFat = isNullOrUndef(user.fat) ? defaultFat : user.fat;
     const chartDataDescription = `${consumedFat}/${maxFat} (g)`
     consumedFat = Math.min(consumedFat, maxFat);
     const data = {
