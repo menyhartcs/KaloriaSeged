@@ -43,6 +43,13 @@ const HeaderComponent = () => {
         )
     }
 
+    function showUsers() {
+
+        if (!isNullOrUndef(email) && !isNullOrUndef(token) && email === "admin@mail.com") {
+            return <a className="navbar-toggler" href="/Users">Felhasználók</a>
+        }
+    }
+
     return (
         <div>
             <header>
@@ -50,7 +57,7 @@ const HeaderComponent = () => {
                     <a className="navbar-brand" href="/">Kalória Segéd</a>
                     <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
                     <a className="navbar-toggler" href="/Foods">Ételek</a>
-                    <a className="navbar-toggler" href="/Users">Felhasználók</a>
+                    {showUsers()}
                     {showLoginOrLogout()}
                 </nav>
             </header>
