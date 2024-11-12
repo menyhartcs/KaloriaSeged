@@ -43,6 +43,10 @@ const ListFoodComponent = () => {
         navigator(`/edit-food/${id}`)
     }
 
+    function eatFood(id) {
+        navigator(`/add-userFoodLog/${id}`)
+    }
+
     function removeFood(id) {
         console.log(id);
 
@@ -89,10 +93,9 @@ const ListFoodComponent = () => {
                             <td>{food.carbohydrate}</td>
                             <td>{food.protein}</td>
                             <td>
-                                <button className="btn btn-info" onClick={() => updateFood(food.id)}>Update</button>
-                                <button className="btn btn-danger" onClick={() => removeFood(food.id)}
-                                        style={{marginLeft: "10px"}}>Delete
-                                </button>
+                                <button className="btn btn-success m-1" onClick={() => eatFood(food.id)}>Megeszem</button>
+                                <button className="btn btn-info m-1" onClick={() => updateFood(food.id)}>Update</button>
+                                <button className="btn btn-danger m-1" onClick={() => removeFood(food.id)}>Delete</button>
                             </td>
                         </tr>)
                 }
