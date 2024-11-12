@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {createUserFoodLog, getUserFoodLog, updateUserFoodLog} from "../service/UserFoodLogService.js";
 import moment from "moment/moment.js";
+import {getUserByEmail} from "../service/UserService.js";
+import {getFoodById} from "../service/FoodService.js";
 
 const UserFoodLogComponent = () => {
 
     const [User, setUser] = useState({})
     const [Food, setFood] = useState({})
     const [date, setDate] = useState(getCurrentDate)
-
+    const location = useLocation();
+    const currentUrl = location.pathname.split('/')[1]
+    const navigator = useNavigate();
     const {id} = useParams();
 
     const [errors, setErrors] = useState({
@@ -17,10 +21,9 @@ const UserFoodLogComponent = () => {
         date: "",
     })
 
-    const navigator = useNavigate();
 
     useEffect(() =>{
-        if (id) {
+        if (currentUrl === "edit-userFoodLog") {
             getUserFoodLog(id).then((response) => {
                 const userData = response.data.user || {};
                 const foodData = response.data.food || {};
@@ -33,8 +36,25 @@ const UserFoodLogComponent = () => {
                 console.error(error)
             })
         }
-
     }, [id])
+
+    let email = localStorage.getItem("email")
+    useEffect(() =>{
+        if (currentUrl === "add-userFoodLog") {
+            getFoodById(id).then((response) => {
+                setFood(response.data)
+            }).catch(error => {
+                console.error(error)
+            })
+            getUserByEmail(email).then((response) => {
+                setUser(response.data);
+            }).catch(error => {
+                console.error(error)
+            })
+            console.log(User)
+            console.log(Food)
+        }
+    }, [])
 
     function getCurrentDate() {
         return moment().format('YYYY-MM-DD');
@@ -53,7 +73,7 @@ const UserFoodLogComponent = () => {
             const userFoodLog = {user: User, food: Food, date}
             console.log(userFoodLog)
 
-            if (id) {
+            if (currentUrl === "edit-userFoodLog") {
                 updateUserFoodLog(id, userFoodLog).then((response) => {
                     console.log(response.data);
                     navigator("/UserFoodLogs");
@@ -116,27 +136,16 @@ const UserFoodLogComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">User id:</label>
-                                <input type="text"
-                                       placeholder="Enter user id"
-                                       name="User"
-                                       value={User.id || ""}
-                                       className={`form-control ${errors.User ? "is-invalid" : ""}`}
-                                       onChange={(e) => setUser({...User, id: e.target.value})}
-                                />
-                                {errors.User && <div className="invalid-feedback">{errors.User}</div>}
+                                <h4><b>{Food.name}</b></h4>
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Food id:</label>
-                                <input type="text"
-                                       placeholder="Enter food id"
-                                       name="Food"
-                                       value={Food.id || ""}
-                                       className={`form-control ${errors.Food ? "is-invalid" : ""}`}
-                                       onChange={(e) => setFood({...Food, id: e.target.value})}
-                                />
-                                {errors.Food && <div className="invalid-feedback">{errors.Food}</div>}
+                                <ul>
+                                    <li>Kalória: {Food.calorie} kcal</li>
+                                    <li>Fehérje: {Food.protein} g</li>
+                                    <li>Szénhidrát: {Food.carbohydrate} g</li>
+                                    <li>Zsír: {Food.fat} g</li>
+                                </ul>
                             </div>
 
                             <div className="mb-3">
