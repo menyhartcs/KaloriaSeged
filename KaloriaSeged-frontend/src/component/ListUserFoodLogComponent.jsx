@@ -54,10 +54,10 @@ const ListUserFoodLogComponent = () => {
             const summedNutrients = userFoodLogs.reduce((dictionary, log) => {
                 const food = log.food || {};
                 return {
-                    calorie: dictionary.calorie + (food.calorie * log.amount / 100 || 0),
-                    protein: dictionary.protein + (food.protein * log.amount / 100 || 0),
-                    carbohydrate: dictionary.carbohydrate + (food.carbohydrate * log.amount / 100 || 0),
-                    fat: dictionary.fat + (food.fat * log.amount / 100 || 0)
+                    calorie: dictionary.calorie + (Math.round(food.calorie * log.amount / 100) || 0),
+                    protein: dictionary.protein + (Math.round(food.protein * log.amount / 100) || 0),
+                    carbohydrate: dictionary.carbohydrate + (Math.round(food.carbohydrate * log.amount / 100) || 0),
+                    fat: dictionary.fat + (Math.round(food.fat * log.amount / 100) || 0)
                 };
             }, { calorie: 0, protein: 0, carbohydrate: 0, fat: 0 });
 
@@ -189,10 +189,10 @@ const ListUserFoodLogComponent = () => {
                                 <ul>
                                     <li>{userFoodLog.food.id}</li>
                                     <li>{userFoodLog.food.name}</li>
-                                    <li>Energia: {userFoodLog.food.calorie * userFoodLog.amount / 100} kcal</li>
-                                    <li>Zsír: {userFoodLog.food.fat * userFoodLog.amount / 100}g</li>
-                                    <li>Szénhidrát: {userFoodLog.food.carbohydrate * userFoodLog.amount / 100}g</li>
-                                    <li>Fehérje: {userFoodLog.food.protein * userFoodLog.amount / 100}g</li>
+                                    <li>Energia: {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
+                                    <li>Zsír: {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}g</li>
+                                    <li>Szénhidrát: {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}g</li>
+                                    <li>Fehérje: {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}g</li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
@@ -206,10 +206,10 @@ const ListUserFoodLogComponent = () => {
                                 <button className="btn btn-info"
                                         onClick={() => analyzeUserFoodLog(
                                             `Röviden elemezd az ételt:
-                                             Energia: ${userFoodLog.food.calorie * userFoodLog.amount / 100}
-                                             Zsír: ${userFoodLog.food.fat * userFoodLog.amount / 100}
-                                             Szénhidrát: ${userFoodLog.food.carbohydrate * userFoodLog.amount / 100}
-                                             Fehérje: ${userFoodLog.food.protein * userFoodLog.amount / 100}
+                                             Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
+                                             Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
+                                             Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
+                                             Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
                                              és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
                                         )}>Elemezd
                                 </button>
