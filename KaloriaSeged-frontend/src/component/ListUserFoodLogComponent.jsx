@@ -95,7 +95,7 @@ const ListUserFoodLogComponent = () => {
     }
 
     function addNewUserFoodLog() {
-        navigator("/add-userFoodLog")
+        navigator("/Foods")
     }
 
     function updateUserFoodLog(id) {
@@ -157,53 +157,47 @@ const ListUserFoodLogComponent = () => {
                     onKeyDown={handleKeyDown} // Esemény figyelése az Enter lenyomására
                 />
             </div>
-            <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Add UserFoodLog</button>
+            <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
             <div className="charts-container">
                 <FatChart user={user} consumedFat={consumedNutrients.fat}/>
                 <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
                 <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
                 <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
             </div>
-            <table className="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>User</th>
-                    <th>Food</th>
-                    <th>Date</th>
-                </tr>
-                </thead>
+            <table className="table table-striped table-bordered m-3">
+                {/*<thead>*/}
+                {/*<tr>*/}
+                {/*    <th>Id</th>*/}
+                {/*    <th>User</th>*/}
+                {/*    <th>Food</th>*/}
+                {/*    <th>Date</th>*/}
+                {/*</tr>*/}
+                {/*</thead>*/}
                 <tbody>
                 {
                     userFoodLogs.map(userFoodLog =>
                         <tr key={userFoodLog.id}>
                             <td>{userFoodLog.id}</td>
                             <td>
-                                <ul>
-                                    <li>{userFoodLog.user.id}</li>
-                                    <li>{userFoodLog.user.name}</li>
-                                    <li>{userFoodLog.user.email}</li>
-                                </ul>
+                                <div className="form-group m-1">
+                                    <h4><b>{userFoodLog.food.name}</b></h4>
+                                </div>
                             </td>
                             <td>
                                 <ul>
-                                    <li>{userFoodLog.food.id}</li>
-                                    <li>{userFoodLog.food.name}</li>
                                     <li>Energia: {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
-                                    <li>Zsír: {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}g</li>
-                                    <li>Szénhidrát: {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}g</li>
-                                    <li>Fehérje: {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}g</li>
+                                    <li>Zsír: {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
+                                    <li>Szénhidrát: {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
+                                    <li>Fehérje: {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
                             <td>
-                                <button className="btn btn-info"
-                                        onClick={() => updateUserFoodLog(userFoodLog.id)}>Update
-                                </button>
-                                <button className="btn btn-danger" onClick={() => removeUserFoodLog(userFoodLog.id)}
-                                        style={{marginLeft: "10px"}}>Delete
-                                </button>
-                                <button className="btn btn-info"
+                                <button className="btn btn-success m-1"
+                                        onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>
+                                <button className="btn btn-danger m-1"
+                                        onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl</button>
+                                <button className="btn btn-info m-1"
                                         onClick={() => analyzeUserFoodLog(
                                             `Röviden elemezd az ételt:
                                              Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
