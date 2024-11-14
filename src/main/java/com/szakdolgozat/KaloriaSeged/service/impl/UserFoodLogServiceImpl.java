@@ -22,22 +22,11 @@ import java.util.List;
 public class UserFoodLogServiceImpl implements UserFoodLogService {
 
     private final UserFoodLogRepository userFoodLogRepository;
-    private final UserRepository userRepository;
     private final FoodRepository foodRepository;
 
     @Override
     @Transactional
     public UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto) {
-//        User user = userRepository.findById(userFoodLogDto.getUser().getId())
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userFoodLogDto.getUser().getId()));
-//
-//        Food food = foodRepository.findById(userFoodLogDto.getFood().getId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Food not found with id: " + userFoodLogDto.getFood().getId()));
-//
-//        UserFoodLog userFoodLog = new UserFoodLog();
-//        userFoodLog.setUser(user);
-//        userFoodLog.setFood(food);
-
         UserFoodLog userFoodLog = UserFoodLogMapper.mapToUserFoodLog(userFoodLogDto);
 
         UserFoodLog savedUserFoodLog = userFoodLogRepository.save(userFoodLog);
@@ -91,6 +80,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
 
         userFoodLog.setFood(food);
         userFoodLog.setDate(updatedUserFoodLog.getDate());
+        userFoodLog.setAmount(updatedUserFoodLog.getAmount());
 
         UserFoodLog updatedUserFoodLogObj = userFoodLogRepository.save(userFoodLog);
 

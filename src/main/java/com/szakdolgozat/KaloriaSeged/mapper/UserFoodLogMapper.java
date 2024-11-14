@@ -14,6 +14,7 @@ public class UserFoodLogMapper {
         userFoodLogDto.setId(userFoodLog.getId());
         userFoodLogDto.setUser(createUserDto(userFoodLog));
         userFoodLogDto.setFood(createFoodDto(userFoodLog));
+        userFoodLogDto.setAmount(userFoodLog.getAmount());
         if (userFoodLog.getDate() != null) {
             userFoodLogDto.setDate(userFoodLog.getDate());
         } else {
@@ -55,6 +56,7 @@ public class UserFoodLogMapper {
         userFoodLog.setId(userFoodLogDto.getId());
         userFoodLog.setUser(UserMapper.mapToUser(userFoodLogDto.getUser()));
         userFoodLog.setFood(FoodMapper.mapToFood(userFoodLogDto.getFood()));
+        userFoodLog.setAmount(userFoodLogDto.getAmount());
         if (userFoodLogDto.getDate() != null) {
             userFoodLog.setDate(userFoodLogDto.getDate());
         } else {

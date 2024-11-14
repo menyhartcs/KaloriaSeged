@@ -17,4 +17,5 @@ public class UserFoodLogDto {
     private UserDto user;
     private FoodDto food;
     private LocalDate date;
+    private Integer amount;
 }

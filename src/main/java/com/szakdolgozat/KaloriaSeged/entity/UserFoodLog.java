@@ -27,4 +27,6 @@ public class UserFoodLog {
     private Food food;
     @Column(name = "date", nullable = false)
     private LocalDate date;
+    @Column(name = "amount")
+    private Integer amount;
 }
