@@ -10,15 +10,18 @@ const UserFoodLogComponent = () => {
     const [User, setUser] = useState({})
     const [Food, setFood] = useState({})
     const [date, setDate] = useState(getCurrentDate)
+    const [amount, setAmount] = useState(100)
     const location = useLocation();
     const currentUrl = location.pathname.split('/')[1]
     const navigator = useNavigate();
     const {id} = useParams();
+    const amountMultiplier =  amount / 100;
 
     const [errors, setErrors] = useState({
         User: "",
         Food: "",
         date: "",
+        amount: ""
     })
 
 
@@ -28,10 +31,12 @@ const UserFoodLogComponent = () => {
                 const userData = response.data.user || {};
                 const foodData = response.data.food || {};
                 const logDate = response.data.date || getCurrentDate();
+                const logAmount = response.data.amount || {};
 
                 setUser(userData);
                 setFood(foodData);
                 setDate(logDate);
+                setAmount(logAmount);
             }).catch(error => {
                 console.error(error)
             })
@@ -70,7 +75,7 @@ const UserFoodLogComponent = () => {
 
         if (validateForm()) {
 
-            const userFoodLog = {user: User, food: Food, date}
+            const userFoodLog = {user: User, food: Food, date, amount}
             console.log(userFoodLog)
 
             if (currentUrl === "edit-userFoodLog") {
@@ -141,11 +146,22 @@ const UserFoodLogComponent = () => {
 
                             <div className="form-group mb-2">
                                 <ul>
-                                    <li>Kalória: {Food.calorie} kcal</li>
-                                    <li>Fehérje: {Food.protein} g</li>
-                                    <li>Szénhidrát: {Food.carbohydrate} g</li>
-                                    <li>Zsír: {Food.fat} g</li>
+                                    <li>Kalória: {Math.round(Food.calorie * amountMultiplier)} kcal</li>
+                                    <li>Fehérje: {Math.round(Food.protein * amountMultiplier)} g</li>
+                                    <li>Szénhidrát: {Math.round(Food.carbohydrate * amountMultiplier)} g</li>
+                                    <li>Zsír: {Math.round(Food.fat * amountMultiplier)} g</li>
                                 </ul>
+                            </div>
+
+                            <div className="form-group col-md-4 mb-2">
+                                <label className="form-label">Mennyiség (g):</label>
+                                <input type="number"
+                                       name="amount"
+                                       value={amount}
+                                       className={`form-control ${errors.amount ? "is-invalid" : ""}`}
+                                       onChange={(e) => setAmount(e.target.value)}
+                                />
+                                {errors.amount && <div className="invalid-feedback">{errors.amount}</div>}
                             </div>
 
                             <div className="mb-3">

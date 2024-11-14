@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {
     deleteUserFoodLog,
     listUserFoodLogs,
@@ -12,7 +12,6 @@ import FatChart from "./FatChart.jsx";
 import CalorieChart from "./CalorieChart.jsx";
 import '../style/Charts.css';
 import moment from 'moment';
-import axios from "axios";
 import {isNullOrUndef} from "chart.js/helpers";
 import {getUserByEmail} from "../service/UserService.js";
 import {analyze} from "../service/AnalyzerService.js";
@@ -55,10 +54,10 @@ const ListUserFoodLogComponent = () => {
             const summedNutrients = userFoodLogs.reduce((dictionary, log) => {
                 const food = log.food || {};
                 return {
-                    calorie: dictionary.calorie + (food.calorie || 0),
-                    protein: dictionary.protein + (food.protein || 0),
-                    carbohydrate: dictionary.carbohydrate + (food.carbohydrate || 0),
-                    fat: dictionary.fat + (food.fat || 0)
+                    calorie: dictionary.calorie + (food.calorie * log.amount / 100 || 0),
+                    protein: dictionary.protein + (food.protein * log.amount / 100 || 0),
+                    carbohydrate: dictionary.carbohydrate + (food.carbohydrate * log.amount / 100 || 0),
+                    fat: dictionary.fat + (food.fat * log.amount / 100 || 0)
                 };
             }, { calorie: 0, protein: 0, carbohydrate: 0, fat: 0 });
 
@@ -190,10 +189,10 @@ const ListUserFoodLogComponent = () => {
                                 <ul>
                                     <li>{userFoodLog.food.id}</li>
                                     <li>{userFoodLog.food.name}</li>
-                                    <li>Energia: {userFoodLog.food.calorie} kcal</li>
-                                    <li>Zsír: {userFoodLog.food.fat}g</li>
-                                    <li>Szénhidrát: {userFoodLog.food.carbohydrate}g</li>
-                                    <li>Fehérje: {userFoodLog.food.protein}g</li>
+                                    <li>Energia: {userFoodLog.food.calorie * userFoodLog.amount / 100} kcal</li>
+                                    <li>Zsír: {userFoodLog.food.fat * userFoodLog.amount / 100}g</li>
+                                    <li>Szénhidrát: {userFoodLog.food.carbohydrate * userFoodLog.amount / 100}g</li>
+                                    <li>Fehérje: {userFoodLog.food.protein * userFoodLog.amount / 100}g</li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
@@ -207,10 +206,10 @@ const ListUserFoodLogComponent = () => {
                                 <button className="btn btn-info"
                                         onClick={() => analyzeUserFoodLog(
                                             `Röviden elemezd az ételt:
-                                             Energia: ${userFoodLog.food.calorie}
-                                             Zsír: ${userFoodLog.food.fat}
-                                             Szénhidrát: ${userFoodLog.food.carbohydrate}
-                                             Fehérje: ${userFoodLog.food.protein}
+                                             Energia: ${userFoodLog.food.calorie * userFoodLog.amount / 100}
+                                             Zsír: ${userFoodLog.food.fat * userFoodLog.amount / 100}
+                                             Szénhidrát: ${userFoodLog.food.carbohydrate * userFoodLog.amount / 100}
+                                             Fehérje: ${userFoodLog.food.protein * userFoodLog.amount / 100}
                                              és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
                                         )}>Elemezd
                                 </button>
