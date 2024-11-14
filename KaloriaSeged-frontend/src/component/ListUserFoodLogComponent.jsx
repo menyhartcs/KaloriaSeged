@@ -159,9 +159,9 @@ const ListUserFoodLogComponent = () => {
             </div>
             <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
             <div className="charts-container">
-                <FatChart user={user} consumedFat={consumedNutrients.fat}/>
-                <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
                 <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
+                <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
+                <FatChart user={user} consumedFat={consumedNutrients.fat}/>
                 <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
             </div>
             <table className="table table-striped table-bordered m-3">
@@ -185,10 +185,10 @@ const ListUserFoodLogComponent = () => {
                             </td>
                             <td>
                                 <ul>
-                                    <li>Energia: {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
-                                    <li>Zsír: {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
-                                    <li>Szénhidrát: {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
-                                    <li>Fehérje: {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
+                                    <li><b className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
+                                    <li><b className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
+                                    <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
+                                    <li><b className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
                                 </ul>
                             </td>
                             <td>{userFoodLog.date}</td>
