@@ -18,3 +18,28 @@ body {
     color: white;
     bottom: 0;  /* Rögzített pozíció az alján */
 }
+
+.nutritionText {
+    color: black; /* Fekete betűszín */
+    background-color: #32CD32; /* Zöld háttér */
+    padding: 2px 4px; /* Kis belső margó */
+    border-radius: 15px; /* Lekerekített sarkak */
+    font-weight: bold; /* Félkövér szöveg */
+}
+
+.energy {
+    background-color: #32CD32;
+}
+
+.protein {
+    background-color: #00bfff;
+}
+
+.carbohydrate {
+    background-color: #FFA500;
+}
+
+.fat {
+    background-color: #FF69B4;
+}
+
