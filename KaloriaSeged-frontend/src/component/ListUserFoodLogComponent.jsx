@@ -104,15 +104,19 @@ const ListUserFoodLogComponent = () => {
     }
 
     function analyzeUserFoodLog(prompt) {
-        // HTTP kérés küldése az axios segítségével
-        analyze(prompt).then(response => {
-            // Eredmény frissítése
-            setAnalysisResult(response.data);
-        })
-        .catch(error => {
-            console.error(error);
-            setAnalysisResult("Error analyzing data");
-        });
+        console.log(userFoodLogs)
+        setShowCard(!showCard)
+        if (showCard === false) {
+            // HTTP kérés küldése az axios segítségével
+            analyze(prompt).then(response => {
+                // Eredmény frissítése
+                setAnalysisResult(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+                setAnalysisResult("Error analyzing data");
+            });
+        }
     }
 
     function removeUserFoodLog(id) {
@@ -145,96 +149,106 @@ const ListUserFoodLogComponent = () => {
     };
 
     return (
-        <div className="container main-content m-5 card">
+        <div className="container main-content m-5">
             <h2 className="text-center">Étkezési napló</h2>
-            <div className="mb-3">
-                <label htmlFor="dateInput" className="form-label">Jelenlegi dátum:</label>
-                <input
-                    type="date"
-                    id="dateInput"
-                    className="form-control"
-                    value={selectedDate}
-                    onChange={handleChangeDate}
-                    onKeyDown={handleKeyDown} // Esemény figyelése az Enter lenyomására
-                />
-            </div>
-            <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
-            <div className="charts-container">
-                <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
-                <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
-                <FatChart user={user} consumedFat={consumedNutrients.fat}/>
-                <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
-            </div>
-            <table className="table table-striped table-bordered mt-3">
-                {/*<thead>*/}
-                {/*<tr>*/}
-                {/*    <th>Id</th>*/}
-                {/*    <th>User</th>*/}
-                {/*    <th>Food</th>*/}
-                {/*    <th>Date</th>*/}
-                {/*</tr>*/}
-                {/*</thead>*/}
-                <tbody>
-                {
-                    userFoodLogs.map(userFoodLog =>
-                        <tr key={userFoodLog.id}>
-                            <td>
-                                <div className="form-group m-1">
-                                    <h4><b>{userFoodLog.food.name}</b></h4>
-                                </div>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li><b className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
-                                    <li><b className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
-                                    <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
-                                    <li><b className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
-                                </ul>
-                            </td>
-                            <td>{userFoodLog.date}</td>
-                            <td>
-                                <button className="btn btn-success m-1"
-                                        onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>
-                                <button className="btn btn-danger m-1"
-                                        onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl</button>
-                                <button className="btn btn-info m-1"
-                                        onClick={() => analyzeUserFoodLog(
-                                            `Röviden elemezd az ételt:
-                                             Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
-                                             Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
-                                             Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
-                                             Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
-                                             és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
-                                        )}>Elemezd
-                                </button>
-                            </td>
-                            <td>
-                                {/* Eredmény kiírása */}
-                                {analysisResult && (
-                                    <div className="analysis-result">
-                                        <h3>Analysis Result:</h3>
-                                        <p>{analysisResult}</p>
-                                    </div>
-                                )}
-                            </td>
-                        </tr>)
-                }
-                </tbody>
-            </table>
-            {/* A megjelenő Card */}
-            {showCard && (
-                <div className="card p-3 mt-3">
-                    <h5>További információ</h5>
-                    <p>Itt bármilyen tartalmat megadhatsz.</p>
+            <div className="row">
+                <div className="col-md-8">
+                    <div className="card p-3">
+                        <label htmlFor="dateInput" className="form-label">Jelenlegi dátum:</label>
+                        <input
+                            type="date"
+                            id="dateInput"
+                            className="form-control"
+                            value={selectedDate}
+                            onChange={handleChangeDate}
+                            onKeyDown={handleKeyDown} // Esemény figyelése az Enter lenyomására
+                        />
+                        <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
+                        <table className="table table-striped table-bordered mt-3">
+                            {/*<thead>*/}
+                            {/*<tr>*/}
+                            {/*    <th>Id</th>*/}
+                            {/*    <th>User</th>*/}
+                            {/*    <th>Food</th>*/}
+                            {/*    <th>Date</th>*/}
+                            {/*</tr>*/}
+                            {/*</thead>*/}
+                            <tbody>
+                            {
+                                userFoodLogs.map(userFoodLog =>
+                                    <tr key={userFoodLog.id}>
+                                        <td>
+                                            <div className="form-group m-1">
+                                                <h4><b>{userFoodLog.food.name}</b></h4>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <li><b className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
+                                                <li><b className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
+                                                <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
+                                                <li><b className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
+                                            </ul>
+                                        </td>
+                                        <td>{userFoodLog.date}</td>
+                                        <td>
+                                            <button className="btn btn-success m-1"
+                                                    onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>
+                                            <button className="btn btn-danger m-1"
+                                                    onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl</button>
+                                            <button className="btn btn-info m-1"
+                                                    onClick={() => analyzeUserFoodLog(
+                                                        `Röviden elemezd az ételt:
+                                                         Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
+                                                         Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
+                                                         Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
+                                                         Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
+                                                         és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
+                                                    )}>Elemezd
+                                            </button>
+                                        </td>
+                                    </tr>)
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            )}
+                <div className="col-md-4">
 
-            <button
-                className="btn btn-primary mt-3"
-                onClick={() => setShowCard(!showCard)}
-            >
-                {showCard ? "Elrejtés" : "Megjelenítés"}
-            </button>
+                    <div className="card p-3">
+                        <div className="charts-container">
+                            <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
+                            <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
+                            <FatChart user={user} consumedFat={consumedNutrients.fat}/>
+                            <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
+                        </div>
+                        <button
+                            className="btn btn-info mt-3"
+                            onClick={() => analyzeUserFoodLog(
+                                `Ez egy étkezési napló: ${userFoodLogs} röviden elemezd a 
+                                napi beállított személyes cél:
+                                Napi kitűzött energia bevitel: ${user.calorie}
+                                Napi kitűzött fehérje bevitel: ${user.protein}
+                                Napi kitűzött szénhidrát bevitel: ${user.carbohydrate}
+                                Napi kitűzött zsír bevitel: ${user.fat}
+                                és személyes adatok alapján:
+                                Súly: ${user.weight}
+                                Magasság: ${user.height}
+                                Kor: ${user.age}
+                                és adj tanácsot, mire lenne érdemes odafigyelni, röviden`
+                            )}>
+                            {showCard ? "Elrejtés" : "Elemzés"}
+                        </button>
+                        <h5>További információ</h5>
+                        {/* A megjelenő Card */}
+                        {showCard && (
+                            <p>{analysisResult}</p>
+                        )}
+                    </div>
+
+
+                </div>
+            </div>
         </div>
     )
 }
