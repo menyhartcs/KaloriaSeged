@@ -35,7 +35,7 @@ const ProteinChart = ({ user, consumedProtein }) => {
     };
 
     return (
-        <div style={{ position: 'relative', width: 50, height: 50 }}>
+        <div style={{ position: 'relative', width: 70, height: 70 }}>
             <Doughnut data={data} options={options} />
             <div style={{
                 position: 'absolute',
