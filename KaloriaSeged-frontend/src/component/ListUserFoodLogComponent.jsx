@@ -26,6 +26,7 @@ const ListUserFoodLogComponent = () => {
     const [analysisResult, setAnalysisResult] = useState("");
     const [user, setUser] = useState([])
     const navigator = useNavigate();
+    const [showCard, setShowCard] = useState(false);
 
     useEffect(() => {
         const userEmail = localStorage.getItem("email");
@@ -144,10 +145,10 @@ const ListUserFoodLogComponent = () => {
     };
 
     return (
-        <div className="container main-content">
+        <div className="container main-content m-5 card">
             <h2 className="text-center">Étkezési napló</h2>
             <div className="mb-3">
-                <label htmlFor="dateInput" className="form-label">Select current date:</label>
+                <label htmlFor="dateInput" className="form-label">Jelenlegi dátum:</label>
                 <input
                     type="date"
                     id="dateInput"
@@ -164,7 +165,7 @@ const ListUserFoodLogComponent = () => {
                 <FatChart user={user} consumedFat={consumedNutrients.fat}/>
                 <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
             </div>
-            <table className="table table-striped table-bordered m-3">
+            <table className="table table-striped table-bordered mt-3">
                 {/*<thead>*/}
                 {/*<tr>*/}
                 {/*    <th>Id</th>*/}
@@ -177,7 +178,6 @@ const ListUserFoodLogComponent = () => {
                 {
                     userFoodLogs.map(userFoodLog =>
                         <tr key={userFoodLog.id}>
-                            <td>{userFoodLog.id}</td>
                             <td>
                                 <div className="form-group m-1">
                                     <h4><b>{userFoodLog.food.name}</b></h4>
@@ -221,6 +221,20 @@ const ListUserFoodLogComponent = () => {
                 }
                 </tbody>
             </table>
+            {/* A megjelenő Card */}
+            {showCard && (
+                <div className="card p-3 mt-3">
+                    <h5>További információ</h5>
+                    <p>Itt bármilyen tartalmat megadhatsz.</p>
+                </div>
+            )}
+
+            <button
+                className="btn btn-primary mt-3"
+                onClick={() => setShowCard(!showCard)}
+            >
+                {showCard ? "Elrejtés" : "Megjelenítés"}
+            </button>
         </div>
     )
 }
