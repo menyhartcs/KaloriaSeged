@@ -106,17 +106,19 @@ const ListUserFoodLogComponent = () => {
     function analyzeUserFoodLog(prompt) {
         console.log(userFoodLogs)
         setShowCard(!showCard)
-        if (showCard === false) {
-            // HTTP kérés küldése az axios segítségével
-            analyze(prompt).then(response => {
-                // Eredmény frissítése
-                setAnalysisResult(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-                setAnalysisResult("Error analyzing data");
-            });
+        if (showCard === true) {
+            setAnalysisResult("");
         }
+        // HTTP kérés küldése az axios segítségével
+        setAnalysisResult("Elemzés folyamatban....");
+        analyze(prompt).then(response => {
+            // Eredmény frissítése
+            setAnalysisResult(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+            setAnalysisResult("Error analyzing data");
+        });
     }
 
     function removeUserFoodLog(id) {
@@ -149,7 +151,7 @@ const ListUserFoodLogComponent = () => {
     };
 
     return (
-        <div className="container main-content m-5">
+        <div className="container main-content m-6">
             <h2 className="text-center">Étkezési napló</h2>
             <div className="row">
                 <div className="col-md-8">
@@ -214,7 +216,6 @@ const ListUserFoodLogComponent = () => {
                     </div>
                 </div>
                 <div className="col-md-4">
-
                     <div className="card p-3">
                         <div className="charts-container">
                             <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
@@ -245,8 +246,6 @@ const ListUserFoodLogComponent = () => {
                             <p>{analysisResult}</p>
                         )}
                     </div>
-
-
                 </div>
             </div>
         </div>

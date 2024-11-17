@@ -56,7 +56,7 @@ const CalorieChart = ({ user, consumedCalorie }) => {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 textAlign: 'center',
-                pointerEvents: 'none',
+                pointerEvents: 'none'
             }}>
                 <p style={{ margin: 0, fontSize: 16 }}>{chartDataDescription}</p>
             </div>
