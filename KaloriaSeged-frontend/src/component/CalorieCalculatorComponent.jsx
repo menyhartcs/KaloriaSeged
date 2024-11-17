@@ -17,6 +17,7 @@ const CalorieCalculatorComponent = () => {
     const [carbohydrate, setCarbohydrate] = useState([])
     const [fat, setFat] = useState([])
     const [activity, setActivity] = useState()
+    const [goal, setGoal] = useState()
     const [result, setResult] = useState()
 
     const [errors, setErrors] = useState({
@@ -64,10 +65,12 @@ const CalorieCalculatorComponent = () => {
         if (validateForm()) {
             let bmr;
             let activityMultiplier;
+            let goalMultiplier;
             let calculatedCalorie;
             let calculatedProtein;
             let calculatedCarbohydrate;
             let calculatedFat;
+
             switch (activity) {
                 case "1":
                     activityMultiplier = 1.2;
@@ -87,9 +90,30 @@ const CalorieCalculatorComponent = () => {
                 default:
                     activityMultiplier=1.2
             }
+
+            switch (goal) {
+                case "1":
+                    goalMultiplier = 0.8;
+                    break;
+                case "2":
+                    goalMultiplier=0.9;
+                    break;
+                case "3":
+                    goalMultiplier=1;
+                    break;
+                case "4":
+                    goalMultiplier=1.1;
+                    break;
+                case "5":
+                    goalMultiplier=1.2;
+                    break;
+                default:
+                    goalMultiplier=1
+            }
+
             if (gender === "M") {
                 bmr = 10 * weight + 6.25 * height - 5 * age + 5
-                calculatedCalorie = Math.round(bmr * activityMultiplier)
+                calculatedCalorie = Math.round(bmr * activityMultiplier * goalMultiplier)
                 calculatedProtein = Math.round(1.6 * weight)
                 calculatedFat = Math.round(0.25 * calculatedCalorie / 9)
                 calculatedCarbohydrate = Math.round((calculatedCalorie - calculatedProtein * 4 - calculatedFat * 9) / 4)
@@ -97,7 +121,7 @@ const CalorieCalculatorComponent = () => {
 
             if (gender === "F") {
                 bmr = 10 * weight + 6.25 * height - 5 * age - 161
-                calculatedCalorie = Math.round(bmr * activityMultiplier)
+                calculatedCalorie = Math.round(bmr * activityMultiplier * goalMultiplier)
                 calculatedProtein = Math.round(1.6 * weight)
                 calculatedFat = Math.round(0.25 * calculatedCalorie / 9)
                 calculatedCarbohydrate = Math.round((calculatedCalorie - calculatedProtein * 4 - calculatedFat * 9) / 4)
@@ -226,7 +250,9 @@ const CalorieCalculatorComponent = () => {
                                         />
                                         {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
 
-                                        <label className="form-label ms-3 me-2">Napi aktivitás:</label>
+                                        <br/>
+                                        <label className="form-label me-2">Napi aktivitás:</label>
+                                        <br/>
                                         <select name="activity" id="activity"
                                                 defaultValue="1.2"
                                                 value={activity}
@@ -275,9 +301,24 @@ const CalorieCalculatorComponent = () => {
                                 </form>
                             </div>
                             <div className="col-md-6">
+                                <label className="form-label me-2">Cél kiválasztása:</label>
+                                <br/>
+                                <select name="goal" id="goal"
+                                        defaultValue="3"
+                                        value={goal}
+                                        onChange={(e) => setGoal(e.target.value)}>
+                                    <option value="1">Gyors fogyás</option>
+                                    <option value="2">Mérsékelt fogyás</option>
+                                    <option value="3">Szintentartás</option>
+                                    <option value="4">Mérsékelt tömegnövelés</option>
+                                    <option value="5">Gyors tömegnövelés</option>
+                                </select>
+                                <br/>
+                                <br/>
                                 <h5>Eredmény:</h5>
                                 <div dangerouslySetInnerHTML={{__html: result}}></div>
-                                <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként</button>
+                                <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként
+                                </button>
                             </div>
                         </div>
                     </div>
