@@ -1,4 +1,4 @@
-package com.szakdolgozat.KaloriaSeged.service.impl;
+package com.szakdolgozat.KaloriaSeged.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,6 +2,7 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.szakdolgozat.KaloriaSeged.util.OpenAIRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
