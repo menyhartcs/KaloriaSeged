@@ -4,6 +4,7 @@ import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.exception.LoginException;
 import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
 import com.szakdolgozat.KaloriaSeged.util.LoginRequest;
+import com.szakdolgozat.KaloriaSeged.util.ValidatePasswordUtil;
 import lombok.AllArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class ValidationService {
 
     private UserServiceImpl userServiceImpl;
+    private ValidatePasswordUtil validatePasswordUtil;
 
     public void loginUser(LoginRequest loginRequest) {
         UserDto user = userServiceImpl.getUserByEmail(loginRequest.getEmail());
@@ -22,14 +24,14 @@ public class ValidationService {
         if (loginRequest.getPassword() == null || loginRequest.getPassword().trim().isEmpty()) {
             throw new RegistrationException("Jelszó megadása kötelező!");
         }
-        if (!checkPassword(loginRequest.getPassword(), user.getPassword())) {
+        if (!validatePasswordUtil.checkPassword(loginRequest.getPassword(), user.getPassword())) {
             throw new LoginException("Hibás jelszó!");
         }
     }
 
     public void registerUser(UserDto user) {
         if (isValidSignUp(user)) {
-            user.setPassword(encodePassword(user.getPassword()));
+            user.setPassword(validatePasswordUtil.encodePassword(user.getPassword()));
         }
     }
 
@@ -68,11 +70,4 @@ public class ValidationService {
         return true;
     }
 
-    private String encodePassword(String rawPassword) {
-        return BCrypt.hashpw(rawPassword, BCrypt.gensalt());
-    }
-
-    private boolean checkPassword(String rawPassword, String encodedPassword) {
-        return BCrypt.checkpw(rawPassword, encodedPassword);
-    }
 }
