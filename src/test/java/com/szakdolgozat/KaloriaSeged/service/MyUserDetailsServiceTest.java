@@ -17,16 +17,15 @@ import static org.mockito.Mockito.when;
 
 public class MyUserDetailsServiceTest {
 
-    @Mock
-    private UserRepository userRepository;
-
-    @InjectMocks
-    private MyUserDetailsService myUserDetailsService;
-
     private static final String EMAIL = "test@mail.com";
     private static final String PASSWORD = "testpw";
 
     private User user;
+
+    @Mock
+    private UserRepository userRepository;
+    @InjectMocks
+    private MyUserDetailsService myUserDetailsService;
 
     @BeforeEach
     void setUp() {

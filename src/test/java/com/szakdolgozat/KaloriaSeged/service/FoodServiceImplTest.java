@@ -32,15 +32,15 @@ public class FoodServiceImplTest {
     private static final List<UserFoodLog> USER_FOOD_LOGS = new ArrayList<>();
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
 
+    private Food food;
+    private FoodDto foodDto;
+
     @Mock
     private FoodRepository foodRepository;
     @Mock
     private UserFoodLogRepository userFoodLogRepository;
     @InjectMocks
     private FoodServiceImpl foodService;
-
-    private Food food;
-    private FoodDto foodDto;
 
     @BeforeEach
     void setUp() {
