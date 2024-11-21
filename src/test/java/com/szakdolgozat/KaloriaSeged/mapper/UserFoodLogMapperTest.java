@@ -81,4 +81,51 @@ public class UserFoodLogMapperTest {
         assertEquals(userFoodLogDto.getAmount(), result.getAmount());
         assertEquals(userFoodLogDto.getDate(), result.getDate());
     }
+
+    @Test
+    void testMapToUserFoodLogDtoWithNoTNullDate() {
+        // GIVEN: Date is already set in the BeforeEach() for userFoodLog
+
+        // WHEN
+        UserFoodLogDto result = UserFoodLogMapper.mapToUserFoodLogDto(userFoodLog);
+
+        // THEN
+        assertEquals(DATE, result.getDate());
+    }
+
+    @Test
+    void testMapToUserFoodLogDtoWithNullDate() {
+        // GIVEN
+        userFoodLog.setDate(null);
+
+        // WHEN
+        UserFoodLogDto result = UserFoodLogMapper.mapToUserFoodLogDto(userFoodLog);
+
+        // THEN
+        assertEquals(LocalDate.now(), result.getDate());
+    }
+
+    @Test
+    void testMapToUserFoodLogWithNotNullDate() {
+        // GIVEN: Date is already set in the userFoodLog
+
+        // WHEN
+        UserFoodLog result = UserFoodLogMapper.mapToUserFoodLog(userFoodLogDto);
+
+        // THEN
+        assertEquals(DATE, result.getDate());
+    }
+
+    @Test
+    void testMapToUserFoodLogWithNullDate() {
+        // GIVEN
+        userFoodLogDto.setDate(null);
+
+        // WHEN
+        UserFoodLog result = UserFoodLogMapper.mapToUserFoodLog(userFoodLogDto);
+
+        // THEN
+        assertEquals(LocalDate.now(), result.getDate());
+    }
+
 }
