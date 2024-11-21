@@ -6,7 +6,4 @@ public class RegistrationException extends RuntimeException {
         super(message);
     }
 
-    public RegistrationException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
