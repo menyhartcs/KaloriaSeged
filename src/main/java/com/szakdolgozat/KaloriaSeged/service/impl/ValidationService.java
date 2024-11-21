@@ -8,6 +8,9 @@ import com.szakdolgozat.KaloriaSeged.util.ValidatePasswordUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * The {@link ValidationService} handles the validation for the user login and registration.
+ */
 @AllArgsConstructor
 @Service
 public class ValidationService {
@@ -15,6 +18,7 @@ public class ValidationService {
     private UserServiceImpl userServiceImpl;
     private ValidatePasswordUtil validatePasswordUtil;
 
+    // Checks if the user credentials are correct for the login.
     public void loginUser(LoginRequest loginRequest) {
         UserDto user = userServiceImpl.getUserByEmail(loginRequest.getEmail());
         if (user == null) {
@@ -28,16 +32,19 @@ public class ValidationService {
         }
     }
 
+    // Checks if the registration is valid.
     public void registerUser(UserDto user) {
         if (isValidSignUp(user)) {
             user.setPassword(validatePasswordUtil.encodePassword(user.getPassword()));
         }
     }
 
+    // Proxy method, check if the signup is valid for clear understanding.
     public boolean isValidSignUp(UserDto user) {
         return isAllFieldsValid(user);
     }
 
+    // Checks if all the form fields are valid.
     private boolean isAllFieldsValid(UserDto user) {
         if (user.getName().trim().isEmpty() && user.getEmail().trim().isEmpty() && user.getPassword().trim().isEmpty()) {
             throw new RegistrationException("Minden mező kitöltése kötelező!");
@@ -45,6 +52,7 @@ public class ValidationService {
         return isNameValid(user.getName()) && isEmailValid(user.getEmail()) && isPasswordValid(user.getPassword());
     }
 
+    // Checks if name form field is valid.
     private boolean isNameValid(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new RegistrationException("Név megadása kötelező!");
@@ -52,6 +60,7 @@ public class ValidationService {
         return true;
     }
 
+    // Checks if email form field is valid.
     private boolean isEmailValid(String email) {
         if(email == null || email.trim().isEmpty()) {
             throw new RegistrationException("Email cím megadása kötelező!");
@@ -62,6 +71,7 @@ public class ValidationService {
         return true;
     }
 
+    // Checks if password form field is valid.
     private boolean isPasswordValid(String password) {
         if (password == null || password.trim().isEmpty()) {
             throw new RegistrationException("Jelszó megadása kötelező!");

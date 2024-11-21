@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Interface for the UserFoodLog object CRUD operations.
+ * Interface for the {@link UserFoodLogDto} object CRUD operations.
  */
 public interface UserFoodLogService {
     UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto);

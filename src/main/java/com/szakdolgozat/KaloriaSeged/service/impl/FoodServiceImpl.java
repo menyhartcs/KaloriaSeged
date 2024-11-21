@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation for {@link FoodService} interface. Implements CRUD operations.
+ */
 @AllArgsConstructor
 @Service
 public class FoodServiceImpl implements FoodService {

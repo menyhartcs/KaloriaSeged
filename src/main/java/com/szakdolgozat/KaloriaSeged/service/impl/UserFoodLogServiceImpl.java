@@ -2,13 +2,11 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.entity.Food;
-import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.exception.ResourceNotFoundException;
 import com.szakdolgozat.KaloriaSeged.mapper.UserFoodLogMapper;
 import com.szakdolgozat.KaloriaSeged.repository.FoodRepository;
 import com.szakdolgozat.KaloriaSeged.repository.UserFoodLogRepository;
-import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import com.szakdolgozat.KaloriaSeged.service.UserFoodLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Implementation for {@link UserFoodLog} interface. Implements CRUD operations.
+ */
 @AllArgsConstructor
 @Service
 public class UserFoodLogServiceImpl implements UserFoodLogService {
@@ -24,6 +25,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
     private final UserFoodLogRepository userFoodLogRepository;
     private final FoodRepository foodRepository;
 
+    // Creates UserFoodLog.
     @Override
     @Transactional
     public UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto) {
@@ -34,6 +36,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
         return UserFoodLogMapper.mapToUserFoodLogDto(savedUserFoodLog);
     }
 
+    // Finds UserFoodLog by id.
     @Override
     public UserFoodLogDto getUserFoodLogById(Long userFoodLogId) {
         UserFoodLog userFoodLog = userFoodLogRepository.findById(userFoodLogId)
@@ -41,6 +44,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
         return UserFoodLogMapper.mapToUserFoodLogDto(userFoodLog);
     }
 
+    // Finds all UserFoodLogs in the table.
     @Override
     public List<UserFoodLogDto> getAllUserFoodLogs() {
         return userFoodLogRepository.findAll().stream()
@@ -48,6 +52,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
                 .toList();
     }
 
+    // Finds UserFoodLogs for specific user id and date.
     @Override
     public List<UserFoodLogDto> getUserFoodLogsByUserIdAndDate(Long userId, LocalDate date) {
         return userFoodLogRepository.findByUserIdAndDate(userId, date).stream()
@@ -55,6 +60,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
                 .toList();
     }
 
+    // Finds UserFoodLogs for specific date.
     @Override
     public List<UserFoodLogDto> getUserFoodLogsByDate(LocalDate date) {
         return userFoodLogRepository.findByDate(date).stream()
@@ -62,6 +68,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
                 .toList();
     }
 
+    // Finds UserFoodLogs for specific user id.
     @Override
     public List<UserFoodLogDto> getUserFoodLogsByUserId(Long userId) {
         return userFoodLogRepository.findByUserId(userId).stream()
@@ -69,6 +76,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
                 .toList();
     }
 
+    // Updates UserFoodLog.
     @Override
     public UserFoodLogDto updateUserFoodLog(Long userFoodLogId, UserFoodLogDto updatedUserFoodLog) {
         UserFoodLog userFoodLog = userFoodLogRepository.findById(userFoodLogId)
@@ -87,6 +95,7 @@ public class UserFoodLogServiceImpl implements UserFoodLogService {
         return UserFoodLogMapper.mapToUserFoodLogDto(updatedUserFoodLogObj);
     }
 
+    // Delete UserFoodLog.
     @Override
     public void deleteUserFoodLog(Long userFoodLogId) {
         userFoodLogRepository.findById(userFoodLogId)

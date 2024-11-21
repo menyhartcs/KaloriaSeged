@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation for {@link UserService} interface. Implements CRUD operations.
+ */
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private final UserFoodLogRepository userFoodLogRepository;
 
+    // Creates the User.
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUser(userDto);
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(savedUser);
     }
 
+    // Finds a User by id.
     @Override
     public UserDto getUserById(Long userId) {
         User user = userRepository.findById(userId)
@@ -35,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(user);
     }
 
+    // Finds a User by email.
     @Override
     public UserDto getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
@@ -44,12 +50,14 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(user);
     }
 
+    // Find all Users in the table.
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
+    // Updates User.
     @Override
     public UserDto updateUser(Long userId, UserDto updatedUser) {
         User user = userRepository.findById(userId)
@@ -78,6 +86,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(updatedUserObj);
     }
 
+    // Deletes User.
     @Override
     public void deleteUser(Long userId) {
         userRepository.findById(userId)

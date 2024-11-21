@@ -13,6 +13,9 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
+/**
+ * Implementation for OpenAI Completions API.
+ */
 @Service
 public class OpenAIService {
 
@@ -21,10 +24,12 @@ public class OpenAIService {
 
     private final WebClient webClient;
 
+    // Init the client connection.
     public OpenAIService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://api.openai.com/v1/chat/completions").build();
     }
 
+    // Handles the API call and gets the response.
     public Mono<String> getCompletion(String prompt) {
         OpenAIRequest request = new OpenAIRequest(prompt);
 
@@ -46,6 +51,7 @@ public class OpenAIService {
                 });
     }
 
+    // Extracts the message into a simple String from the JSON object.
     private String extractContentFromResponse(String responseJson) {
         String content = "";
         try {
