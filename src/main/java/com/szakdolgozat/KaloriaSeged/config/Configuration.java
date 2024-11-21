@@ -13,6 +13,9 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
+/**
+ * Spring bean configuration class.
+ */
 @org.springframework.context.annotation.Configuration
 @EnableWebSecurity
 public class Configuration {
@@ -20,26 +23,31 @@ public class Configuration {
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    // Creates bean for BCrypt.
     @Bean
     public BCrypt passwordEncoder() {
         return new BCrypt();
     }
 
+    // Creates bean for SecurityFilterChain and configures the cors, authorization and authentication filtering.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
 
+        // CORS settings.
         http.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowedOrigins(List.of("http://localhost:3000"));  // A front-end URL-je
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
             config.setAllowedHeaders(List.of("*"));
-            config.setAllowCredentials(true);  // Hitelesítési adatokat is átenged
+            config.setAllowCredentials(true);
             return config;
         }));
 
+        // JWT authentication filter setting.
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // Setting authorization for http request.
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(
                     "/registration/register*",
@@ -49,11 +57,13 @@ public class Configuration {
             request.anyRequest().authenticated();
         });
 
+        // Setting the form login permission.
         http.formLogin(formLogin -> formLogin.loginPage("/login")
                 .usernameParameter("email").permitAll()
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login"));
 
+        // Setting the logout.
         http.logout(logOut -> logOut.logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
