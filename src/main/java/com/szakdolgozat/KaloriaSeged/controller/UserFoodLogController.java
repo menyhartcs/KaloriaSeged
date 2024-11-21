@@ -49,7 +49,7 @@ public class UserFoodLogController {
     }
 
     @GetMapping("/searchByDate")
-    public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByUserAndDate(
+    public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByDate(
                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<UserFoodLogDto> userFoodLogDto = userFoodLogService.getUserFoodLogsByDate(date);
         return ResponseEntity.ok(userFoodLogDto);
