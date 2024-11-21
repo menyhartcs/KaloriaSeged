@@ -21,30 +21,35 @@ public class FoodController {
 
     private FoodService foodService;
 
+    // Handles the POST request for create Food.
     @PostMapping
     public ResponseEntity<FoodDto> createFood(@RequestBody FoodDto foodDto) {
         FoodDto savedFood = foodService.createFood(foodDto);
         return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
     }
 
+    // Handles the GET request for find Food by id.
     @GetMapping("/id/{id}")
     public ResponseEntity<FoodDto> getFoodById(@PathVariable("id") Long foodId) {
         FoodDto foodDto = foodService.getFoodById(foodId);
         return ResponseEntity.ok(foodDto);
     }
 
+    // Handles the GET request for find Food by name.
     @GetMapping("/name/{name}")
     public ResponseEntity<FoodDto> getFoodById(@PathVariable("name") String name) {
         FoodDto foodDto = foodService.getFoodByName(name);
         return ResponseEntity.ok(foodDto);
     }
 
+    // Handles the GET request for find all Foods.
     @GetMapping
     public ResponseEntity<List<FoodDto>> getAllFoods() {
         List<FoodDto> foods = foodService.getAllFoods();
         return ResponseEntity.ok(foods);
     }
 
+    // Handles the PUT request for update Food.
     @PutMapping("{id}")
     public ResponseEntity<FoodDto> updateFood(@PathVariable("id") Long foodId,
                                                       @RequestBody FoodDto updatedFood) {
@@ -52,6 +57,7 @@ public class FoodController {
         return ResponseEntity.ok(foodDto);
     }
 
+    // Handles the DELETE request for delete Food.
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteFood(@PathVariable("id") Long foodId) {
         foodService.deleteFood(foodId);

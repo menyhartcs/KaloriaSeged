@@ -23,31 +23,36 @@ public class UserFoodLogController {
 
     private UserFoodLogService userFoodLogService;
 
+    // Handles the POST request for create UserFoodLog.
     @PostMapping
     public ResponseEntity<UserFoodLogDto> createUserFoodLog(@RequestBody UserFoodLogDto userFoodLogDto) {
         UserFoodLogDto savedUserFoodLog = userFoodLogService.createUserFoodLog(userFoodLogDto);
         return new ResponseEntity<>(savedUserFoodLog, HttpStatus.CREATED);
     }
 
+    // Handles the GET request for find UserFoodLog by id.
     @GetMapping("{id}")
     public ResponseEntity<UserFoodLogDto> getUserFoodLogById(@PathVariable("id") Long userFoodLogId) {
         UserFoodLogDto userFoodLogDto = userFoodLogService.getUserFoodLogById(userFoodLogId);
         return ResponseEntity.ok(userFoodLogDto);
     }
 
+    // Handles the GET request for find UserFoodLog by User id.
     @GetMapping("/searchByUserId")
     public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByUserId(@RequestParam Long userId) {
         List<UserFoodLogDto> userFoodLogDto = userFoodLogService.getUserFoodLogsByUserId(userId);
         return ResponseEntity.ok(userFoodLogDto);
     }
 
+    // Handles the GET request for find UserFoodLog by User id and date.
     @GetMapping("/searchByUserIdAndDate")
-    public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByUserAndDate(@RequestParam Long userId,
-                                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByDate(@RequestParam Long userId,
+                                                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<UserFoodLogDto> userFoodLogDto = userFoodLogService.getUserFoodLogsByUserIdAndDate(userId, date);
         return ResponseEntity.ok(userFoodLogDto);
     }
 
+    // Handles the GET request for find UserFoodLog by date.
     @GetMapping("/searchByDate")
     public ResponseEntity<List<UserFoodLogDto>> getUserFoodLogByDate(
                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -55,12 +60,14 @@ public class UserFoodLogController {
         return ResponseEntity.ok(userFoodLogDto);
     }
 
+    // Handles the GET request for find all the UserFoodLogs.
     @GetMapping
     public ResponseEntity<List<UserFoodLogDto>> getAllUserFoodLogs() {
         List<UserFoodLogDto> userFoodLogs = userFoodLogService.getAllUserFoodLogs();
         return ResponseEntity.ok(userFoodLogs);
     }
 
+    // Handles the PUT request for update UserFoodLog.
     @PutMapping("{id}")
     public ResponseEntity<UserFoodLogDto> updateUserFoodLog(@PathVariable("id") Long userFoodLogId,
                                                       @RequestBody UserFoodLogDto updatedUserFoodLog) {
@@ -68,6 +75,7 @@ public class UserFoodLogController {
         return ResponseEntity.ok(userFoodLogDto);
     }
 
+    // Handles the DELETE request for delete UserFoodLog.
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteUserFoodLog(@PathVariable("id") Long userFoodLogId) {
         userFoodLogService.deleteUserFoodLog(userFoodLogId);

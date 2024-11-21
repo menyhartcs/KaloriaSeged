@@ -18,6 +18,7 @@ public class OpenAIController {
 
     private OpenAIService openAIService;
 
+    // Handles the POST request for OpenAI Completion API.
     @PostMapping("/complete")
     public Mono<String> getCompletion(@RequestBody String prompt) {
         return openAIService.getCompletion(prompt);

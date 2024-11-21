@@ -21,6 +21,7 @@ public class RegistrationController {
     private UserService userService;
     private ValidationService validationService;
 
+    // Handles the POST request for user registration.
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest registrationRequest) {
         UserDto user = new UserDto();
