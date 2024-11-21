@@ -9,6 +9,11 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the {@link Food} entity in the database.
+ * It contains food data.
+ * It has a relation with the {@link UserFoodLog} object.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

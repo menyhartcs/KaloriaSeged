@@ -8,6 +8,11 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+/**
+ * Represents the {@link UserFoodLog} entity in the database.
+ * It contains the food logs for the user.
+ * It has a relation with the {@link User} and the {@link Food} objects.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
