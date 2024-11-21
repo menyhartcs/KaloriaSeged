@@ -6,8 +6,12 @@ import com.szakdolgozat.KaloriaSeged.entity.User;
 
 import java.util.List;
 
+/**
+ * Handles the mapping between {@link User} and {@link UserDto} objects.
+ */
 public class UserMapper {
 
+    // Maps the User to UserDto object.
     public static UserDto mapToUserDto(User user) {
         List<UserFoodLogDto> foodLogDtos = user.getFoodLogs().stream()
                 .map(UserFoodLogMapper::mapToUserFoodLogDto)
@@ -29,6 +33,7 @@ public class UserMapper {
         );
     }
 
+    // Maps the UserDto to User object.
     public static User mapToUser(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());

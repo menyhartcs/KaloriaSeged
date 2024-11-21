@@ -7,8 +7,12 @@ import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 
 import java.time.LocalDate;
 
+/**
+ * Handles the mapping between {@link UserFoodLog} and {@link UserFoodLogDto} objects.
+ */
 public class UserFoodLogMapper {
 
+    // Maps the UserFoodLog to UserFoodLogDto object.
     public static UserFoodLogDto mapToUserFoodLogDto(UserFoodLog userFoodLog) {
         UserFoodLogDto userFoodLogDto = new UserFoodLogDto();
         userFoodLogDto.setId(userFoodLog.getId());
@@ -23,6 +27,7 @@ public class UserFoodLogMapper {
         return userFoodLogDto;
     }
 
+    // INIT the FoodDto object for UserFoodLogDto object.
     private static FoodDto createFoodDto(UserFoodLog userFoodLog) {
         FoodDto foodDto = new FoodDto();
         foodDto.setId(userFoodLog.getFood().getId());
@@ -34,6 +39,7 @@ public class UserFoodLogMapper {
         return foodDto;
     }
 
+    // INIT the UserDto object for UserFoodLogDto object.
     private static UserDto createUserDto(UserFoodLog userFoodLog) {
         UserDto userDto = new UserDto();
         userDto.setId(userFoodLog.getUser().getId());
@@ -51,6 +57,7 @@ public class UserFoodLogMapper {
         return userDto;
     }
 
+    // Maps the UserFoodLogDto to UserFoodLog object.
     public static UserFoodLog mapToUserFoodLog(UserFoodLogDto userFoodLogDto) {
         UserFoodLog userFoodLog = new UserFoodLog();
         userFoodLog.setId(userFoodLogDto.getId());
