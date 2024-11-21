@@ -22,7 +22,7 @@ public class ValidationServiceTest {
     private static final String USER_NAME = "name";
     private static final String USER_PASSWORD = "testpw";
     private static final String PASSWORD = "password";
-    public static final String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
 
     @Mock
     private UserServiceImpl userServiceImpl;
