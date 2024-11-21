@@ -6,7 +6,6 @@ import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
 import com.szakdolgozat.KaloriaSeged.util.LoginRequest;
 import com.szakdolgozat.KaloriaSeged.util.ValidatePasswordUtil;
 import lombok.AllArgsConstructor;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
