@@ -20,19 +20,21 @@ import static org.mockito.Mockito.*;
 public class FoodControllerTest {
 
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
+    // INIT FoodDto1
     private static final Long FOOD_ID = 1L;
     private static final String FOOD_NAME = "Apple";
     private static final int CALORIE = 1;
     private static final int FAT = 1;
     private static final int CARBOHYDRATE = 1;
     private static final int PROTEIN = 1;
+    // INIT FoodDto2
     private static final Long FOOD_ID2 = 2L;
     private static final String FOOD_NAME2 = "Banana";
     private static final int CALORIE2 = 2;
     private static final int FAT2 = 2;
     private static final int CARBOHYDRATE2 = 2;
     private static final int PROTEIN2 = 2;
-
+    // INIT FoodDtos
     private static final FoodDto FOOD_DTO1 =
             new FoodDto(FOOD_ID, FOOD_NAME, CALORIE, FAT, CARBOHYDRATE, PROTEIN, USER_FOOD_LOG_DTOS);
     private static final FoodDto FOOD_DTO2 =

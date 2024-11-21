@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 public class UserControllerTest {
 
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
+    // INIT UserDto1
     private static final Long USER_ID = 1L;
     private static final String USER_EMAIL = "test@mail.com";
     private static final String USER_NAME = "name";
@@ -33,6 +34,7 @@ public class UserControllerTest {
     private static final int PROTEIN = 150;
     private static final int CARBOHYDRATE = 300;
     private static final int FAT = 60;
+    // INIT UserDto2
     private static final Long USER_ID2 = 2L;
     private static final String USER_EMAIL2 = "test2@mail.com";
     private static final String USER_NAME2 = "name2";
@@ -45,6 +47,7 @@ public class UserControllerTest {
     private static final int PROTEIN2 = 80;
     private static final int CARBOHYDRATE2 = 250;
     private static final int FAT2 = 50;
+    // INIT UserDtos
     private static final UserDto USER_DTO1 =
             new UserDto(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
                     CALORIE, PROTEIN, CARBOHYDRATE, FAT, USER_FOOD_LOG_DTOS);
