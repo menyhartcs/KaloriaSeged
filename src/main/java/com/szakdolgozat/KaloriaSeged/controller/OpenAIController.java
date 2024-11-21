@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+/**
+ * Controller class for the {@link OpenAIService}. Handles the requests coming from client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController

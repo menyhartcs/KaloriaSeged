@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
+import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.service.UserFoodLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controller class for {@link UserFoodLog}. Handles the requests coming from the client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController

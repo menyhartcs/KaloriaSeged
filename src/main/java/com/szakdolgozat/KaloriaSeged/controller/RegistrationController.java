@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for registration. Handles the requests coming from the client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController

@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
 import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for {@link User}. Handles the requests coming from the client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController

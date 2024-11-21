@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for login. Handles the requests coming from the client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController

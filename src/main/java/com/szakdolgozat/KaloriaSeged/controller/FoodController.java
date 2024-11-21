@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.FoodDto;
+import com.szakdolgozat.KaloriaSeged.entity.Food;
 import com.szakdolgozat.KaloriaSeged.service.FoodService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for {@link Food}. Handles the requests coming from the client.
+ */
 @AllArgsConstructor
 @CrossOrigin("*")
 @RestController
