@@ -125,12 +125,12 @@ public class UserFoodLogControllerTest {
     }
 
     @Test
-    void testGetUserFoodLogByUserAndDate() {
+    void testGetUserFoodLogByUserIdAndDate() {
         // GIVEN
         when(userFoodLogService.getUserFoodLogsByUserIdAndDate(USER_ID, DATE)).thenReturn(USER_FOOD_LOG_DTOS);
 
         // WHEN
-        ResponseEntity<List<UserFoodLogDto>> response = userFoodLogController.getUserFoodLogByUserAndDate(USER_ID, DATE);
+        ResponseEntity<List<UserFoodLogDto>> response = userFoodLogController.getUserFoodLogByDate(USER_ID, DATE);
 
         // THEN
         assertEquals(200, response.getStatusCodeValue());
@@ -144,7 +144,7 @@ public class UserFoodLogControllerTest {
         when(userFoodLogService.getUserFoodLogsByDate(DATE)).thenReturn(USER_FOOD_LOG_DTOS);
 
         // WHEN
-        ResponseEntity<List<UserFoodLogDto>> response = userFoodLogController.getUserFoodLogByUserAndDate(DATE);
+        ResponseEntity<List<UserFoodLogDto>> response = userFoodLogController.getUserFoodLogByDate(DATE);
 
         // THEN
         assertEquals(200, response.getStatusCodeValue());
