@@ -1,5 +1,6 @@
 package com.szakdolgozat.KaloriaSeged.dto;
 
+import com.szakdolgozat.KaloriaSeged.entity.Food;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Data transfer object for {@link Food}.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
