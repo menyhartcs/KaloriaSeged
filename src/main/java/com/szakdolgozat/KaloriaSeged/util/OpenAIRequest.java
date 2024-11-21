@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Util class for open ai request.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

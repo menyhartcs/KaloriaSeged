@@ -12,6 +12,9 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+/**
+ * Util class for JWT token generation & validation.
+ */
 @Component
 public class JWTUtil {
 
