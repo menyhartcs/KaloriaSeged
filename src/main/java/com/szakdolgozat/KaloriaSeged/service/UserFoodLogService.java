@@ -5,6 +5,9 @@ import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Interface for the UserFoodLog object CRUD operations.
+ */
 public interface UserFoodLogService {
     UserFoodLogDto createUserFoodLog(UserFoodLogDto userFoodLogDto);
     UserFoodLogDto getUserFoodLogById(Long userFoodLogId);

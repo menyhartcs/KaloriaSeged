@@ -4,6 +4,9 @@ import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 
 import java.util.List;
 
+/**
+ * Interface for the User object CRUD operations.
+ */
 public interface UserService {
     UserDto createUser(UserDto userDto);
     UserDto getUserById(Long userId);
