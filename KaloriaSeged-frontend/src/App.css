@@ -1,13 +1,14 @@
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Az oldal magassága legalább 100vh legyen */
+    min-height: 100vh;
     margin: 0;
+    background-color: #32CD32;
 }
 
 .main-content {
     flex: 1;
-    min-height: calc(100vh - 106px)
+    min-height: calc(100vh - 106px);
 }
 
 .footer {
@@ -16,15 +17,15 @@ body {
     background-color: black;
     text-align: center;
     color: white;
-    bottom: 0;  /* Rögzített pozíció az alján */
+    bottom: 0;
 }
 
 .nutritionText {
-    color: black; /* Fekete betűszín */
-    background-color: #32CD32; /* Zöld háttér */
-    padding: 2px 4px; /* Kis belső margó */
-    border-radius: 15px; /* Lekerekített sarkak */
-    font-weight: bold; /* Félkövér szöveg */
+    color: black;
+    background-color: #32CD32;
+    padding: 2px 4px;
+    border-radius: 15px;
+    font-weight: bold;
 }
 
 .energy {

@@ -97,6 +97,16 @@ const ListFoodComponent = () => {
         }
     }
 
+    function showDeleteButton(foodId) {
+        if ("admin@mail.com" === currentEmail) {
+            return (
+                <button className="btn btn-danger m-1"
+                        onClick={() => removeFood(foodId)}>Töröl
+                </button>
+            )
+        }
+    }
+
     return (
         <div className="container main-content">
             <h2 className="text-center">Elérhető ételek listája</h2>
@@ -135,9 +145,7 @@ const ListFoodComponent = () => {
                                                     onClick={() => eatFood(food.id)}>Megeszem
                                             </button>
                                             {showUpdateButton(food.id)}
-                                            <button className="btn btn-danger m-1"
-                                                    onClick={() => removeFood(food.id)}>Töröl
-                                            </button>
+                                            {showDeleteButton(food.id)}
                                             <button className="btn btn-info m-1"
                                                     onClick={() => analyzeUserFoodLog(
                                                         `Röviden mutasd be az ételt: ${food.name}

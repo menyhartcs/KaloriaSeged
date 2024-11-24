@@ -77,7 +77,7 @@ const FoodComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim()) {
+        if (name.trim) {
             errorsCopy.name = "";
         } else {
             errorsCopy.name = "Név megadása kötelező!";
@@ -149,7 +149,7 @@ const FoodComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Energia (kcal):</label>
-                                <input type="text"
+                                <input type="number"
                                        placeholder="Add meg az étel energia tartalmát"
                                        name="calorie"
                                        value={calorie}
@@ -161,7 +161,7 @@ const FoodComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Zsír (g):</label>
-                                <input type="text"
+                                <input type="number"
                                        placeholder="Add meg az étel zsír tartalmát"
                                        name="fat"
                                        value={fat}
@@ -173,7 +173,7 @@ const FoodComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Szénhidrát (g):</label>
-                                <input type="text"
+                                <input type="number"
                                        placeholder="Add meg az étel szénhidrát tartalmát"
                                        name="carbohydrate"
                                        value={carbohydrate}
@@ -185,7 +185,7 @@ const FoodComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Fehérje (g):</label>
-                                <input type="text"
+                                <input type="number"
                                        placeholder="Add meg az étel fehérje tartalmát"
                                        name="protein"
                                        value={protein}
