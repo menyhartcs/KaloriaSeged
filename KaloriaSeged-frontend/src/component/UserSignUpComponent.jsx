@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {createUser} from "../service/UserService.js";
 import {useNavigate, useParams} from "react-router-dom";
+import {isNullOrUndef} from "chart.js-helpers";
 
 const UserSignUpComponent = () => {
 
@@ -8,7 +9,11 @@ const UserSignUpComponent = () => {
     const [email, setEmail] = useState([])
     const [password, setPassword] = useState([])
 
-    const {id} = useParams();
+    useEffect(() => {
+        if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserFoodLogs");
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         name: "",

@@ -1,7 +1,4 @@
-import React, {useState} from "react";
-import {getUserByEmail, loginUser} from "../service/UserService.js";
-import {useNavigate} from "react-router-dom";
-import moment from "moment/moment.js";
+import React from "react";
 
 const UserLogOutComponent = () => {
 

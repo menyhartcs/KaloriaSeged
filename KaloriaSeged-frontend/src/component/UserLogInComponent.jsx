@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import {getUserByEmail, loginUser} from "../service/UserService.js";
+import React, {useEffect, useState} from "react";
+import {loginUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 import moment from "moment/moment.js";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const UserLogInComponent = () => {
 
@@ -10,6 +11,12 @@ const UserLogInComponent = () => {
     const [email, setEmail] = useState([]);
     const [password, setPassword] = useState([]);
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
+
+    useEffect(() => {
+        if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserFoodLogs");
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         id: "",
