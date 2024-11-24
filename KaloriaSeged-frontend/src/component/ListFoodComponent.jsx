@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {deleteFood, listFoods} from "../service/FoodService.js";
 import {useNavigate} from "react-router-dom";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const ListFoodComponent = () => {
 
@@ -10,7 +11,11 @@ const ListFoodComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
-        getAllFoods();
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        } else {
+            getAllFoods();
+        }
     }, []);
 
 

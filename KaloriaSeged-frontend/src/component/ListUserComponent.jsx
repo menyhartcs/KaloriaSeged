@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {deleteUser, listUsers} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const ListUserComponent = () => {
 
@@ -10,7 +11,11 @@ const ListUserComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
-        getAllUsers();
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        } else {
+            getAllUsers();
+        }
     }, []);
 
     function getAllUsers() {

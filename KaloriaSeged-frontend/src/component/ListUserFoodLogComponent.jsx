@@ -29,6 +29,12 @@ const ListUserFoodLogComponent = () => {
     const [showCard, setShowCard] = useState(false);
 
     useEffect(() => {
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+    }, []);
+
+    useEffect(() => {
         const userEmail = localStorage.getItem("email");
         getUserByEmail(userEmail).then((response) => {
             setUser(response.data);

@@ -29,13 +29,15 @@ const HeaderComponent = () => {
         }
     }, [email]);
 
-    function showLoginOrLogout() {
+    function showLoginOrLogoutMenu() {
 
         if (isNullOrUndef(email) && isNullOrUndef(token)) {
             return <a className="navbar-toggler" href="/UserLogIn">Bejelentkezés/Regisztráció</a>
         }
         return (
             <>
+                <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
+                <a className="navbar-toggler" href="/Foods">Ételek</a>
                 <a className="navbar-toggler" href="/CalorieCalculator">Kalória kalkulátor</a>
                 <a className="navbar-brand" href="/UserProfile">{name}</a>
                 <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
@@ -55,10 +57,8 @@ const HeaderComponent = () => {
             <header>
                 <nav className="navbar navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">Kalória Segéd</a>
-                    <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
-                    <a className="navbar-toggler" href="/Foods">Ételek</a>
                     {showUsers()}
-                    {showLoginOrLogout()}
+                    {showLoginOrLogoutMenu()}
                 </nav>
             </header>
         </div>

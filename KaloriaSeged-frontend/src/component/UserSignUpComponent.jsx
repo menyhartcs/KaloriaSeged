@@ -67,22 +67,12 @@ const UserSignUpComponent = () => {
         return valid;
     }
 
-    function pageTitle() {
-        if (id) {
-            return <h2 className="text-center">Update User</h2>
-        } else {
-            <h2 className="text-center">Regisztráció</h2>
-        }
-    }
-
     return (
         <div className="container main-content">
             <br/><br/>
             <div className="row">
                 <div className="card col-md-6 offset-md-3 offset-md-3">
-                    {
-                        pageTitle()
-                    }
+                    <h2 className="text-center">Regisztráció</h2>
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
