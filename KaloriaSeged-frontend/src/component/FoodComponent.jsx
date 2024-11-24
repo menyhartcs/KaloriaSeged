@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {createFood, getFoodById, updateFood} from "../service/FoodService.js";
 import {useNavigate, useParams} from "react-router-dom";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const FoodComponent = () => {
 
@@ -11,6 +12,12 @@ const FoodComponent = () => {
     const [protein, setProtein] = useState([])
 
     const {id} = useParams();
+
+    useEffect(() => {
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         name: "",

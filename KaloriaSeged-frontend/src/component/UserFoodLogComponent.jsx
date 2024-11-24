@@ -4,6 +4,7 @@ import {createUserFoodLog, getUserFoodLog, updateUserFoodLog} from "../service/U
 import moment from "moment/moment.js";
 import {getUserByEmail} from "../service/UserService.js";
 import {getFoodById} from "../service/FoodService.js";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const UserFoodLogComponent = () => {
 
@@ -17,13 +18,18 @@ const UserFoodLogComponent = () => {
     const {id} = useParams();
     const amountMultiplier =  amount / 100;
 
+    useEffect(() => {
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+    }, []);
+
     const [errors, setErrors] = useState({
         User: "",
         Food: "",
         date: "",
         amount: ""
     })
-
 
     useEffect(() =>{
         if (currentUrl === "edit-userFoodLog") {

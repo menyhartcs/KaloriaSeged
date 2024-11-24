@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const CalorieCalculatorComponent = () => {
 
@@ -19,6 +20,12 @@ const CalorieCalculatorComponent = () => {
     const [activity, setActivity] = useState()
     const [goal, setGoal] = useState()
     const [result, setResult] = useState()
+
+    useEffect(() => {
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         id: "",

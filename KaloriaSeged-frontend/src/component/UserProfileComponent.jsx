@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
+import {isNullOrUndef} from "chart.js/helpers";
 
 const UserProfileComponent = () => {
 
@@ -16,6 +17,12 @@ const UserProfileComponent = () => {
     const [userProtein, setUserProtein] = useState([])
     const [userCarbohydrate, setUserCarbohydrate] = useState([])
     const [userFat, setUserFat] = useState([])
+
+    useEffect(() => {
+        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         id: "",
