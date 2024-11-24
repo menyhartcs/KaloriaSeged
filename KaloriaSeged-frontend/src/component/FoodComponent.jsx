@@ -77,38 +77,38 @@ const FoodComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim) {
+        if (name.trim()) {
             errorsCopy.name = "";
         } else {
-            errorsCopy.name = "Name is required!";
+            errorsCopy.name = "Név megadása kötelező!";
             valid = false;
         }
 
-        if (calorie.trim) {
+        if (calorie+"".trim()) {
             errorsCopy.calorie = "";
         } else {
-            errorsCopy.calorie = "Calorie is required!";
+            errorsCopy.calorie = "Energia tartalom megadása kötelező!";
             valid = false;
         }
 
-        if (calorie.trim) {
+        if (fat+"".trim()) {
             errorsCopy.fat = "";
         } else {
-            errorsCopy.fat = "Fat is required!";
+            errorsCopy.fat = "Zsír tartalom megadása kötelező!";
             valid = false;
         }
 
-        if (calorie.trim) {
+        if (carbohydrate+"".trim()) {
             errorsCopy.carbohydrate = "";
         } else {
-            errorsCopy.carbohydrate = "Carbohydrate is required!";
+            errorsCopy.carbohydrate = "Szénhidrát tartalom megadása kötelező!";
             valid = false;
         }
 
-        if (calorie.trim) {
+        if (protein+"".trim()) {
             errorsCopy.protein = "";
         } else {
-            errorsCopy.protein = "Protein is required!";
+            errorsCopy.protein = "Fehérje tartalom megadása kötelező!";
             valid = false;
         }
 
