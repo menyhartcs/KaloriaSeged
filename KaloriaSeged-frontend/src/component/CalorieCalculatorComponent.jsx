@@ -20,6 +20,7 @@ const CalorieCalculatorComponent = () => {
     const [activity, setActivity] = useState()
     const [goal, setGoal] = useState()
     const [result, setResult] = useState()
+    const [showResult, setShowResult] = useState(false)
 
     useEffect(() => {
         if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
@@ -139,14 +140,18 @@ const CalorieCalculatorComponent = () => {
             setCarbohydrate(calculatedCarbohydrate)
             setFat(calculatedFat)
 
-            setResult(`
-            <table class="table table-bordered w-100">
-                <tr><th>Energia</th><td>${calculatedCalorie} kcal</td></tr>
-                <tr><th>Fehérje</th><td>${calculatedProtein} g</td></tr>
-                <tr><th>Szénhidrát</th><td>${calculatedCarbohydrate} g</td></tr>
-                <tr><th>Zsír</th><td>${calculatedFat} g</td></tr>
-            </table>
-        `);
+            setResult(
+                <table className="table table-bordered w-100">
+                    <tbody>
+                        <tr><th>Energia</th><td>{calculatedCalorie} kcal</td></tr>
+                        <tr><th>Fehérje</th><td>{calculatedProtein} g</td></tr>
+                        <tr><th>Szénhidrát</th><td>{calculatedCarbohydrate} g</td></tr>
+                        <tr><th>Zsír</th><td>{calculatedFat} g</td></tr>
+                    </tbody>
+                </table>
+            );
+            setShowResult(true)
+
             console.log("BMR: " + bmr)
             console.log("calorie: " + calculatedCalorie)
             console.log("protein: " + calculatedProtein)
@@ -343,10 +348,14 @@ const CalorieCalculatorComponent = () => {
                                 </select>
                                 <br/>
                                 <br/>
-                                <h5>Eredmény:</h5>
-                                <div dangerouslySetInnerHTML={{__html: result}}></div>
-                                <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként
-                                </button>
+                                {showResult && (
+                                    <div>
+                                        <h5>Eredmény:</h5>
+                                        {result}
+                                        <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
