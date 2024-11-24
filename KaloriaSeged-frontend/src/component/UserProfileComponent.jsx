@@ -104,14 +104,35 @@ const UserProfileComponent = () => {
         if (name.trim) {
             errorsCopy.name = "";
         } else {
-            errorsCopy.name = "Name is required!";
+            errorsCopy.name = "Név megadása kötelező!";
             valid = false;
         }
 
         if (email.trim) {
             errorsCopy.email = "";
         } else {
-            errorsCopy.email = "Email address is required!";
+            errorsCopy.email = "Email cím megadása kötelező!";
+            valid = false;
+        }
+
+        if (height+"".trim()) {
+            errorsCopy.height = "";
+        } else {
+            errorsCopy.height = "Magasság megadása kötelező!";
+            valid = false;
+        }
+
+        if (weight+"".trim()) {
+            errorsCopy.weight = "";
+        } else {
+            errorsCopy.weight = "Súly megadása kötelező!";
+            valid = false;
+        }
+
+        if (age+"".trim()) {
+            errorsCopy.age = "";
+        } else {
+            errorsCopy.age = "Kor megadása kötelező!";
             valid = false;
         }
 
