@@ -127,11 +127,11 @@ const ListFoodComponent = () => {
                                             <button className="btn btn-success m-1"
                                                     onClick={() => eatFood(food.id)}>Megeszem
                                             </button>
-                                            <button className="btn btn-info m-1"
-                                                    onClick={() => updateFood(food.id)}>Update
+                                            <button className="btn btn-warning m-1"
+                                                    onClick={() => updateFood(food.id)}>Szerkeszt
                                             </button>
                                             <button className="btn btn-danger m-1"
-                                                    onClick={() => removeFood(food.id)}>Delete
+                                                    onClick={() => removeFood(food.id)}>Töröl
                                             </button>
                                             <button className="btn btn-info m-1"
                                                     onClick={() => analyzeUserFoodLog(

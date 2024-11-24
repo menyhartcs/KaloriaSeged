@@ -304,7 +304,7 @@ const CalorieCalculatorComponent = () => {
                                         />
                                         {errors.age && <div className="invalid-feedback">{errors.age}</div>}
                                     </div>
-                                    <button className="btn btn-success mt-3" onClick={calculate}>Számít</button>
+                                    <button className="btn btn-primary mt-3" onClick={calculate}>Számít</button>
                                 </form>
                             </div>
                             <div className="col-md-6">

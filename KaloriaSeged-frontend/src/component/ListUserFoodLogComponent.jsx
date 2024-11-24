@@ -200,7 +200,7 @@ const ListUserFoodLogComponent = () => {
                                         </td>
                                         <td>{userFoodLog.date}</td>
                                         <td>
-                                            <button className="btn btn-success m-1"
+                                            <button className="btn btn-warning m-1"
                                                     onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>
                                             <button className="btn btn-danger m-1"
                                                     onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl</button>
@@ -246,10 +246,11 @@ const ListUserFoodLogComponent = () => {
                             )}>
                             {showCard ? "Elrejtés" : "Elemzés"}
                         </button>
-                        <h5>További információ</h5>
-                        {/* A megjelenő Card */}
                         {showCard && (
-                            <p>{analysisResult}</p>
+                            <div>
+                                <h5>További információ</h5>
+                                <p>{analysisResult}</p>
+                            </div>
                         )}
                     </div>
                 </div>

@@ -209,7 +209,7 @@ const UserProfileComponent = () => {
                                 {errors.age && <div className="invalid-feedback">{errors.age}</div>}
                             </div>
 
-                            <button className="btn btn-success mt-3" onClick={saveOrUpdateUser}>Frissít</button>
+                            <button className="btn btn-primary mt-3" onClick={saveOrUpdateUser}>Frissít</button>
                         </form>
                     </div>
                 </div>
