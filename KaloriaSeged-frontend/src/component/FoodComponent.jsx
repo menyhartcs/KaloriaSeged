@@ -119,9 +119,9 @@ const FoodComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className="text-center">Update Food</h2>
+            return <h2 className="text-center">Étel szerkesztése</h2>
         } else {
-            <h2 className="text-center">Add Food</h2>
+            <h2 className="text-center">Étel hozzáadása</h2>
         }
     }
 
@@ -136,9 +136,9 @@ const FoodComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">Name:</label>
+                                <label className="form-label">Név:</label>
                                 <input type="text"
-                                       placeholder="Enter food name"
+                                       placeholder="Add meg az étel nevét"
                                        name="name"
                                        value={name}
                                        className={`form-control ${errors.name ? "is-invalid" : ""}`}
@@ -148,9 +148,9 @@ const FoodComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Calorie:</label>
+                                <label className="form-label">Energia (kcal):</label>
                                 <input type="text"
-                                       placeholder="Enter calorie"
+                                       placeholder="Add meg az étel energia tartalmát"
                                        name="calorie"
                                        value={calorie}
                                        className={`form-control ${errors.calorie ? "is-invalid" : ""}`}
@@ -160,9 +160,9 @@ const FoodComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Fat:</label>
+                                <label className="form-label">Zsír (g):</label>
                                 <input type="text"
-                                       placeholder="Enter fat"
+                                       placeholder="Add meg az étel zsír tartalmát"
                                        name="fat"
                                        value={fat}
                                        className={`form-control ${errors.fat ? "is-invalid" : ""}`}
@@ -172,9 +172,9 @@ const FoodComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Carbohydrate:</label>
+                                <label className="form-label">Szénhidrát (g):</label>
                                 <input type="text"
-                                       placeholder="Enter carbohydrate"
+                                       placeholder="Add meg az étel szénhidrát tartalmát"
                                        name="carbohydrate"
                                        value={carbohydrate}
                                        className={`form-control ${errors.carbohydrate ? "is-invalid" : ""}`}
@@ -184,9 +184,9 @@ const FoodComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Protein:</label>
+                                <label className="form-label">Fehérje (g):</label>
                                 <input type="text"
-                                       placeholder="Enter protein"
+                                       placeholder="Add meg az étel fehérje tartalmát"
                                        name="protein"
                                        value={protein}
                                        className={`form-control ${errors.protein ? "is-invalid" : ""}`}
@@ -195,7 +195,7 @@ const FoodComponent = () => {
                                 {errors.protein && <div className="invalid-feedback">{errors.protein}</div>}
                             </div>
 
-                            <button className="btn btn-success" onClick={saveOrUpdateFood}>Submit</button>
+                            <button className="btn btn-success" onClick={saveOrUpdateFood}>Mentés</button>
                         </form>
                     </div>
                 </div>

@@ -130,9 +130,9 @@ const UserFoodLogComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className="text-center">Update UserFoodLog</h2>
+            return <h2 className="text-center">Naplóbejegyzés módosítása</h2>
         } else {
-            <h2 className="text-center">Add UserFoodLog</h2>
+            <h2 className="text-center">Étel fogyasztás naplózása</h2>
         }
     }
 
@@ -152,10 +152,10 @@ const UserFoodLogComponent = () => {
 
                             <div className="form-group mb-2">
                                 <ul>
-                                    <li>Kalória: {Math.round(Food.calorie * amountMultiplier)} kcal</li>
-                                    <li>Fehérje: {Math.round(Food.protein * amountMultiplier)} g</li>
-                                    <li>Szénhidrát: {Math.round(Food.carbohydrate * amountMultiplier)} g</li>
-                                    <li>Zsír: {Math.round(Food.fat * amountMultiplier)} g</li>
+                                    <li><b className="nutritionText energy">Energia:</b> {Math.round(Food.calorie * amountMultiplier)} kcal</li>
+                                    <li><b className="nutritionText protein">Fehérje:</b> {Math.round(Food.protein * amountMultiplier)} g</li>
+                                    <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(Food.carbohydrate * amountMultiplier)} g</li>
+                                    <li><b className="nutritionText fat">Zsír:</b> {Math.round(Food.fat * amountMultiplier)} g</li>
                                 </ul>
                             </div>
 
@@ -171,7 +171,7 @@ const UserFoodLogComponent = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="dateInput" className="form-label">Select date:</label>
+                                <label htmlFor="dateInput" className="form-label">Válaszd ki melyik nap fogyasztottad:</label>
                                 <input
                                     type="date"
                                     id="dateInput"
@@ -181,7 +181,7 @@ const UserFoodLogComponent = () => {
                                 />
                             </div>
 
-                            <button className="btn btn-success" onClick={saveOrUpdateUserFoodLog}>Submit</button>
+                            <button className="btn btn-success" onClick={saveOrUpdateUserFoodLog}>Mentés</button>
                         </form>
                     </div>
                 </div>

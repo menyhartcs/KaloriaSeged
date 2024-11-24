@@ -102,27 +102,23 @@ const ListFoodComponent = () => {
 
                         <button className="btn btn-dark mb-2" onClick={addNewFood}>Étel hozzáadása</button>
                         <table className="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Calorie</th>
-                                <th>Fat</th>
-                                <th>Carbohydrate</th>
-                                <th>Protein</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
                             <tbody>
                             {
                                 filteredFoods.map(food =>
                                     <tr key={food.id}>
-                                        <td>{food.id}</td>
-                                        <td>{food.name}</td>
-                                        <td>{food.calorie}</td>
-                                        <td>{food.fat}</td>
-                                        <td>{food.carbohydrate}</td>
-                                        <td>{food.protein}</td>
+                                        <td>
+                                            <div className="form-group m-1">
+                                                <h4><b>{food.name}</b></h4>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <li><b className="nutritionText energy">Energia:</b> {food.calorie} kcal</li>
+                                                <li><b className="nutritionText protein">Fehérje:</b> {food.protein} g</li>
+                                                <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {food.carbohydrate} g</li>
+                                                <li><b className="nutritionText fat">Zsír:</b> {food.fat} g</li>
+                                            </ul>
+                                        </td>
                                         <td>
                                             <button className="btn btn-success m-1"
                                                     onClick={() => eatFood(food.id)}>Megeszem
