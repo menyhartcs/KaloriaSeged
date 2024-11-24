@@ -51,10 +51,6 @@ const ListUserComponent = () => {
         }
     }
 
-    function addNewUser() {
-        navigator("/add-user")
-    }
-
     function updateUser(id) {
         navigator(`/edit-user/${id}`)
     }
@@ -71,7 +67,7 @@ const ListUserComponent = () => {
 
     return (
         <div className="container main-content">
-            <h2 className="text-center">List of users</h2>
+            <h2 className="text-center">Felhasználók listája</h2>
 
             <input
                 type="text"
@@ -81,14 +77,13 @@ const ListUserComponent = () => {
                 onChange={(e) => searchUsers(e.target.value)}
             />
 
-            <button className="btn btn-dark mb-2" onClick={addNewUser}>Add User</button>
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                    <th>Név</th>
+                    <th>Email cím</th>
+                    <th>Műveletek</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,9 +94,9 @@ const ListUserComponent = () => {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>
-                                <button className="btn btn-info" onClick={() => updateUser(user.id)}>Update</button>
+                                <button className="btn btn-warning" onClick={() => updateUser(user.id)}>Szerkesztés</button>
                                 <button className="btn btn-danger" onClick={() => removeUser(user.id)}
-                                        style={{marginLeft: "10px"}}>Delete
+                                        style={{marginLeft: "10px"}}>Törlés
                                 </button>
                             </td>
                         </tr>)
