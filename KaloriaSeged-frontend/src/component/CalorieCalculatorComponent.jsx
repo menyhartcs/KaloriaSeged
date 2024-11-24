@@ -52,7 +52,7 @@ const CalorieCalculatorComponent = () => {
             setName(response.data.name);
             setEmail(response.data.email);
             setPassword(response.data.password);
-            setGender(response.data.gender);
+            isNullOrUndef(response.data.gender) ? setGender("M") : setGender(response.data.gender);
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
@@ -140,8 +140,8 @@ const CalorieCalculatorComponent = () => {
             setFat(calculatedFat)
 
             setResult(`
-            <table style="border: 1px solid black; border-collapse: collapse; width: 100%;">
-                <tr><th>Kalória</th><td>${calculatedCalorie} kcal</td></tr>
+            <table class="table table-bordered w-100">
+                <tr><th>Energia</th><td>${calculatedCalorie} kcal</td></tr>
                 <tr><th>Fehérje</th><td>${calculatedProtein} g</td></tr>
                 <tr><th>Szénhidrát</th><td>${calculatedCarbohydrate} g</td></tr>
                 <tr><th>Zsír</th><td>${calculatedFat} g</td></tr>
