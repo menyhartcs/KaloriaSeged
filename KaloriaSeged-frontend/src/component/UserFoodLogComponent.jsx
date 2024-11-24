@@ -73,7 +73,7 @@ const UserFoodLogComponent = () => {
 
     const handleChangeDate = (event) => {
         const newDate = event.target.value;
-        setDate(newDate); // `selectedDate` állapot frissítése az új dátummal
+        setDate(newDate);
     };
 
     function saveOrUpdateUserFoodLog(e) {

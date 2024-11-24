@@ -15,7 +15,7 @@ const CarbohydrateChart = ({ user, consumedCarbohydrate }) => {
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [consumedCarbohydrate, maxCarbohydrate-consumedCarbohydrate], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
+                data: [consumedCarbohydrate, maxCarbohydrate-consumedCarbohydrate],
                 backgroundColor: ['#FFA500', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -23,13 +23,13 @@ const CarbohydrateChart = ({ user, consumedCarbohydrate }) => {
     };
 
     const options = {
-        cutout: '70%', // A gyűrű vastagságának beállítása
+        cutout: '70%',
         plugins: {
             tooltip: {
                 enabled: false
             },
             legend: {
-                display: false // Legenda kikapcsolása
+                display: false
             },
         },
     };

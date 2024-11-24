@@ -26,7 +26,7 @@ const CalorieChart = ({ user, consumedCalorie }) => {
     };
 
     const options = {
-        indexAxis: 'y', // Make the bar chart horizontal
+        indexAxis: 'y',
         plugins: {
             tooltip: {
                 enabled: true
@@ -37,12 +37,12 @@ const CalorieChart = ({ user, consumedCalorie }) => {
         },
         scales: {
             x: {
-                display: false, // Remove the x-axis
+                display: false,
                 beginAtZero: true,
                 max: 100,
             },
             y: {
-                display: false, // Remove the y-axis
+                display: false,
             }
         }
     };

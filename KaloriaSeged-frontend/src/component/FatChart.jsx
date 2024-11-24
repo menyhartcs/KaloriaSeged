@@ -15,7 +15,7 @@ const FatChart = ({ user, consumedFat }) => {
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [consumedFat, maxFat-consumedFat], // 19 g fehérje bevitel, 81 g hátravan a 100 g cél eléréséhez
+                data: [consumedFat, maxFat-consumedFat],
                 backgroundColor: ['#FF69B4', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -23,13 +23,13 @@ const FatChart = ({ user, consumedFat }) => {
     };
 
     const options = {
-        cutout: '70%', // A gyűrű vastagságának beállítása
+        cutout: '70%',
         plugins: {
             tooltip: {
                 enabled: false
             },
             legend: {
-                display: false // Legenda kikapcsolása
+                display: false
             },
         },
     };

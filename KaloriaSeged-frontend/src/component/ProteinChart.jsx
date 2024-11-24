@@ -15,7 +15,7 @@ const ProteinChart = ({ user, consumedProtein }) => {
         datasets: [
             {
                 label: 'Fehérje bevitel',
-                data: [consumedProtein, maxProtein-consumedProtein], // {protein} g fehérje bevitel, {100-protein} g hátravan a 100 g cél eléréséhez
+                data: [consumedProtein, maxProtein-consumedProtein],
                 backgroundColor: ['#00bfff', '#f0f0f0'],
                 borderWidth: 0,
             },
@@ -23,13 +23,13 @@ const ProteinChart = ({ user, consumedProtein }) => {
     };
 
     const options = {
-        cutout: '70%', // A gyűrű vastagságának beállítása
+        cutout: '70%',
         plugins: {
             tooltip: {
                 enabled: false
             },
             legend: {
-                display: false // Legenda kikapcsolása
+                display: false
             },
         },
     };

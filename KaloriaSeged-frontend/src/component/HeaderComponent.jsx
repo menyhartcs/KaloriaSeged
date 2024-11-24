@@ -12,12 +12,11 @@ const HeaderComponent = () => {
             const newEmail = localStorage.getItem("email");
             const newToken = localStorage.getItem("token");
 
-            // Csak akkor állítjuk be az állapotot, ha az új értékek különböznek a régiektől
             if (newEmail !== email) setEmail(newEmail);
             if (newToken !== token) setToken(newToken);
-        }, 100); // Ellenőrizzük 1 másodpercenként
+        }, 100);
 
-        return () => clearInterval(intervalId); // Tisztítjuk az időzítőt, ha a komponens eltávolításra kerül
+        return () => clearInterval(intervalId);
     }, [email, token]);
 
 
