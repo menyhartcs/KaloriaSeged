@@ -12,9 +12,10 @@ const ListFoodComponent = () => {
     const navigator = useNavigate();
     const [showCard, setShowCard] = useState(false);
     const [analysisResult, setAnalysisResult] = useState("");
+    const currentEmail = localStorage.getItem("email");
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        if (isNullOrUndef(currentEmail) && isNullOrUndef(localStorage.getItem("token"))) {
             navigator("/UserLogIn");
         } else {
             getAllFoods();
@@ -86,6 +87,16 @@ const ListFoodComponent = () => {
         setShowCard(!showCard)
     }
 
+    function showUpdateButton(foodId) {
+        if ("admin@mail.com" === currentEmail) {
+            return (
+                <button className="btn btn-warning m-1"
+                        onClick={() => updateFood(foodId)}>Szerkeszt
+                </button>
+            )
+        }
+    }
+
     return (
         <div className="container main-content">
             <h2 className="text-center">Elérhető ételek listája</h2>
@@ -123,9 +134,7 @@ const ListFoodComponent = () => {
                                             <button className="btn btn-success m-1"
                                                     onClick={() => eatFood(food.id)}>Megeszem
                                             </button>
-                                            <button className="btn btn-warning m-1"
-                                                    onClick={() => updateFood(food.id)}>Szerkeszt
-                                            </button>
+                                            {showUpdateButton(food.id)}
                                             <button className="btn btn-danger m-1"
                                                     onClick={() => removeFood(food.id)}>Töröl
                                             </button>
@@ -150,7 +159,7 @@ const ListFoodComponent = () => {
                                 <p>{analysisResult}</p>
                             </div>
                             <button className="btn btn-info m-1"
-                                    onClick={() => analyzeUserFoodLog()}>Elrejtés
+                                    onClick={() => hideInfo()}>Elrejtés
                             </button>
                         </div>
                     </div>

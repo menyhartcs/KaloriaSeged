@@ -11,6 +11,18 @@ const ListUserComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
+        let email = localStorage.getItem("email")
+        if (isNullOrUndef(email) && isNullOrUndef(localStorage.getItem("token"))) {
+            navigator("/UserLogIn");
+        }
+        if ("admin@mail.com" === email) {
+            getAllUsers();
+        } else {
+            navigator("/UserFoodLogs")
+        }
+    }, []);
+
+    useEffect(() => {
         if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
             navigator("/UserLogIn");
         } else {

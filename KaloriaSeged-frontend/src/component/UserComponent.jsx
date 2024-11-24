@@ -11,8 +11,12 @@ const UserComponent = () => {
     const {id} = useParams();
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        let email = localStorage.getItem("email")
+        if (isNullOrUndef(email) && isNullOrUndef(localStorage.getItem("token"))) {
             navigator("/UserLogIn");
+        }
+        if ("admin@mail.com" !== email) {
+            navigator("/UserFoodLogs")
         }
     }, []);
 

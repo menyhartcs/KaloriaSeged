@@ -115,10 +115,8 @@ const ListUserFoodLogComponent = () => {
         if (showCard === true) {
             setAnalysisResult("");
         }
-        // HTTP kérés küldése az axios segítségével
         setAnalysisResult("Elemzés folyamatban....");
         analyze(prompt).then(response => {
-            // Eredmény frissítése
             setAnalysisResult(response.data);
         })
         .catch(error => {
@@ -143,7 +141,7 @@ const ListUserFoodLogComponent = () => {
 
     const handleChangeDate = (event) => {
         const newDate = event.target.value;
-        setSelectedDate(newDate); // `selectedDate` állapot frissítése az új dátummal
+        setSelectedDate(newDate);
     };
 
     const handleKeyDown = (event) => {
@@ -169,18 +167,10 @@ const ListUserFoodLogComponent = () => {
                             className="form-control"
                             value={selectedDate}
                             onChange={handleChangeDate}
-                            onKeyDown={handleKeyDown} // Esemény figyelése az Enter lenyomására
+                            onKeyDown={handleKeyDown}
                         />
                         <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
                         <table className="table table-striped table-bordered mt-3">
-                            {/*<thead>*/}
-                            {/*<tr>*/}
-                            {/*    <th>Id</th>*/}
-                            {/*    <th>User</th>*/}
-                            {/*    <th>Food</th>*/}
-                            {/*    <th>Date</th>*/}
-                            {/*</tr>*/}
-                            {/*</thead>*/}
                             <tbody>
                             {
                                 userFoodLogs.map(userFoodLog =>
@@ -198,7 +188,6 @@ const ListUserFoodLogComponent = () => {
                                                 <li><b className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
                                             </ul>
                                         </td>
-                                        <td>{userFoodLog.date}</td>
                                         <td>
                                             <button className="btn btn-warning m-1"
                                                     onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>

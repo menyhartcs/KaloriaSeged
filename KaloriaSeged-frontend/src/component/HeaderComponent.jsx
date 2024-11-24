@@ -29,6 +29,13 @@ const HeaderComponent = () => {
         }
     }, [email]);
 
+    function showUsers() {
+
+        if (!isNullOrUndef(email) && !isNullOrUndef(token) && email === "admin@mail.com") {
+            return <a className="navbar-toggler" href="/Users">Felhasználók</a>
+        }
+    }
+
     function showLoginOrLogoutMenu() {
 
         if (isNullOrUndef(email) && isNullOrUndef(token)) {
@@ -37,6 +44,7 @@ const HeaderComponent = () => {
         return (
             <>
                 <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
+                {showUsers()}
                 <a className="navbar-toggler" href="/Foods">Ételek</a>
                 <a className="navbar-toggler" href="/CalorieCalculator">Kalória kalkulátor</a>
                 <a className="navbar-brand" href="/UserProfile">{name}</a>
@@ -45,19 +53,11 @@ const HeaderComponent = () => {
         )
     }
 
-    function showUsers() {
-
-        if (!isNullOrUndef(email) && !isNullOrUndef(token) && email === "admin@mail.com") {
-            return <a className="navbar-toggler" href="/Users">Felhasználók</a>
-        }
-    }
-
     return (
         <div>
             <header>
                 <nav className="navbar navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">Kalória Segéd</a>
-                    {showUsers()}
                     {showLoginOrLogoutMenu()}
                 </nav>
             </header>
