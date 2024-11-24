@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {createUser, getUserById, updateUser} from "../service/UserService.js";
+import React, {useState} from "react";
+import {createUser} from "../service/UserService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const UserSignUpComponent = () => {
