@@ -87,22 +87,35 @@ const ListFoodComponent = () => {
         setShowCard(!showCard)
     }
 
-    function showUpdateButton(foodId) {
+    function showAdminButtons(foodId) {
         if ("admin@mail.com" === currentEmail) {
             return (
-                <button className="btn btn-warning m-1"
-                        onClick={() => updateFood(foodId)}>Szerkeszt
-                </button>
+                <>
+                    <button className="btn btn-warning m-1"
+                            onClick={() => updateFood(foodId)}>Szerkeszt
+                    </button>
+                    <button className="btn btn-danger m-1"
+                            onClick={() => removeFood(foodId)}>Töröl
+                    </button>
+                </>
             )
         }
     }
 
-    function showDeleteButton(foodId) {
-        if ("admin@mail.com" === currentEmail) {
+    function showUserButtons(food) {
+        if ("admin@mail.com" !== currentEmail) {
             return (
-                <button className="btn btn-danger m-1"
-                        onClick={() => removeFood(foodId)}>Töröl
-                </button>
+                <>
+                    <button className="btn btn-success m-1"
+                            onClick={() => eatFood(food.id)}>Megeszem
+                    </button>
+                    <button className="btn btn-info m-1"
+                            onClick={() => analyzeUserFoodLog(
+                                `Röviden mutasd be az ételt: ${food.name}
+                                        és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
+                            )}>Infó
+                    </button>
+                </>
             )
         }
     }
@@ -141,17 +154,8 @@ const ListFoodComponent = () => {
                                             </ul>
                                         </td>
                                         <td>
-                                            <button className="btn btn-success m-1"
-                                                    onClick={() => eatFood(food.id)}>Megeszem
-                                            </button>
-                                            {showUpdateButton(food.id)}
-                                            {showDeleteButton(food.id)}
-                                            <button className="btn btn-info m-1"
-                                                    onClick={() => analyzeUserFoodLog(
-                                                        `Röviden mutasd be az ételt: ${food.name}
-                                                         és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
-                                                    )}>Infó
-                                            </button>
+                                            {showUserButtons(food)}
+                                            {showAdminButtons(food.id)}
                                         </td>
                                     </tr>)
                             }
