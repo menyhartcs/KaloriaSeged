@@ -83,6 +83,31 @@ const ListFoodComponent = () => {
             });
     }
 
+    function adviceForEating() {
+        setShowCard(!showCard)
+        if (showCard === true) {
+            setAnalysisResult("");
+        }
+
+        let prompt = `Adj tanácsot, hogy mit egyek ma, az alábbi lista áll rendelkezésedre: ${getSimpleFoodList()}
+        ebben megtalálod az ételek nevét és a hozzájuk tartozó makrotápanyagokat, 
+        válassz ki belőle párat, 
+        amit mára ajánlanál`
+
+        setAnalysisResult("Elemzés folyamatban....");
+        analyze(prompt).then(response => {
+            setAnalysisResult(response.data);
+        })
+            .catch(error => {
+                console.error(error);
+                setAnalysisResult("Error analyzing data");
+            });
+    }
+
+    function getSimpleFoodList() {
+        return foods.map(food => food.name);
+    }
+
     function hideInfo() {
         setShowCard(!showCard)
     }
@@ -163,19 +188,22 @@ const ListFoodComponent = () => {
                         </table>
                     </div>
                 </div>
-                {showCard && (
-                    <div className="col-md-4">
-                        <div className="card p-3">
+                <div className="col-md-4">
+                    <div className="card p-3">
+                        <button className="btn btn-info m-1"
+                                onClick={() => adviceForEating()}>Mit egyek ma?
+                        </button>
+                        {showCard && (
                             <div>
                                 <h5>További információ</h5>
                                 <p>{analysisResult}</p>
+                                <button className="btn btn-info m-1"
+                                        onClick={() => hideInfo()}>Elrejtés
+                                </button>
                             </div>
-                            <button className="btn btn-info m-1"
-                                    onClick={() => hideInfo()}>Elrejtés
-                            </button>
-                        </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     )
