@@ -70,7 +70,6 @@ const ListUserFoodLogComponent = () => {
             }, { calorie: 0, protein: 0, carbohydrate: 0, fat: 0 });
 
             setConsumedNutrients(summedNutrients);
-            console.log("Bevitt tápanyagok:", summedNutrients);
         }
     }, [userFoodLogs]);
 
@@ -111,7 +110,6 @@ const ListUserFoodLogComponent = () => {
     }
 
     function analyzeUserFoodLog(prompt) {
-        console.log(userFoodLogs)
         setShowCard(!showCard)
         if (showCard === true) {
             setAnalysisResult("");
@@ -125,6 +123,17 @@ const ListUserFoodLogComponent = () => {
             setAnalysisResult("Error analyzing data");
         });
     }
+
+    function getSimpleFoodList() {
+        return userFoodLogs.map(userFoodLog =>
+            `Étel neve: ${userFoodLog.food.name},
+             Étel energia tartalom (kcal): ${userFoodLog.food.calorie},
+             Étel fehérje tartalom (g): ${userFoodLog.food.protein},
+             Étel szénhidrát tartalom (g): ${userFoodLog.food.carbohydrate},
+             Étel zsír tartalom (g): ${userFoodLog.food.fat}
+            `);
+    }
+
 
     function removeUserFoodLog(id) {
         console.log(id);
@@ -222,7 +231,7 @@ const ListUserFoodLogComponent = () => {
                         <button
                             className="btn btn-info mt-3"
                             onClick={() => analyzeUserFoodLog(
-                                `Ez egy étkezési napló: ${userFoodLogs} nagyon röviden elemezd a 
+                                `Ez egy étkezési napló: ${getSimpleFoodList()} nagyon röviden elemezd a 
                                 napi beállított személyes cél és bevitel függvényében:
                                 Napi kitűzött energia bevitel: ${user.calorie}
                                 Napi kitűzött fehérje bevitel: ${user.protein}
