@@ -223,16 +223,22 @@ const ListUserFoodLogComponent = () => {
                             className="btn btn-info mt-3"
                             onClick={() => analyzeUserFoodLog(
                                 `Ez egy étkezési napló: ${userFoodLogs} nagyon röviden elemezd a 
-                                napi beállított személyes cél:
+                                napi beállított személyes cél és bevitel függvényében:
                                 Napi kitűzött energia bevitel: ${user.calorie}
                                 Napi kitűzött fehérje bevitel: ${user.protein}
                                 Napi kitűzött szénhidrát bevitel: ${user.carbohydrate}
                                 Napi kitűzött zsír bevitel: ${user.fat}
+                                Mai bevitt energia (kcal): ${consumedNutrients.calorie}
+                                Mai bevitt fehérje (g): ${consumedNutrients.protein}
+                                Mai bevitt szénhidrát (g): ${consumedNutrients.carbohydrate}
+                                Mai bevitt zsír (g): ${consumedNutrients.fat}
                                 és személyes adatok alapján:
                                 Súly: ${user.weight}
                                 Magasság: ${user.height}
                                 Kor: ${user.age}
-                                és adj tanácsot, mire lenne érdemes odafigyelni, nagyon röviden`
+                                és adj tanácsot, mire lenne érdemes odafigyelni, nagyon röviden, így tagold a választ:
+                                -Nagyon röviden a napi makrótápanyag bevitelről és arányokról
+                                -Nagyon röviden a tanács`
                             )}>
                             {showCard ? "Elrejtés" : "Elemzés"}
                         </button>
