@@ -27,16 +27,20 @@ const ListUserFoodLogComponent = () => {
     const [user, setUser] = useState([])
     const navigator = useNavigate();
     const [showCard, setShowCard] = useState(false);
+    const currentEmail = localStorage.getItem("email");
+    const currentToken = localStorage.getItem("token");
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
             navigator("/UserLogIn");
+        }
+        if (!isNullOrUndef(currentEmail) && !isNullOrUndef(currentToken) && currentEmail === "admin@mail.com") {
+            navigator("/Users")
         }
     }, []);
 
     useEffect(() => {
-        const userEmail = localStorage.getItem("email");
-        getUserByEmail(userEmail).then((response) => {
+        getUserByEmail(currentEmail).then((response) => {
             setUser(response.data);
         });
     }, []);
@@ -45,9 +49,6 @@ const ListUserFoodLogComponent = () => {
     const date = getCurrentDate();
 
     useEffect(() => {
-        console.log("userId=" + userId);
-        console.log("date=" + date);
-
         if (isNullOrUndef(userId)) {
             getUserFoodLogsByDate(selectedDate);
         } else {
@@ -164,7 +165,7 @@ const ListUserFoodLogComponent = () => {
                         <input
                             type="date"
                             id="dateInput"
-                            className="form-control"
+                            className="form-control mb-1"
                             value={selectedDate}
                             onChange={handleChangeDate}
                             onKeyDown={handleKeyDown}
@@ -200,7 +201,7 @@ const ListUserFoodLogComponent = () => {
                                                          Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
                                                          Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
                                                          Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
-                                                         és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
+                                                         és adj tanácsot, mikor lenne érdemes fogyasztani, nagyon röviden`
                                                     )}>Elemezd
                                             </button>
                                         </td>
@@ -221,7 +222,7 @@ const ListUserFoodLogComponent = () => {
                         <button
                             className="btn btn-info mt-3"
                             onClick={() => analyzeUserFoodLog(
-                                `Ez egy étkezési napló: ${userFoodLogs} röviden elemezd a 
+                                `Ez egy étkezési napló: ${userFoodLogs} nagyon röviden elemezd a 
                                 napi beállított személyes cél:
                                 Napi kitűzött energia bevitel: ${user.calorie}
                                 Napi kitűzött fehérje bevitel: ${user.protein}
@@ -231,7 +232,7 @@ const ListUserFoodLogComponent = () => {
                                 Súly: ${user.weight}
                                 Magasság: ${user.height}
                                 Kor: ${user.age}
-                                és adj tanácsot, mire lenne érdemes odafigyelni, röviden`
+                                és adj tanácsot, mire lenne érdemes odafigyelni, nagyon röviden`
                             )}>
                             {showCard ? "Elrejtés" : "Elemzés"}
                         </button>

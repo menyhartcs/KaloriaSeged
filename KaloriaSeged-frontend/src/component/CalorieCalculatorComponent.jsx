@@ -21,10 +21,16 @@ const CalorieCalculatorComponent = () => {
     const [goal, setGoal] = useState()
     const [result, setResult] = useState()
     const [showResult, setShowResult] = useState(false)
+    const navigator = useNavigate();
+    const currentEmail = localStorage.getItem("email");
+    const currentToken = localStorage.getItem("token");
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
             navigator("/UserLogIn");
+        }
+        if (!isNullOrUndef(currentEmail) && !isNullOrUndef(currentToken) && currentEmail === "admin@mail.com") {
+            navigator("/Users")
         }
     }, []);
 
@@ -42,10 +48,6 @@ const CalorieCalculatorComponent = () => {
         userCarbohydrate: "",
         userFat: ""
     })
-
-    const navigator = useNavigate();
-
-    let currentEmail = localStorage.getItem("email")
 
     useEffect(() =>{
         getUserByEmail(currentEmail).then((response) => {
