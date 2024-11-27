@@ -121,7 +121,7 @@ const FoodComponent = () => {
         if (id) {
             return <h2 className="text-center">Étel szerkesztése</h2>
         } else {
-            <h2 className="text-center">Étel hozzáadása</h2>
+            return <h2 className="text-center">Étel hozzáadása</h2>
         }
     }
 
