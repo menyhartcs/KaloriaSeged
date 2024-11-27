@@ -112,6 +112,30 @@ const ListFoodComponent = () => {
         setShowCard(!showCard)
     }
 
+    function showInfoPanel() {
+        if ("admin@mail.com" === currentEmail) { return; }
+        return (
+            <>
+                <div className="col-md-4">
+                    <div className="card p-3">
+                        <button className="btn btn-info m-1"
+                                onClick={() => adviceForEating()}>Mit egyek ma?
+                        </button>
+                        {showCard && (
+                            <div>
+                                <h5>További információ</h5>
+                                <p>{analysisResult}</p>
+                                <button className="btn btn-info m-1"
+                                        onClick={() => hideInfo()}>Elrejtés
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     function showAdminButtons(foodId) {
         if ("admin@mail.com" === currentEmail) {
             return (
@@ -188,22 +212,7 @@ const ListFoodComponent = () => {
                         </table>
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div className="card p-3">
-                        <button className="btn btn-info m-1"
-                                onClick={() => adviceForEating()}>Mit egyek ma?
-                        </button>
-                        {showCard && (
-                            <div>
-                                <h5>További információ</h5>
-                                <p>{analysisResult}</p>
-                                <button className="btn btn-info m-1"
-                                        onClick={() => hideInfo()}>Elrejtés
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                {showInfoPanel()}
             </div>
         </div>
     )
