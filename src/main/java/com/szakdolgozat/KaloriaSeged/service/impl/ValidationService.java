@@ -76,6 +76,15 @@ public class ValidationService {
         if (password == null || password.trim().isEmpty()) {
             throw new RegistrationException("Jelszó megadása kötelező!");
         }
+        if (password.length() < 6) {
+            throw new RegistrationException("A jelszónak legalább 6 karakter hosszúnak kell lennie!");
+        }
+        // Checks with REGEX if the password contains letters and numbers
+        boolean hasLetter = password.matches(".*[a-zA-Z]+.*");
+        boolean hasDigit = password.matches(".*[0-9]+.*");
+        if (!hasLetter || !hasDigit) {
+            throw new RegistrationException("A jelszónak tartalmaznia kell legalább egy betűt és egy számot!");
+        }
         return true;
     }
 
