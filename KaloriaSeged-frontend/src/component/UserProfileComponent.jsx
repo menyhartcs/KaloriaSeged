@@ -183,7 +183,7 @@ const UserProfileComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Név:</label>
                                 <input type="text"
-                                       placeholder="Enter username"
+                                       placeholder="Név"
                                        name="name"
                                        value={name}
                                        className={`form-control ${errors.name ? "is-invalid" : ""}`}
@@ -195,7 +195,7 @@ const UserProfileComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Email:</label>
                                 <input type="text"
-                                       placeholder="Enter email address"
+                                       placeholder="Email cím"
                                        name="email"
                                        value={email}
                                        className={`form-control ${errors.email ? "is-invalid" : ""}`}
