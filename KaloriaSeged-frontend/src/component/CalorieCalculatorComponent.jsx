@@ -195,20 +195,6 @@ const CalorieCalculatorComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim) {
-            errorsCopy.name = "";
-        } else {
-            errorsCopy.name = "Név megadása kötelező!";
-            valid = false;
-        }
-
-        if (email.trim) {
-            errorsCopy.email = "";
-        } else {
-            errorsCopy.email = "Email cím megadása kötelező!";
-            valid = false;
-        }
-
         if (height+"".trim()) {
             errorsCopy.height = "";
         } else {

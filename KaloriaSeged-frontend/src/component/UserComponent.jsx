@@ -120,7 +120,13 @@ const UserComponent = () => {
         }
 
         if (email.trim) {
-            errorsCopy.email = "";
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                errorsCopy.email = "Az email cím formátuma érvénytelen!";
+                valid = false;
+            } else {
+                errorsCopy.email = "";
+            }
         } else {
             errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;

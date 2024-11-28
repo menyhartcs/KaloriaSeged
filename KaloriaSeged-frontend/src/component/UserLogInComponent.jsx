@@ -62,14 +62,31 @@ const UserLogInComponent = () => {
         const errorsCopy = {... errors}
 
         if (email.trim) {
-            errorsCopy.email = "";
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                errorsCopy.email = "Az email cím formátuma érvénytelen!";
+                valid = false;
+            } else {
+                errorsCopy.email = "";
+            }
         } else {
             errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;
         }
 
         if (password.trim) {
-            errorsCopy.password = "";
+            const hasLetter = /[a-zA-Z]/.test(password); // Contains letter
+            const hasDigit = /[0-9]/.test(password); // Contains number
+
+            if (password.length < 6) {
+                errorsCopy.password = "A jelszónak legalább 6 karakter hosszúnak kell lennie!";
+                valid = false;
+            } else if (!hasLetter || !hasDigit) {
+                errorsCopy.password = "A jelszónak tartalmaznia kell legalább egy betűt és egy számot!";
+                valid = false;
+            } else {
+                errorsCopy.password = "";
+            }
         } else {
             errorsCopy.password = "Jelszó megadása kötelező!";
             valid = false;
