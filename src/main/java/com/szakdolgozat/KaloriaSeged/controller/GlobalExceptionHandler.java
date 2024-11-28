@@ -1,5 +1,6 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
+import com.szakdolgozat.KaloriaSeged.exception.LoginException;
 import com.szakdolgozat.KaloriaSeged.exception.RegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Map<String, String>> handleRegistrationException(RegistrationException exception) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", exception.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<Map<String, String>> handleLoginException(LoginException exception) {
         Map<String, String> response = new HashMap<>();
         response.put("error", exception.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
