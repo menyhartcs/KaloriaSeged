@@ -6,11 +6,8 @@ import {isNullOrUndef} from "chart.js/helpers";
 
 const UserLogInComponent = () => {
 
-    const [name, setName] = useState([]);
-    const [id, setId] = useState([]);
     const [email, setEmail] = useState([]);
     const [password, setPassword] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(getCurrentDate);
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
@@ -19,8 +16,6 @@ const UserLogInComponent = () => {
     }, []);
 
     const [errors, setErrors] = useState({
-        id: "",
-        name: "",
         email: "",
         password: ""
     })
@@ -52,31 +47,40 @@ const UserLogInComponent = () => {
             console.log("Successful login");
             navigator("/UserFoodLogs");
         } catch (error) {
-            console.error("Login failed", error);
+            if (error.response && error.response.data) {
+                // Backend error message handling
+                const backendError = error.response.data;
+                setErrors((prevErrors) => ({ ...prevErrors, email: backendError }));
+            } else {
+                console.error("Ismeretlen hiba történt!", error);
+            }
         }
     }
 
     function validateForm() {
         let valid = true;
 
-        const errorsCopy = {... errors}
+        const errorsCopy = {...errors}; // Create copy of errors
 
-        if (email.trim) {
+        if (!email.trim) {
+            errorsCopy.email = "Email cím megadása kötelező!";
+            valid = false;
+        } else {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email)) {
                 errorsCopy.email = "Az email cím formátuma érvénytelen!";
                 valid = false;
             } else {
-                errorsCopy.email = "";
+                errorsCopy.email = ""; // Clearing error
             }
-        } else {
-            errorsCopy.email = "Email cím megadása kötelező!";
-            valid = false;
         }
 
-        if (password.trim) {
-            const hasLetter = /[a-zA-Z]/.test(password); // Contains letter
-            const hasDigit = /[0-9]/.test(password); // Contains number
+        if (!password.trim) {
+            errorsCopy.password = "Jelszó megadása kötelező!";
+            valid = false;
+        } else {
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasDigit = /[0-9]/.test(password);
 
             if (password.length < 6) {
                 errorsCopy.password = "A jelszónak legalább 6 karakter hosszúnak kell lennie!";
@@ -85,16 +89,11 @@ const UserLogInComponent = () => {
                 errorsCopy.password = "A jelszónak tartalmaznia kell legalább egy betűt és egy számot!";
                 valid = false;
             } else {
-                errorsCopy.password = "";
+                errorsCopy.password = ""; // Clearing error
             }
-        } else {
-            errorsCopy.password = "Jelszó megadása kötelező!";
-            valid = false;
-
         }
 
-        setErrors(errorsCopy);
-
+        setErrors(errorsCopy); // Update errors
         return valid;
     }
 
@@ -107,8 +106,9 @@ const UserLogInComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">Email cím:</label>
-                                <input type="text"
+                                <label className="form-label" htmlFor="email">Email cím:</label>
+                                <input type="email"
+                                       id="email"
                                        placeholder="Email cím"
                                        name="email"
                                        value={email}
@@ -119,8 +119,9 @@ const UserLogInComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Jelszó:</label>
+                                <label className="form-label" htmlFor="password">Jelszó:</label>
                                 <input type="password"
+                                       id="password"
                                        placeholder="Jelszó"
                                        name="password"
                                        value={password}
