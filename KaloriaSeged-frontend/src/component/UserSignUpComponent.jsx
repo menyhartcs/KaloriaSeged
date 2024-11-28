@@ -5,9 +5,9 @@ import {isNullOrUndef} from "chart.js/helpers";
 
 const UserSignUpComponent = () => {
 
-    const [name, setName] = useState([])
-    const [email, setEmail] = useState([])
-    const [password, setPassword] = useState([])
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
@@ -50,16 +50,15 @@ const UserSignUpComponent = () => {
     function validateForm() {
         let valid = true;
 
-        const errorsCopy = {...errors}; // Create copy of errors
-
-        if (!name.trim) {
+        const errorsCopy = { name: "", email: "", password: "" }; // Initialize error object
+        if (!name.trim()) {
             errorsCopy.name = "Név megadása kötelező!";
             valid = false;
         } else {
             errorsCopy.name = ""; // Clearing error
         }
 
-        if (!email.trim) {
+        if (!email.trim()) {
             errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;
         } else {
@@ -72,7 +71,7 @@ const UserSignUpComponent = () => {
             }
         }
 
-        if (!password.trim) {
+        if (!password.trim()) {
             errorsCopy.password = "Jelszó megadása kötelező!";
             valid = false;
         } else {
@@ -90,6 +89,7 @@ const UserSignUpComponent = () => {
             }
         }
 
+        console.log(errorsCopy)
         setErrors(errorsCopy); // Update errors
         return valid;
     }

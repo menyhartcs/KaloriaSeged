@@ -6,8 +6,8 @@ import {isNullOrUndef} from "chart.js/helpers";
 
 const UserLogInComponent = () => {
 
-    const [email, setEmail] = useState([]);
-    const [password, setPassword] = useState([]);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
@@ -60,9 +60,9 @@ const UserLogInComponent = () => {
     function validateForm() {
         let valid = true;
 
-        const errorsCopy = {...errors}; // Create copy of errors
+        const errorsCopy = { email: "", password: "" }; // Initialize error object
 
-        if (!email.trim) {
+        if (!email.trim()) {
             errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;
         } else {
@@ -75,7 +75,7 @@ const UserLogInComponent = () => {
             }
         }
 
-        if (!password.trim) {
+        if (!password.trim()) {
             errorsCopy.password = "Jelszó megadása kötelező!";
             valid = false;
         } else {
