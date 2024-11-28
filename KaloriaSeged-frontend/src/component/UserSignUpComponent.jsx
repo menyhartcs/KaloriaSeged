@@ -34,7 +34,13 @@ const UserSignUpComponent = () => {
                 console.log(response.data)
                 navigator("/users")
             }).catch(error => {
-                console.error(error);
+                if (error.response && error.response.data) {
+                    // Backend error message handling
+                    const backendError = error.response.data;
+                    setErrors((prevErrors) => ({ ...prevErrors, email: backendError }));
+                } else {
+                    console.error("Ismeretlen hiba történt!", error);
+                }
             })
 
         }
@@ -44,31 +50,34 @@ const UserSignUpComponent = () => {
     function validateForm() {
         let valid = true;
 
-        const errorsCopy = {... errors}
+        const errorsCopy = {...errors}; // Create copy of errors
 
-        if (name.trim) {
-            errorsCopy.name = "";
-        } else {
+        if (!name.trim()) {
             errorsCopy.name = "Név megadása kötelező!";
             valid = false;
+        } else {
+            errorsCopy.name = ""; // Clearing error
         }
 
-        if (email.trim) {
+        if (!email.trim()) {
+            errorsCopy.email = "Email cím megadása kötelező!";
+            valid = false;
+        } else {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email)) {
                 errorsCopy.email = "Az email cím formátuma érvénytelen!";
                 valid = false;
             } else {
-                errorsCopy.email = "";
+                errorsCopy.email = ""; // Clearing error
             }
-        } else {
-            errorsCopy.email = "Email cím megadása kötelező!";
-            valid = false;
         }
 
-        if (password.trim) {
-            const hasLetter = /[a-zA-Z]/.test(password); // Contains letter
-            const hasDigit = /[0-9]/.test(password); // Contains number
+        if (!password.trim()) {
+            errorsCopy.password = "Jelszó megadása kötelező!";
+            valid = false;
+        } else {
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasDigit = /[0-9]/.test(password);
 
             if (password.length < 6) {
                 errorsCopy.password = "A jelszónak legalább 6 karakter hosszúnak kell lennie!";
@@ -77,15 +86,11 @@ const UserSignUpComponent = () => {
                 errorsCopy.password = "A jelszónak tartalmaznia kell legalább egy betűt és egy számot!";
                 valid = false;
             } else {
-                errorsCopy.password = "";
+                errorsCopy.password = ""; // Clearing error
             }
-        } else {
-            errorsCopy.password = "Jelszó megadása kötelező!";
-            valid = false;
         }
 
-        setErrors(errorsCopy);
-
+        setErrors(errorsCopy); // Update errors
         return valid;
     }
 
@@ -110,8 +115,9 @@ const UserSignUpComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Email cím:</label>
-                                <input type="text"
+                                <label className="form-label" htmlFor="email">Email cím:</label>
+                                <input type="email"
+                                       id="email"
                                        placeholder="Email cím"
                                        name="email"
                                        value={email}
