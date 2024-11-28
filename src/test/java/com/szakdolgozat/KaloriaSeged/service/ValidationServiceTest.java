@@ -21,7 +21,10 @@ public class ValidationServiceTest {
     private static final String USER_EMAIL = "test@mail.com";
     private static final String USER_NAME = "name";
     private static final String USER_PASSWORD = "testpw";
-    private static final String PASSWORD = "password";
+    private static final String VALID_PASSWORD = "password123";
+    private static final String SHORT_PASSWORD = "p123";
+    private static final String INVALID_PASSWORD_ONLY_LETTER = "asdasd";
+    private static final String INVALID_PASSWORD_ONLY_NUMBER = "123456";
     private static final String EMPTY_STRING = "";
 
     @Mock
@@ -44,7 +47,7 @@ public class ValidationServiceTest {
 
         loginRequest = new LoginRequest();
         loginRequest.setEmail(USER_EMAIL);
-        loginRequest.setPassword(PASSWORD);
+        loginRequest.setPassword(VALID_PASSWORD);
 
         MockitoAnnotations.openMocks(this);
     }
@@ -86,7 +89,7 @@ public class ValidationServiceTest {
     void testRegisterUserSuccess() {
         // GIVEN
         userDto.setName(USER_NAME);
-        userDto.setPassword(PASSWORD);
+        userDto.setPassword(VALID_PASSWORD);
         when(validatePasswordUtil.encodePassword(loginRequest.getPassword())).thenReturn(userDto.getPassword());
 
         // WHEN
@@ -113,7 +116,7 @@ public class ValidationServiceTest {
         // GIVEN
         userDto.setName(EMPTY_STRING);  // Invalid name
         userDto.setEmail(USER_EMAIL);
-        userDto.setPassword(PASSWORD);
+        userDto.setPassword(VALID_PASSWORD);
 
         // WHEN & THEN
         RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
@@ -125,7 +128,7 @@ public class ValidationServiceTest {
         // GIVEN
         userDto.setName(USER_NAME);
         userDto.setEmail(EMPTY_STRING);  // Invalid email
-        userDto.setPassword(PASSWORD);
+        userDto.setPassword(VALID_PASSWORD);
 
         // WHEN & THEN
         RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
@@ -137,7 +140,7 @@ public class ValidationServiceTest {
         // GIVEN
         userDto.setName(USER_NAME);
         userDto.setEmail(USER_EMAIL);
-        userDto.setPassword(PASSWORD);
+        userDto.setPassword(VALID_PASSWORD);
 
         when(userServiceImpl.getUserByEmail(USER_EMAIL)).thenReturn(userDto);
 
@@ -147,7 +150,7 @@ public class ValidationServiceTest {
     }
 
     @Test
-    void testRegisterUserInvalidPassword() {
+    void testRegisterUserEmptyPassword() {
         // GIVEN
         userDto.setName(USER_NAME);
         userDto.setEmail(USER_EMAIL);
@@ -156,5 +159,41 @@ public class ValidationServiceTest {
         // WHEN & THEN
         RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
         assertEquals("Jelszó megadása kötelező!", exception.getMessage());
+    }
+
+    @Test
+    void testRegisterUserWithTooShortPassword() {
+        // GIVEN
+        userDto.setName(USER_NAME);
+        userDto.setEmail(USER_EMAIL);
+        userDto.setPassword(SHORT_PASSWORD);  // Invalid password
+
+        // WHEN & THEN
+        RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
+        assertEquals("A jelszónak legalább 6 karakter hosszúnak kell lennie!", exception.getMessage());
+    }
+
+    @Test
+    void testRegisterUserWithInvalidOnlyLetterPassword() {
+        // GIVEN
+        userDto.setName(USER_NAME);
+        userDto.setEmail(USER_EMAIL);
+        userDto.setPassword(INVALID_PASSWORD_ONLY_LETTER);  // Invalid password
+
+        // WHEN & THEN
+        RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
+        assertEquals("A jelszónak tartalmaznia kell legalább egy betűt és egy számot!", exception.getMessage());
+    }
+
+    @Test
+    void testRegisterUserWithInvalidOnlyNumberPassword() {
+        // GIVEN
+        userDto.setName(USER_NAME);
+        userDto.setEmail(USER_EMAIL);
+        userDto.setPassword(INVALID_PASSWORD_ONLY_NUMBER);  // Invalid password
+
+        // WHEN & THEN
+        RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
+        assertEquals("A jelszónak tartalmaznia kell legalább egy betűt és egy számot!", exception.getMessage());
     }
 }
