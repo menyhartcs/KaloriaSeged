@@ -65,6 +65,11 @@ public class ValidationService {
         if(email == null || email.trim().isEmpty()) {
             throw new RegistrationException("Email cím megadása kötelező!");
         }
+        // Checks with REGEX if it is a valid email
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if (!email.matches(emailRegex)) {
+            throw new RegistrationException("Az email cím formátuma érvénytelen!");
+        }
         if (userServiceImpl.getUserByEmail(email) != null) {
             throw new RegistrationException("Ez az email cím már regisztrálva van!");
         }
