@@ -37,7 +37,7 @@ public class Configuration {
         // CORS settings.
         http.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of("http://localhost:3000"));  // A front-end URL-je
+            config.setAllowedOrigins(List.of("http://localhost:3000"));  // Front-end URL
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
             config.setAllowedHeaders(List.of("*"));
             config.setAllowCredentials(true);
