@@ -153,13 +153,6 @@ const CalorieCalculatorComponent = () => {
                 </table>
             );
             setShowResult(true)
-
-            console.log("BMR: " + bmr)
-            console.log("calorie: " + calculatedCalorie)
-            console.log("protein: " + calculatedProtein)
-            console.log("fat: " + calculatedFat)
-            console.log("carbohydrate: " + calculatedCarbohydrate)
-
         }
 
     }
