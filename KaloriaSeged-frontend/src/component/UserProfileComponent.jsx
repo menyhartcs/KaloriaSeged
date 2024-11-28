@@ -20,6 +20,7 @@ const UserProfileComponent = () => {
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
     const currentToken = localStorage.getItem("token");
+    const [showDeletePopUp, setShowDeletePopUp] = useState(false);
 
     useEffect(() => {
         if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
@@ -103,6 +104,15 @@ const UserProfileComponent = () => {
         }).catch(error => {
             console.error(error);
         })
+    }
+
+    function handleDeleteConfirm() {
+        removeUser();
+        setShowDeletePopUp(false);
+    }
+
+    function handleDeleteCancel() {
+        setShowDeletePopUp(false);
     }
 
     function validateForm() {
@@ -247,7 +257,32 @@ const UserProfileComponent = () => {
 
                             <button className="btn btn-primary mt-3" onClick={saveOrUpdateUser}>Frissít</button>
                         </form>
-                        <button className="btn btn-danger float-end" onClick={removeUser}>Fiók törlése</button>
+                        <button className="btn btn-danger float-end"
+                                onClick={() => setShowDeletePopUp(true)}>Fiók törlése
+                        </button>
+                        {showDeletePopUp && (
+                            <div className="modal show" style={{ display: 'block' }} onClick={handleDeleteCancel}>
+                                <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">Figyelem</h5>
+                                            <button type="button" className="btn-close" onClick={handleDeleteCancel}></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <p>Biztosan törölni szeretnéd a fiókodat?</p>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" onClick={handleDeleteCancel}>
+                                                Mégse
+                                            </button>
+                                            <button type="button" className="btn btn-danger" onClick={handleDeleteConfirm}>
+                                                Törlés
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
