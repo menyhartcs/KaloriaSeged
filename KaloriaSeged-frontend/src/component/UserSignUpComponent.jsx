@@ -52,14 +52,14 @@ const UserSignUpComponent = () => {
 
         const errorsCopy = {...errors}; // Create copy of errors
 
-        if (!name.trim()) {
+        if (!name.trim) {
             errorsCopy.name = "Név megadása kötelező!";
             valid = false;
         } else {
             errorsCopy.name = ""; // Clearing error
         }
 
-        if (!email.trim()) {
+        if (!email.trim) {
             errorsCopy.email = "Email cím megadása kötelező!";
             valid = false;
         } else {
@@ -72,7 +72,7 @@ const UserSignUpComponent = () => {
             }
         }
 
-        if (!password.trim()) {
+        if (!password.trim) {
             errorsCopy.password = "Jelszó megadása kötelező!";
             valid = false;
         } else {
@@ -103,8 +103,9 @@ const UserSignUpComponent = () => {
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                <label className="form-label">Név:</label>
+                                <label className="form-label" htmlFor="name">Név:</label>
                                 <input type="text"
+                                       id="name"
                                        placeholder="Név"
                                        name="name"
                                        value={name}
@@ -128,8 +129,9 @@ const UserSignUpComponent = () => {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label className="form-label">Jelszó:</label>
+                                <label className="form-label" htmlFor="password">Jelszó:</label>
                                 <input type="password"
+                                       id="password"
                                        placeholder="Jelszó"
                                        name="password"
                                        value={password}
