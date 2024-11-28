@@ -22,10 +22,10 @@ public class ValidationService {
     public void loginUser(LoginRequest loginRequest) {
         UserDto user = userServiceImpl.getUserByEmail(loginRequest.getEmail());
         if (user == null) {
-            throw new LoginException("Hibás adatok!");
+            throw new LoginException("Az alábbi email cím nincs regisztrálva!");
         }
         if (loginRequest.getPassword() == null || loginRequest.getPassword().trim().isEmpty()) {
-            throw new RegistrationException("Jelszó megadása kötelező!");
+            throw new LoginException("Jelszó megadása kötelező!");
         }
         if (!validatePasswordUtil.checkPassword(loginRequest.getPassword(), user.getPassword())) {
             throw new LoginException("Hibás jelszó!");
