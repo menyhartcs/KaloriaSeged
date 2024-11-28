@@ -195,21 +195,21 @@ const CalorieCalculatorComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (height+"".trim()) {
+        if (height+"".trim() && !isNullOrUndef(height)) {
             errorsCopy.height = "";
         } else {
             errorsCopy.height = "Magasság megadása kötelező!";
             valid = false;
         }
 
-        if (weight+"".trim()) {
+        if (weight+"".trim() && !isNullOrUndef(weight)) {
             errorsCopy.weight = "";
         } else {
             errorsCopy.weight = "Súly megadása kötelező!";
             valid = false;
         }
 
-        if (age+"".trim()) {
+        if (age+"".trim() && !isNullOrUndef(age)) {
             errorsCopy.age = "";
         } else {
             errorsCopy.age = "Kor megadása kötelező!";
