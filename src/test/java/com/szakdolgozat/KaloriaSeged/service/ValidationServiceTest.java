@@ -26,6 +26,7 @@ public class ValidationServiceTest {
     private static final String INVALID_PASSWORD_ONLY_LETTER = "asdasd";
     private static final String INVALID_PASSWORD_ONLY_NUMBER = "123456";
     private static final String EMPTY_STRING = "";
+    private static final String INVALID_EMAIL = "test@mail";
 
     @Mock
     private UserServiceImpl userServiceImpl;
@@ -124,7 +125,7 @@ public class ValidationServiceTest {
     }
 
     @Test
-    void testRegisterUserInvalidEmail() {
+    void testRegisterUserEmptyEmail() {
         // GIVEN
         userDto.setName(USER_NAME);
         userDto.setEmail(EMPTY_STRING);  // Invalid email
@@ -133,6 +134,18 @@ public class ValidationServiceTest {
         // WHEN & THEN
         RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
         assertEquals("Email cím megadása kötelező!", exception.getMessage());
+    }
+
+    @Test
+    void testRegisterUserInvalidEmail() {
+        // GIVEN
+        userDto.setName(USER_NAME);
+        userDto.setEmail(INVALID_EMAIL);  // Invalid email
+        userDto.setPassword(VALID_PASSWORD);
+
+        // WHEN & THEN
+        RegistrationException exception = assertThrows(RegistrationException.class, () -> validationService.registerUser(userDto));
+        assertEquals("Az email cím formátuma érvénytelen!", exception.getMessage());
     }
 
     @Test
