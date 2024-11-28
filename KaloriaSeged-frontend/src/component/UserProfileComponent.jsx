@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getUserByEmail, updateUser} from "../service/UserService.js";
+import {deleteUser, getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
@@ -95,6 +95,14 @@ const UserProfileComponent = () => {
 
         }
 
+    }
+
+    function removeUser() {
+        deleteUser(id).then(() => {
+            navigator("/UserLogOut")
+        }).catch(error => {
+            console.error(error);
+        })
     }
 
     function validateForm() {
@@ -239,6 +247,7 @@ const UserProfileComponent = () => {
 
                             <button className="btn btn-primary mt-3" onClick={saveOrUpdateUser}>Frissít</button>
                         </form>
+                        <button className="btn btn-danger float-end" onClick={removeUser}>Fiók törlése</button>
                     </div>
                 </div>
             </div>
