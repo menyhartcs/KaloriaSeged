@@ -8,6 +8,7 @@ const UserLogInComponent = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigator = useNavigate();
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
@@ -19,12 +20,6 @@ const UserLogInComponent = () => {
         email: "",
         password: ""
     })
-
-    const navigator = useNavigate();
-
-    function getCurrentDate() {
-        return moment().format('YYYY-MM-DD');
-    }
 
     async function authenticateUser(e) {
         e.preventDefault();
