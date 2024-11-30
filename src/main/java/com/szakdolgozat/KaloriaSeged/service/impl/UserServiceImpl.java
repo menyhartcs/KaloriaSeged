@@ -2,9 +2,11 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
+import com.szakdolgozat.KaloriaSeged.entity.UserExerciseLog;
 import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.exception.ResourceNotFoundException;
 import com.szakdolgozat.KaloriaSeged.mapper.UserMapper;
+import com.szakdolgozat.KaloriaSeged.repository.UserExerciseLogRepository;
 import com.szakdolgozat.KaloriaSeged.repository.UserFoodLogRepository;
 import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private final UserFoodLogRepository userFoodLogRepository;
+    private final UserExerciseLogRepository userExerciseLogRepository;
 
     // Creates the User.
     @Override
@@ -82,6 +85,12 @@ public class UserServiceImpl implements UserService {
         userFoodLogs.forEach(userFoodLog -> {
             userFoodLog.setUser(updatedUserObj);
             userFoodLogRepository.save(userFoodLog);
+        });
+
+        List<UserExerciseLog> userExerciseLogs = userExerciseLogRepository.findByExerciseId(userId);
+        userExerciseLogs.forEach(userExerciseLog -> {
+            userExerciseLog.setUser(updatedUserObj);
+            userExerciseLogRepository.save(userExerciseLog);
         });
 
         return UserMapper.mapToUserDto(updatedUserObj);

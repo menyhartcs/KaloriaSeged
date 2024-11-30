@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.mapper;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.dto.UserExerciseLogDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
 
@@ -16,6 +17,9 @@ public class UserMapper {
         List<UserFoodLogDto> foodLogDtos = user.getFoodLogs().stream()
                 .map(UserFoodLogMapper::mapToUserFoodLogDto)
                 .toList();
+        List<UserExerciseLogDto> exerciseLogDtos = user.getExerciseLogs().stream()
+                .map(UserExerciseLogMapper::mapToUserExerciseLogDto)
+                .toList();
         return new UserDto(
                 user.getId(),
                 user.getName(),
@@ -30,7 +34,8 @@ public class UserMapper {
                 user.getCarbohydrate(),
                 user.getFat(),
                 user.getRole(),
-                foodLogDtos
+                foodLogDtos,
+                exerciseLogDtos
         );
     }
 
