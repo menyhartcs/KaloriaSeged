@@ -16,7 +16,7 @@ import {isNullOrUndef} from "chart.js/helpers";
 import {getUserByEmail} from "../service/UserService.js";
 import {analyze} from "../service/AnalyzerService.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {listUserExerciseLogsByUserIdAndDate} from "../service/UserExerciseLogService.js";
+import {deleteUserExerciseLog, listUserExerciseLogsByUserIdAndDate} from "../service/UserExerciseLogService.js";
 
 const ListUserFoodLogComponent = () => {
 
@@ -105,6 +105,14 @@ const ListUserFoodLogComponent = () => {
         })
     }
 
+    function getUserExerciseLogsByDate(date) {
+        listUserExerciseLogsByDate(date).then((response) => {
+            setUserFoodLogs(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
     function getUserFoodLogsByUserIdAndDate(userId, date) {
         listUserFoodLogsByUserIdAndDate(userId, date).then((response) => {
             setUserFoodLogs(response.data);
@@ -171,6 +179,20 @@ const ListUserFoodLogComponent = () => {
                 getUserFoodLogsByDate(selectedDate);
             } else {
                 getUserFoodLogsByUserIdAndDate(userId, date);
+            }
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
+    function removeUserExerciseLog(id) {
+        console.log(id);
+
+        deleteUserExerciseLog(id).then(() => {
+            if (isNullOrUndef(userId)) {
+                getUserExerciseLogsByDate(selectedDate);
+            } else {
+                getUserExerciseLogsByUserIdAndDate(userId, date);
             }
         }).catch(error => {
             console.error(error);
