@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {deleteFood, listFoods} from "../service/FoodService.js";
+import {deleteExercise, listExercises} from "../service/ExerciseService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 import {analyze} from "../service/AnalyzerService.js";
 
-const ListFoodComponent = () => {
+const ListExerciseComponent = () => {
 
-    const [foods, setFoods] = useState([])
-    const [filteredFoods, setFilteredFoods] = useState([]);
+    const [exercises, setExercises] = useState([])
+    const [filteredExercises, setFilteredExercises] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const navigator = useNavigate();
     const [showCard, setShowCard] = useState(false);
@@ -18,55 +18,55 @@ const ListFoodComponent = () => {
         if (isNullOrUndef(currentEmail) && isNullOrUndef(localStorage.getItem("token"))) {
             navigator("/UserLogIn");
         } else {
-            getAllFoods();
+            getAllExercises();
         }
     }, []);
 
 
-    function getAllFoods() {
-        listFoods().then((response) => {
-            setFoods(response.data);
-            setFilteredFoods(response.data);
+    function getAllExercises() {
+        listExercises().then((response) => {
+            setExercises(response.data);
+            setFilteredExercises(response.data);
         }).catch(error => {
             console.error(error);
         })
     }
 
-    function searchFoods(query) {
+    function searchExercises(query) {
         setSearchQuery(query);
         if (query === "") {
-            setFilteredFoods(foods);
+            setFilteredExercises(exercises);
         } else {
-            const filtered = foods.filter(food =>
-                food.name.toLowerCase().includes(query.toLowerCase())
+            const filtered = exercises.filter(exercise =>
+                exercise.name.toLowerCase().includes(query.toLowerCase())
             );
-            setFilteredFoods(filtered);
+            setFilteredExercises(filtered);
         }
     }
 
-    function addNewFood() {
-        navigator("/add-food")
+    function addNewExercise() {
+        navigator("/add-exercise")
     }
 
-    function updateFood(id) {
-        navigator(`/edit-food/${id}`)
+    function updateExercise(id) {
+        navigator(`/edit-exercise/${id}`)
     }
 
-    function eatFood(id) {
-        navigator(`/add-userFoodLog/${id}`)
+    function doExercise(id) {
+        navigator(`/add-userExerciseLog/${id}`)
     }
 
-    function removeFood(id) {
+    function removeExercise(id) {
         console.log(id);
 
-        deleteFood(id).then(() => {
-            getAllFoods();
+        deleteExercise(id).then(() => {
+            getAllExercises();
         }).catch(error => {
             console.error(error);
         })
     }
 
-    function analyzeUserFoodLog(prompt) {
+    function analyzeUserExerciseLog(prompt) {
         setShowCard(!showCard)
         if (showCard === true) {
             setAnalysisResult("");
@@ -89,7 +89,7 @@ const ListFoodComponent = () => {
             setAnalysisResult("");
         }
 
-        let prompt = `Adj tanácsot, hogy mit egyek ma, az alábbi lista áll rendelkezésedre: ${getSimpleFoodList()}
+        let prompt = `Adj tanácsot, hogy mit egyek ma, az alábbi lista áll rendelkezésedre: ${getSimpleExerciseList()}
         ebben megtalálod az ételek nevét és a hozzájuk tartozó makrotápanyagokat, 
         válassz ki belőle párat, 
         amit mára ajánlanál`
@@ -104,8 +104,8 @@ const ListFoodComponent = () => {
             });
     }
 
-    function getSimpleFoodList() {
-        return foods.map(food => food.name);
+    function getSimpleExerciseList() {
+        return exercises.map(exercise => exercise.name);
     }
 
     function hideInfo() {
@@ -136,33 +136,33 @@ const ListFoodComponent = () => {
         )
     }
 
-    function showAdminButtons(foodId) {
+    function showAdminButtons(exerciseId) {
         if ("admin@mail.com" === currentEmail) {
             return (
                 <>
                     <button className="btn btn-warning m-1"
-                            onClick={() => updateFood(foodId)}><i className="bi bi-pencil"></i>
+                            onClick={() => updateExercise(exerciseId)}><i className="bi bi-pencil"></i>
                     </button>
                     <button className="btn btn-danger m-1"
-                            onClick={() => removeFood(foodId)}><i className="bi bi-trash"></i>
+                            onClick={() => removeExercise(exerciseId)}><i className="bi bi-trash"></i>
                     </button>
                 </>
             )
         }
     }
 
-    function showUserButtons(food) {
+    function showUserButtons(exercise) {
         if ("admin@mail.com" !== currentEmail) {
             return (
                 <>
                     <button className="btn btn-success m-1"
                             title="Megeszem"
-                            onClick={() => eatFood(food.id)}><i className="bi bi-journal-text"></i>
+                            onClick={() => doExercise(exercise.id)}><i className="bi bi-journal-text"></i>
                     </button>
                     <button className="btn btn-info m-1"
                             title="Információ"
-                            onClick={() => analyzeUserFoodLog(
-                                `Röviden mutasd be az ételt: ${food.name}
+                            onClick={() => analyzeUserExerciseLog(
+                                `Röviden mutasd be az ételt: ${exercise.name}
                                         és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
                             )}><i className="bi bi-info-circle"></i>
                     </button>
@@ -173,40 +173,37 @@ const ListFoodComponent = () => {
 
     return (
         <div className="container main-content">
-            <h2 className="text-center">Elérhető ételek listája</h2>
+            <h2 className="text-center">Elérhető tevékenységek listája</h2>
             <div className="row">
                 <div className="col-md-8">
                     <div className="card p-3">
                         <input
                             type="text"
                             className="form-control mb-2"
-                            placeholder="Keresés étel neve alapján"
+                            placeholder="Keresés tevékenység neve alapján"
                             value={searchQuery}
-                            onChange={(e) => searchFoods(e.target.value)}
+                            onChange={(e) => searchExercises(e.target.value)}
                         />
 
-                        <button className="btn btn-dark mb-2" onClick={addNewFood}>Étel hozzáadása</button>
+                        <button className="btn btn-dark mb-2" onClick={addNewExercise}>Tevékenység hozzáadása</button>
                         <table className="table table-striped table-bordered">
                             <tbody>
                             {
-                                filteredFoods.map(food =>
-                                    <tr key={food.id}>
+                                filteredExercises.map(exercise =>
+                                    <tr key={exercise.id}>
                                         <td>
                                             <div className="form-group m-1">
-                                                <h4><b>{food.name}</b></h4>
+                                                <h4><b>{exercise.name}</b></h4>
                                             </div>
                                         </td>
                                         <td>
                                             <ul>
-                                                <li><b className="nutritionText energy">Energia:</b> {food.calorie} kcal</li>
-                                                <li><b className="nutritionText protein">Fehérje:</b> {food.protein} g</li>
-                                                <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {food.carbohydrate} g</li>
-                                                <li><b className="nutritionText fat">Zsír:</b> {food.fat} g</li>
+                                                <b className="nutritionText energy">Energia:</b> {exercise.calorie} kcal
                                             </ul>
                                         </td>
                                         <td>
-                                            {showUserButtons(food)}
-                                            {showAdminButtons(food.id)}
+                                            {showUserButtons(exercise)}
+                                            {showAdminButtons(exercise.id)}
                                         </td>
                                     </tr>)
                             }
@@ -220,4 +217,4 @@ const ListFoodComponent = () => {
     )
 }
 
-export default ListFoodComponent
+export default ListExerciseComponent

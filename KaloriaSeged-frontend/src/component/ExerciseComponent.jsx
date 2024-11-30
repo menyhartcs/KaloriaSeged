@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {createFood, getFoodById, updateFood} from "../service/FoodService.js";
+import {createExercise, getExerciseById, updateExercise} from "../service/ExerciseService.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
-const FoodComponent = () => {
+const ExerciseComponent = () => {
 
     const [name, setName] = useState([])
     const [calorie, setCalorie] = useState([])
-    const [fat, setFat] = useState([])
-    const [carbohydrate, setCarbohydrate] = useState([])
-    const [protein, setProtein] = useState([])
 
     const {id} = useParams();
 
@@ -21,22 +18,16 @@ const FoodComponent = () => {
 
     const [errors, setErrors] = useState({
         name: "",
-        calorie: "",
-        fat: "",
-        carbohydrate: "",
-        protein: "",
+        calorie: ""
     })
 
     const navigator = useNavigate();
 
     useEffect(() =>{
         if (id) {
-            getFoodById(id).then((response) => {
+            getExerciseById(id).then((response) => {
                 setName(response.data.name);
                 setCalorie(response.data.calorie);
-                setFat(response.data.fat);
-                setCarbohydrate(response.data.carbohydrate);
-                setProtein(response.data.protein);
             }).catch(error => {
                 console.error(error)
             })
@@ -44,25 +35,25 @@ const FoodComponent = () => {
 
     }, [id])
 
-    function saveOrUpdateFood(e) {
+    function saveOrUpdateExercise(e) {
         e.preventDefault();
 
         if (validateForm()) {
 
-            const food = {name, calorie, fat, carbohydrate, protein}
-            console.log(food)
+            const exercise = {name, calorie}
+            console.log(exercise)
 
             if (id) {
-                updateFood(id, food).then((response) => {
+                updateExercise(id, exercise).then((response) => {
                     console.log(response.data);
-                    navigator("/foods");
+                    navigator("/exercises");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
-                createFood(food).then((response) => {
+                createExercise(exercise).then((response) => {
                     console.log(response.data)
-                    navigator("/foods")
+                    navigator("/exercises")
                 }).catch(error => {
                     console.error(error);
                 })
@@ -91,27 +82,6 @@ const FoodComponent = () => {
             valid = false;
         }
 
-        if (fat+"".trim()) {
-            errorsCopy.fat = "";
-        } else {
-            errorsCopy.fat = "Zsír tartalom megadása kötelező!";
-            valid = false;
-        }
-
-        if (carbohydrate+"".trim()) {
-            errorsCopy.carbohydrate = "";
-        } else {
-            errorsCopy.carbohydrate = "Szénhidrát tartalom megadása kötelező!";
-            valid = false;
-        }
-
-        if (protein+"".trim()) {
-            errorsCopy.protein = "";
-        } else {
-            errorsCopy.protein = "Fehérje tartalom megadása kötelező!";
-            valid = false;
-        }
-
         setErrors(errorsCopy);
 
         return valid;
@@ -119,9 +89,9 @@ const FoodComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className="text-center">Étel szerkesztése</h2>
+            return <h2 className="text-center">Tevékenység szerkesztése</h2>
         } else {
-            return <h2 className="text-center">Étel hozzáadása</h2>
+            return <h2 className="text-center">Tevékenység hozzáadása</h2>
         }
     }
 
@@ -159,43 +129,7 @@ const FoodComponent = () => {
                                 {errors.calorie && <div className="invalid-feedback">{errors.calorie}</div>}
                             </div>
 
-                            <div className="form-group mb-2">
-                                <label className="form-label">Zsír (g):</label>
-                                <input type="number"
-                                       placeholder="Add meg az étel zsír tartalmát"
-                                       name="fat"
-                                       value={fat}
-                                       className={`form-control ${errors.fat ? "is-invalid" : ""}`}
-                                       onChange={(e) => setFat(e.target.value)}
-                                />
-                                {errors.fat && <div className="invalid-feedback">{errors.fat}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Szénhidrát (g):</label>
-                                <input type="number"
-                                       placeholder="Add meg az étel szénhidrát tartalmát"
-                                       name="carbohydrate"
-                                       value={carbohydrate}
-                                       className={`form-control ${errors.carbohydrate ? "is-invalid" : ""}`}
-                                       onChange={(e) => setCarbohydrate(e.target.value)}
-                                />
-                                {errors.carbohydrate && <div className="invalid-feedback">{errors.carbohydrate}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Fehérje (g):</label>
-                                <input type="number"
-                                       placeholder="Add meg az étel fehérje tartalmát"
-                                       name="protein"
-                                       value={protein}
-                                       className={`form-control ${errors.protein ? "is-invalid" : ""}`}
-                                       onChange={(e) => setProtein(e.target.value)}
-                                />
-                                {errors.protein && <div className="invalid-feedback">{errors.protein}</div>}
-                            </div>
-
-                            <button className="btn btn-success" onClick={saveOrUpdateFood}>Mentés</button>
+                            <button className="btn btn-success" onClick={saveOrUpdateExercise}>Mentés</button>
                         </form>
                     </div>
                 </div>
@@ -204,4 +138,4 @@ const FoodComponent = () => {
     )
 }
 
-export default FoodComponent
+export default ExerciseComponent

@@ -16,12 +16,17 @@ import {isNullOrUndef} from "chart.js/helpers";
 import {getUserByEmail} from "../service/UserService.js";
 import {analyze} from "../service/AnalyzerService.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import {listUserExerciseLogsByUserIdAndDate} from "../service/UserExerciseLogService.js";
 
 const ListUserFoodLogComponent = () => {
 
     const [userFoodLogs, setUserFoodLogs] = useState([])
+    const [userExerciseLogs, setUserExerciseLogs] = useState([])
     const [consumedNutrients, setConsumedNutrients] = useState({
         calorie: 0, protein: 0, carbohydrate: 0, fat: 0
+    });
+    const [doneExercises, setDoneExercises] = useState({
+        calorie: 0
     });
     const [selectedDate, setSelectedDate] = useState(getCurrentDate);
     const [analysisResult, setAnalysisResult] = useState("");
@@ -54,6 +59,7 @@ const ListUserFoodLogComponent = () => {
             getUserFoodLogsByDate(selectedDate);
         } else {
             getUserFoodLogsByUserIdAndDate(userId, date);
+            getUserExerciseLogsByUserIdAndDate(userId, date);
         }
 
     }, [userId, selectedDate]);
@@ -73,6 +79,19 @@ const ListUserFoodLogComponent = () => {
             setConsumedNutrients(summedNutrients);
         }
     }, [userFoodLogs]);
+
+    useEffect(() => {
+        if (userExerciseLogs.length > 0) {
+            const summedExercises = userExerciseLogs.reduce((dictionary, log) => {
+                const exercise = log.exercise || {};
+                return {
+                    calorie: dictionary.calorie + (Math.round(exercise.calorie * log.duration) || 0)
+                };
+            }, { calorie: 0 });
+
+            setDoneExercises(summedExercises);
+        }
+    }, [userExerciseLogs]);
 
     function getCurrentDate() {
         return moment().format('YYYY-MM-DD');
@@ -94,12 +113,28 @@ const ListUserFoodLogComponent = () => {
         })
     }
 
+    function getUserExerciseLogsByUserIdAndDate(userId, date) {
+        listUserExerciseLogsByUserIdAndDate(userId, date).then((response) => {
+            setUserExerciseLogs(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
     function addNewUserFoodLog() {
         navigator("/Foods")
     }
 
     function updateUserFoodLog(id) {
         navigator(`/edit-userFoodLog/${id}`)
+    }
+
+    function addNewUserExerciseLog() {
+        navigator("/Exercises")
+    }
+
+    function updateUserExerciseLog(id) {
+        navigator(`/edit-userExerciseLog/${id}`)
     }
 
     function analyzeUserFoodLog(prompt) {
@@ -153,6 +188,7 @@ const ListUserFoodLogComponent = () => {
                 getUserFoodLogsByDate(selectedDate);
             } else {
                 getUserFoodLogsByUserIdAndDate(userId, selectedDate);
+                getUserExerciseLogsByUserIdAndDate(userId, selectedDate);
             }
         }
     };
@@ -222,31 +258,31 @@ const ListUserFoodLogComponent = () => {
                             </div>
                             <div className="col-md-5">
                                 <div className="card p-3">
-                                    <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás
+                                    <button className="btn btn-dark mb-2" onClick={addNewUserExerciseLog}>Tevékenység naplózása
                                     </button>
                                     <table className="table table-striped table-bordered mt-3">
                                         <tbody>
                                         {
-                                            userFoodLogs.map(userFoodLog =>
-                                                <tr key={userFoodLog.id}>
+                                            userExerciseLogs.map(userExerciseLog =>
+                                                <tr key={userExerciseLog.id}>
                                                     <td>
                                                         <div className="form-group m-1">
-                                                            <h4><b>{userFoodLog.food.name}</b></h4>
+                                                            <h4><b>{userExerciseLog.exercise.name}</b></h4>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <b className="nutritionText energy">Energia:</b>
                                                         <br/>
-                                                        {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal
+                                                        {Math.round(userExerciseLog.exercise.calorie * userExerciseLog.duration)} kcal
 
                                                     </td>
                                                     <td>
                                                         <button className="btn btn-warning m-1"
-                                                                onClick={() => updateUserFoodLog(userFoodLog.id)}>
+                                                                onClick={() => updateUserExerciseLog(userExerciseLog.id)}>
                                                             <i className="bi bi-pencil"></i>
                                                         </button>
                                                         <button className="btn btn-danger m-1"
-                                                                onClick={() => removeUserFoodLog(userFoodLog.id)}>
+                                                                onClick={() => removeUserExerciseLog(userExerciseLog.id)}>
                                                             <i className="bi bi-trash"></i>
                                                         </button>
                                                     </td>
@@ -266,7 +302,7 @@ const ListUserFoodLogComponent = () => {
                             <ProteinChart user={user} consumedProtein={consumedNutrients.protein}/>
                             <CarbohydrateChart user={user} consumedCarbohydrate={consumedNutrients.carbohydrate}/>
                             <FatChart user={user} consumedFat={consumedNutrients.fat}/>
-                            <CalorieChart user={user} consumedCalorie={consumedNutrients.calorie}/>
+                            <CalorieChart maxCalorie={user.calorie + doneExercises.calorie} consumedCalorie={consumedNutrients.calorie}/>
                         </div>
                         <button
                             className="btn btn-info mt-3"

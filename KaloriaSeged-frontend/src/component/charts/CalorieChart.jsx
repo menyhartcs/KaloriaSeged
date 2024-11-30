@@ -5,12 +5,12 @@ import {isNullOrUndef} from "chart.js/helpers";
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const CalorieChart = ({ user, consumedCalorie }) => {
+const CalorieChart = ({ maxCalorie, consumedCalorie }) => {
     const defaultCalorie = 2000
-    const maxCalorie = isNullOrUndef(user.calorie) ? defaultCalorie : user.calorie;
-    const chartDataDescription = `${consumedCalorie}/${maxCalorie} kcal`
-    consumedCalorie = Math.min(consumedCalorie, maxCalorie);
-    const percentageFilled = (consumedCalorie / maxCalorie) * 100;
+    const calorieLimit = isNullOrUndef(maxCalorie) ? defaultCalorie : maxCalorie;
+    const chartDataDescription = `${consumedCalorie}/${calorieLimit} kcal`
+    consumedCalorie = Math.min(consumedCalorie, calorieLimit);
+    const percentageFilled = (consumedCalorie / calorieLimit) * 100;
 
     const data = {
         labels: ['Kalória'],
