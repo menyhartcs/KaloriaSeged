@@ -29,6 +29,7 @@ public class UserMapper {
                 user.getProtein(),
                 user.getCarbohydrate(),
                 user.getFat(),
+                user.getRole(),
                 foodLogDtos
         );
     }
@@ -48,6 +49,7 @@ public class UserMapper {
         user.setProtein(userDto.getProtein());
         user.setCarbohydrate(userDto.getCarbohydrate());
         user.setFat(userDto.getFat());
+        user.setRole(userDto.getRole());
         return user;
     }
 }

@@ -47,6 +47,8 @@ public class User {
     private Integer carbohydrate;
     @Column(name = "fat")
     private Integer fat;
+    @Column(name = "role")
+    private String role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFoodLog> foodLogs = new ArrayList<>();
 }

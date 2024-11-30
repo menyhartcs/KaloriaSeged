@@ -29,5 +29,6 @@ public class UserDto {
     private Integer protein;
     private Integer carbohydrate;
     private Integer fat;
+    private String role;
     private List<UserFoodLogDto> foodLogs;
 }

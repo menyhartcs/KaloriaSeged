@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         user.setProtein(updatedUser.getProtein());
         user.setCarbohydrate(updatedUser.getCarbohydrate());
         user.setFat(updatedUser.getFat());
+        user.setRole(updatedUser.getRole());
 
         User updatedUserObj = userRepository.save(user);
 
