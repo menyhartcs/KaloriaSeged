@@ -28,6 +28,7 @@ public class RegistrationController {
         user.setEmail(registrationRequest.getEmail());
         user.setName(registrationRequest.getName());
         user.setPassword(registrationRequest.getPassword());
+        user.setRole("ROLE_USER");
 
         try {
             validationService.registerUser(user);
