@@ -6,10 +6,10 @@ import {
     listUserFoodLogsByDate,
     listUserFoodLogsByUserIdAndDate
 } from "../service/UserFoodLogService.js";
-import ProteinChart from "./ProteinChart.jsx";
-import CarbohydrateChart from "./CarbohydrateChart.jsx";
-import FatChart from "./FatChart.jsx";
-import CalorieChart from "./CalorieChart.jsx";
+import ProteinChart from "./charts/ProteinChart.jsx";
+import CarbohydrateChart from "./charts/CarbohydrateChart.jsx";
+import FatChart from "./charts/FatChart.jsx";
+import CalorieChart from "./charts/CalorieChart.jsx";
 import '../style/Charts.css';
 import moment from 'moment';
 import {isNullOrUndef} from "chart.js/helpers";
