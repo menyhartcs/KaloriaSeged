@@ -15,6 +15,7 @@ import moment from 'moment';
 import {isNullOrUndef} from "chart.js/helpers";
 import {getUserByEmail} from "../service/UserService.js";
 import {analyze} from "../service/AnalyzerService.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const ListUserFoodLogComponent = () => {
 
@@ -171,45 +172,120 @@ const ListUserFoodLogComponent = () => {
                             onChange={handleChangeDate}
                             onKeyDown={handleKeyDown}
                         />
-                        <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás</button>
-                        <table className="table table-striped table-bordered mt-3">
-                            <tbody>
-                            {
-                                userFoodLogs.map(userFoodLog =>
-                                    <tr key={userFoodLog.id}>
-                                        <td>
-                                            <div className="form-group m-1">
-                                                <h4><b>{userFoodLog.food.name}</b></h4>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <ul>
-                                                <li><b className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal</li>
-                                                <li><b className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g</li>
-                                                <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g</li>
-                                                <li><b className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g</li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-warning m-1"
-                                                    onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt</button>
-                                            <button className="btn btn-danger m-1"
-                                                    onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl</button>
-                                            <button className="btn btn-info m-1"
-                                                    onClick={() => analyzeUserFoodLog(
-                                                        `Röviden elemezd az ételt:
-                                                         Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
-                                                         Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
-                                                         Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
-                                                         Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
-                                                         és adj tanácsot, mikor lenne érdemes fogyasztani, nagyon röviden`
-                                                    )}>Elemezd
-                                            </button>
-                                        </td>
-                                    </tr>)
-                            }
-                            </tbody>
-                        </table>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="card p-3">
+                                    <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás
+                                    </button>
+                                    <table className="table table-striped table-bordered mt-3">
+                                        <tbody>
+                                        {
+                                            userFoodLogs.map(userFoodLog =>
+                                                <tr key={userFoodLog.id}>
+                                                    <td>
+                                                        <div className="form-group m-1">
+                                                            <h4><b>{userFoodLog.food.name}</b></h4>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li><b
+                                                                className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <button className="btn btn-warning m-1"
+                                                                title="Szerkeszt"
+                                                                onClick={() => updateUserFoodLog(userFoodLog.id)}><i className="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button className="btn btn-danger m-1"
+                                                                title="Töröl"
+                                                                onClick={() => removeUserFoodLog(userFoodLog.id)}><i className="bi bi-trash"></i>
+                                                        </button>
+                                                        <button className="btn btn-info m-1"
+                                                                title="Információ"
+                                                                onClick={() => analyzeUserFoodLog(
+                                                                    `Röviden elemezd az ételt:
+                                                             Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
+                                                             Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
+                                                             Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
+                                                             Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
+                                                             és adj tanácsot, mikor lenne érdemes fogyasztani, nagyon röviden`
+                                                                )}><i className="bi bi-info-circle"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>)
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="card p-3">
+                                    <button className="btn btn-dark mb-2" onClick={addNewUserFoodLog}>Étel fogyasztás
+                                    </button>
+                                    <table className="table table-striped table-bordered mt-3">
+                                        <tbody>
+                                        {
+                                            userFoodLogs.map(userFoodLog =>
+                                                <tr key={userFoodLog.id}>
+                                                    <td>
+                                                        <div className="form-group m-1">
+                                                            <h4><b>{userFoodLog.food.name}</b></h4>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li><b
+                                                                className="nutritionText energy">Energia:</b> {Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)} kcal
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText protein">Fehérje:</b> {Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText carbohydrate">Szénhidrát:</b> {Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                            <li><b
+                                                                className="nutritionText fat">Zsír:</b> {Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)} g
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <button className="btn btn-warning m-1"
+                                                                onClick={() => updateUserFoodLog(userFoodLog.id)}>Szerkeszt
+                                                        </button>
+                                                        <button className="btn btn-danger m-1"
+                                                                onClick={() => removeUserFoodLog(userFoodLog.id)}>Töröl
+                                                        </button>
+                                                        <button className="btn btn-info m-1"
+                                                                onClick={() => analyzeUserFoodLog(
+                                                                    `Röviden elemezd az ételt:
+                                                             Energia: ${Math.round(userFoodLog.food.calorie * userFoodLog.amount / 100)}
+                                                             Zsír: ${Math.round(userFoodLog.food.fat * userFoodLog.amount / 100)}
+                                                             Szénhidrát: ${Math.round(userFoodLog.food.carbohydrate * userFoodLog.amount / 100)}
+                                                             Fehérje: ${Math.round(userFoodLog.food.protein * userFoodLog.amount / 100)}
+                                                             és adj tanácsot, mikor lenne érdemes fogyasztani, nagyon röviden`
+                                                                )}>Elemezd
+                                                        </button>
+                                                    </td>
+                                                </tr>)
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div className="col-md-4">
