@@ -141,10 +141,10 @@ const ListFoodComponent = () => {
             return (
                 <>
                     <button className="btn btn-warning m-1"
-                            onClick={() => updateFood(foodId)}>Szerkeszt
+                            onClick={() => updateFood(foodId)}><i className="bi bi-pencil"></i>
                     </button>
                     <button className="btn btn-danger m-1"
-                            onClick={() => removeFood(foodId)}>Töröl
+                            onClick={() => removeFood(foodId)}><i className="bi bi-trash"></i>
                     </button>
                 </>
             )
@@ -156,13 +156,15 @@ const ListFoodComponent = () => {
             return (
                 <>
                     <button className="btn btn-success m-1"
-                            onClick={() => eatFood(food.id)}>Megeszem
+                            title="Megeszem"
+                            onClick={() => eatFood(food.id)}><i className="bi bi-journal-text"></i>
                     </button>
                     <button className="btn btn-info m-1"
+                            title="Információ"
                             onClick={() => analyzeUserFoodLog(
                                 `Röviden mutasd be az ételt: ${food.name}
                                         és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
-                            )}>Infó
+                            )}><i className="bi bi-info-circle"></i>
                     </button>
                 </>
             )

@@ -94,8 +94,12 @@ const ListUserComponent = () => {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>
-                                <button className="btn btn-warning m-1" onClick={() => updateUser(user.id)}>Szerkeszt</button>
-                                <button className="btn btn-danger m-1" onClick={() => removeUser(user.id)}>Töröl</button>
+                                <button className="btn btn-warning m-1" onClick={() => updateUser(user.id)}>
+                                    <i className="bi bi-pencil"></i>
+                                </button>
+                                <button className="btn btn-danger m-1" onClick={() => removeUser(user.id)}>
+                                    <i className="bi bi-trash"></i>
+                                </button>
                             </td>
                         </tr>)
                 }
