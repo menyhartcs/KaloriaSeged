@@ -77,14 +77,6 @@ const ListUserFoodLogComponent = () => {
         return moment().format('YYYY-MM-DD');
     }
 
-    function getAllUserFoodLogs() {
-        listUserFoodLogs().then((response) => {
-            setUserFoodLogs(response.data);
-        }).catch(error => {
-            console.error(error);
-        })
-    }
-
     function getUserFoodLogsByDate(date) {
         listUserFoodLogsByDate(date).then((response) => {
             setUserFoodLogs(response.data);
