@@ -13,6 +13,8 @@ import UserSignUpComponent from "./component/UserSignUpComponent.jsx";
 import UserLogOutComponent from "./component/UserLogOutComponent.jsx";
 import UserProfileComponent from "./component/UserProfileComponent.jsx";
 import CalorieCalculatorComponent from "./component/CalorieCalculatorComponent.jsx";
+import ListExerciseComponent from "./component/ListExerciseComponent.jsx";
+import ExerciseComponent from "./component/ExerciseComponent.jsx";
 
 function App() {
 
@@ -35,6 +37,10 @@ function App() {
                         <Route path="/Foods" element = { <ListFoodComponent/> }></Route>
                         <Route path="/add-food" element = { <FoodComponent/> }></Route>
                         <Route path="/edit-food/:id" element = { <FoodComponent/> }></Route>
+
+                        <Route path="/Exercises" element = { <ListExerciseComponent/> }></Route>
+                        <Route path="/add-exercise" element = { <ExerciseComponent/> }></Route>
+                        <Route path="/edit-exercise/:id" element = { <ExerciseComponent/> }></Route>
 
                         <Route path="/UserFoodLogs" element = { <ListUserFoodLogComponent/> }></Route>
                         <Route path="/userFoodLog/searchByUserIdAndDate" element = { <ListUserFoodLogComponent/> }></Route>
