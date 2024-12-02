@@ -18,7 +18,7 @@ import {analyze} from "../service/AnalyzerService.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {deleteUserExerciseLog, listUserExerciseLogsByUserIdAndDate} from "../service/UserExerciseLogService.js";
 
-const ListUserFoodLogComponent = () => {
+const ListUserLogsComponent = () => {
 
     const [userFoodLogs, setUserFoodLogs] = useState([])
     const [userExerciseLogs, setUserExerciseLogs] = useState([])
@@ -364,4 +364,4 @@ const ListUserFoodLogComponent = () => {
     )
 }
 
-export default ListUserFoodLogComponent
+export default ListUserLogsComponent

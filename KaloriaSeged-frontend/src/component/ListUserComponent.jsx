@@ -18,7 +18,7 @@ const ListUserComponent = () => {
         if ("admin@mail.com" === email) {
             getAllUsers();
         } else {
-            navigator("/UserFoodLogs")
+            navigator("/UserLogs")
         }
     }, []);
 

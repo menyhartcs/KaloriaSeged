@@ -9,18 +9,20 @@ const UserProfileComponent = () => {
     const [name, setName] = useState([])
     const [password, setPassword] = useState([])
     const [email, setEmail] = useState([])
+    const [role, setRole] = useState([])
     const [gender, setGender] = useState([])
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
     const [age, setAge] = useState([])
-    const [userCalorie, setUserCalorie] = useState([])
-    const [userProtein, setUserProtein] = useState([])
-    const [userCarbohydrate, setUserCarbohydrate] = useState([])
-    const [userFat, setUserFat] = useState([])
+    const [calorie, setCalorie] = useState([])
+    const [protein, setProtein] = useState([])
+    const [carbohydrate, setCarbohydrate] = useState([])
+    const [fat, setFat] = useState([])
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
     const currentToken = localStorage.getItem("token");
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+    const [showUpdateProfilePopUp, setShowUpdateProfilePopUp] = useState(false);
 
     useEffect(() => {
         if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
@@ -36,14 +38,15 @@ const UserProfileComponent = () => {
         name: "",
         password: "",
         email: "",
+        role: "",
         gender: "",
         height: "",
         weight: "",
         age: "",
-        userCalorie: "",
-        userProtein: "",
-        userCarbohydrate: "",
-        userFat: ""
+        calorie: "",
+        protein: "",
+        carbohydrate: "",
+        fat: ""
     })
 
     useEffect(() =>{
@@ -51,15 +54,16 @@ const UserProfileComponent = () => {
             setId(response.data.id);
             setName(response.data.name);
             setEmail(response.data.email);
+            setRole(response.data.role);
             setPassword(response.data.password);
             setGender(response.data.gender);
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
-            setUserCalorie(response.data.userCalorie);
-            setUserProtein(response.data.userProtein);
-            setUserCarbohydrate(response.data.userCarbohydrate);
-            setUserFat(response.data.userFat);
+            setCalorie(response.data.calorie);
+            setProtein(response.data.protein);
+            setCarbohydrate(response.data.carbohydrate);
+            setFat(response.data.fat);
             console.log(response.data)
         }).catch(error => {
             console.error(error)
@@ -76,14 +80,15 @@ const UserProfileComponent = () => {
                 name,
                 password,
                 email,
+                role,
                 gender,
                 height,
                 weight,
                 age,
-                userCalorie,
-                userProtein,
-                userCarbohydrate,
-                userFat
+                calorie,
+                protein,
+                carbohydrate,
+                fat
             }
             console.log(user)
 
@@ -93,7 +98,7 @@ const UserProfileComponent = () => {
             }).catch(error => {
                 console.error(error);
             })
-
+            setShowUpdateProfilePopUp(true)
         }
 
     }
@@ -113,6 +118,10 @@ const UserProfileComponent = () => {
 
     function handleDeleteCancel() {
         setShowDeletePopUp(false);
+    }
+
+    function handleUpdateProfilePopUpConfirm() {
+        setShowUpdateProfilePopUp(false);
     }
 
     function validateForm() {
@@ -256,6 +265,26 @@ const UserProfileComponent = () => {
                             </div>
 
                             <button className="btn btn-primary mt-3" onClick={saveOrUpdateUser}>Frissít</button>
+                            {showUpdateProfilePopUp && (
+                                <div className="modal show" style={{ display: 'block' }} onClick={handleUpdateProfilePopUpConfirm}>
+                                    <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">Info</h5>
+                                                <button type="button" className="btn-close" onClick={handleUpdateProfilePopUpConfirm}></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>Sikeresen frissítetted a profilod!</p>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-success" onClick={handleUpdateProfilePopUpConfirm}>
+                                                    Rendben
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </form>
                         <button className="btn btn-danger float-end"
                                 onClick={() => setShowDeletePopUp(true)}>Fiók törlése

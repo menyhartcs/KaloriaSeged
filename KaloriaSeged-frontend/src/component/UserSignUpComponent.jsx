@@ -11,7 +11,7 @@ const UserSignUpComponent = () => {
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
-            navigator("/UserFoodLogs");
+            navigator("/UserLogs");
         }
     }, []);
 

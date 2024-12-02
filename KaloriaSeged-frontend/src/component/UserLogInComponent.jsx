@@ -12,7 +12,7 @@ const UserLogInComponent = () => {
 
     useEffect(() => {
         if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
-            navigator("/UserFoodLogs");
+            navigator("/UserLogs");
         }
     }, []);
 
@@ -40,7 +40,7 @@ const UserLogInComponent = () => {
             localStorage.setItem("email", user.email);
 
             console.log("Successful login");
-            navigator("/UserFoodLogs");
+            navigator("/UserLogs");
         } catch (error) {
             if (error.response && error.response.data) {
                 // Backend error message handling
