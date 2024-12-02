@@ -9,6 +9,7 @@ const CalorieCalculatorComponent = () => {
     const [name, setName] = useState([])
     const [password, setPassword] = useState([])
     const [email, setEmail] = useState([])
+    const [role, setRole] = useState([])
     const [gender, setGender] = useState([])
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
@@ -24,6 +25,8 @@ const CalorieCalculatorComponent = () => {
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
     const currentToken = localStorage.getItem("token");
+    const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+
 
     useEffect(() => {
         if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
@@ -39,6 +42,7 @@ const CalorieCalculatorComponent = () => {
         name: "",
         password: "",
         email: "",
+        role: "",
         gender: "",
         height: "",
         weight: "",
@@ -54,6 +58,7 @@ const CalorieCalculatorComponent = () => {
             setId(response.data.id);
             setName(response.data.name);
             setEmail(response.data.email);
+            setRole(response.data.role);
             setPassword(response.data.password);
             isNullOrUndef(response.data.gender) ? setGender("M") : setGender(response.data.gender);
             setHeight(response.data.height);
@@ -164,6 +169,7 @@ const CalorieCalculatorComponent = () => {
             name,
             password,
             email,
+            role,
             gender,
             height,
             weight,
@@ -173,7 +179,6 @@ const CalorieCalculatorComponent = () => {
             carbohydrate,
             fat
         }
-        console.log("Init user: ", user)
 
         updateUser(id, user).then((response) => {
             console.log("Response: ", response.data);
@@ -181,6 +186,7 @@ const CalorieCalculatorComponent = () => {
         }).catch(error => {
             console.error(error);
         })
+        setShowDeletePopUp(true)
     }
 
     function validateForm() {
@@ -212,6 +218,10 @@ const CalorieCalculatorComponent = () => {
         setErrors(errorsCopy);
 
         return valid;
+    }
+
+    function handlePopUpConfirm() {
+        setShowDeletePopUp(false);
     }
 
     function pageTitle() {
@@ -335,6 +345,26 @@ const CalorieCalculatorComponent = () => {
                                         {result}
                                         <button className="btn btn-success mt-3" onClick={setDailyGoal}>Beállítás napi célként
                                         </button>
+                                    </div>
+                                )}
+                                {showDeletePopUp && (
+                                    <div className="modal show" style={{ display: 'block' }} onClick={handlePopUpConfirm}>
+                                        <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title">Gratulálunk!</h5>
+                                                    <button type="button" className="btn-close" onClick={handlePopUpConfirm}></button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <p>Sikerült beállítanod a célodat!</p>
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-success" onClick={handlePopUpConfirm}>
+                                                        Rendben
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>
