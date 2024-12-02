@@ -78,7 +78,7 @@ const ExerciseComponent = () => {
         if (calorie+"".trim()) {
             errorsCopy.calorie = "";
         } else {
-            errorsCopy.calorie = "Energia tartalom megadása kötelező!";
+            errorsCopy.calorie = "Tevékenységgel elégethető energia megadása kötelező!";
             valid = false;
         }
 
@@ -108,7 +108,7 @@ const ExerciseComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Név:</label>
                                 <input type="text"
-                                       placeholder="Add meg az étel nevét"
+                                       placeholder="Add meg a tevékenység nevét"
                                        name="name"
                                        value={name}
                                        className={`form-control ${errors.name ? "is-invalid" : ""}`}
@@ -120,7 +120,7 @@ const ExerciseComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Energia (kcal):</label>
                                 <input type="number"
-                                       placeholder="Add meg az étel energia tartalmát"
+                                       placeholder="Add meg mennyi energiát éget el a tevékenység"
                                        name="calorie"
                                        value={calorie}
                                        className={`form-control ${errors.calorie ? "is-invalid" : ""}`}

@@ -71,10 +71,8 @@ const ListExerciseComponent = () => {
         if (showCard === true) {
             setAnalysisResult("");
         }
-        // HTTP kérés küldése az axios segítségével
         setAnalysisResult("Elemzés folyamatban....");
         analyze(prompt).then(response => {
-            // Eredmény frissítése
             setAnalysisResult(response.data);
         })
             .catch(error => {
@@ -83,16 +81,14 @@ const ListExerciseComponent = () => {
             });
     }
 
-    function adviceForEating() {
+    function adviceForMoving() {
         setShowCard(!showCard)
         if (showCard === true) {
             setAnalysisResult("");
         }
 
-        let prompt = `Adj tanácsot, hogy mit egyek ma, az alábbi lista áll rendelkezésedre: ${getSimpleExerciseList()}
-        ebben megtalálod az ételek nevét és a hozzájuk tartozó makrotápanyagokat, 
-        válassz ki belőle párat, 
-        amit mára ajánlanál`
+        let prompt = `Adj tanácsot, hogy mit mozogjak ma, az alábbi lista áll rendelkezésedre: ${getSimpleExerciseList()}
+        ebben megtalálod a mozgásformák nevét, válassz ki belőle párat, amit mára ajánlanál`
 
         setAnalysisResult("Elemzés folyamatban....");
         analyze(prompt).then(response => {
@@ -119,7 +115,7 @@ const ListExerciseComponent = () => {
                 <div className="col-md-4">
                     <div className="card p-3">
                         <button className="btn btn-info m-1"
-                                onClick={() => adviceForEating()}>Mit egyek ma?
+                                onClick={() => adviceForMoving()}>Mit mozogjak ma?
                         </button>
                         {showCard && (
                             <div>
@@ -162,8 +158,9 @@ const ListExerciseComponent = () => {
                     <button className="btn btn-info m-1"
                             title="Információ"
                             onClick={() => analyzeUserExerciseLog(
-                                `Röviden mutasd be az ételt: ${exercise.name}
-                                        és adj tanácsot, mikor lenne érdemes fogyasztani, röviden`
+                                `Röviden mutasd be a mozgásformát: ${exercise.name}
+                                        és adj tanácsot, mikor lenne érdemes végezni és 
+                                        mennyit célszerű kezdő vagy haladóként, röviden`
                             )}><i className="bi bi-info-circle"></i>
                     </button>
                 </>

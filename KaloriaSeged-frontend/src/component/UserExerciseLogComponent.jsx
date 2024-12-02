@@ -11,7 +11,7 @@ const UserExerciseLogComponent = () => {
     const [User, setUser] = useState({})
     const [Exercise, setExercise] = useState({})
     const [date, setDate] = useState(getCurrentDate)
-    const [duration, setDuration] = useState(100)
+    const [duration, setDuration] = useState(10)
     const location = useLocation();
     const currentUrl = location.pathname.split('/')[1]
     const navigator = useNavigate();
@@ -147,7 +147,7 @@ const UserExerciseLogComponent = () => {
                             </div>
 
                             <div className="form-group col-md-4 mb-2">
-                                <label className="form-label">Mennyiség (g):</label>
+                                <label className="form-label">Időtartam (perc):</label>
                                 <input type="number"
                                        name="duration"
                                        value={duration}
@@ -158,7 +158,7 @@ const UserExerciseLogComponent = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="dateInput" className="form-label">Válaszd ki melyik nap fogyasztottad:</label>
+                                <label htmlFor="dateInput" className="form-label">Válaszd ki melyik nap végezted:</label>
                                 <input
                                     type="date"
                                     id="dateInput"
