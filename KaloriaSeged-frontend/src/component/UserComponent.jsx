@@ -12,10 +12,10 @@ const UserComponent = () => {
     const [height, setHeight] = useState([])
     const [weight, setWeight] = useState([])
     const [age, setAge] = useState([])
-    const [userCalorie, setUserCalorie] = useState([])
-    const [userProtein, setUserProtein] = useState([])
-    const [userCarbohydrate, setUserCarbohydrate] = useState([])
-    const [userFat, setUserFat] = useState([])
+    const [calorie, setCalorie] = useState([])
+    const [protein, setProtein] = useState([])
+    const [carbohydrate, setCarbohydrate] = useState([])
+    const [fat, setFat] = useState([])
 
     const {id} = useParams();
 
@@ -37,10 +37,10 @@ const UserComponent = () => {
         height: "",
         weight: "",
         age: "",
-        userCalorie: "",
-        userProtein: "",
-        userCarbohydrate: "",
-        userFat: ""
+        calorie: "",
+        protein: "",
+        carbohydrate: "",
+        fat: ""
     })
 
     const navigator = useNavigate();
@@ -55,10 +55,10 @@ const UserComponent = () => {
                 setHeight(response.data.height);
                 setWeight(response.data.weight);
                 setAge(response.data.age);
-                setUserCalorie(response.data.userCalorie);
-                setUserProtein(response.data.userProtein);
-                setUserCarbohydrate(response.data.userCarbohydrate);
-                setUserFat(response.data.userFat);
+                setCalorie(response.data.calorie);
+                setProtein(response.data.protein);
+                setCarbohydrate(response.data.carbohydrate);
+                setFat(response.data.fat);
                 console.log(response.data)
             }).catch(error => {
                 console.error(error)
@@ -80,10 +80,10 @@ const UserComponent = () => {
                 height,
                 weight,
                 age,
-                userCalorie,
-                userProtein,
-                userCarbohydrate,
-                userFat
+                calorie,
+                protein,
+                carbohydrate,
+                fat
             }
             console.log(user)
 

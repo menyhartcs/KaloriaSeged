@@ -47,9 +47,9 @@ const CalorieCalculatorComponent = () => {
         height: "",
         weight: "",
         age: "",
-        userCalorie: "",
-        userProtein: "",
-        userCarbohydrate: "",
+        calorie: "",
+        protein: "",
+        carbohydrate: "",
         userFat: ""
     })
 
@@ -64,10 +64,10 @@ const CalorieCalculatorComponent = () => {
             setHeight(response.data.height);
             setWeight(response.data.weight);
             setAge(response.data.age);
-            setCalorie(response.data.userCalorie);
-            setProtein(response.data.userProtein);
-            setCarbohydrate(response.data.userCarbohydrate);
-            setFat(response.data.userFat);
+            setCalorie(response.data.calorie);
+            setProtein(response.data.protein);
+            setCarbohydrate(response.data.carbohydrate);
+            setFat(response.data.fat);
             console.log(response.data)
         }).catch(error => {
             console.error(error)
