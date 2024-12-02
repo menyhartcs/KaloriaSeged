@@ -25,7 +25,7 @@ const UserComponent = () => {
             navigator("/UserLogIn");
         }
         if ("admin@mail.com" !== email) {
-            navigator("/UserFoodLogs")
+            navigator("/UserLogs")
         }
     }, []);
 

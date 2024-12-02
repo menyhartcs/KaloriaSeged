@@ -87,14 +87,14 @@ const UserFoodLogComponent = () => {
             if (currentUrl === "edit-userFoodLog") {
                 updateUserFoodLog(id, userFoodLog).then((response) => {
                     console.log(response.data);
-                    navigator("/UserFoodLogs");
+                    navigator("/UserLogs");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
                 createUserFoodLog(userFoodLog).then((response) => {
                     console.log(response.data)
-                    navigator("/UserFoodLogs")
+                    navigator("/UserLogs")
                 }).catch(error => {
                     console.error(error);
                 })
