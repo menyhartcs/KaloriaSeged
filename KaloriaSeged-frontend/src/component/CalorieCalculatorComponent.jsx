@@ -25,7 +25,7 @@ const CalorieCalculatorComponent = () => {
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
     const currentToken = localStorage.getItem("token");
-    const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+    const [showSetGoalPopUp, setShowSetGoalPopUp] = useState(false);
 
 
     useEffect(() => {
@@ -186,7 +186,7 @@ const CalorieCalculatorComponent = () => {
         }).catch(error => {
             console.error(error);
         })
-        setShowDeletePopUp(true)
+        setShowSetGoalPopUp(true)
     }
 
     function validateForm() {
@@ -221,7 +221,7 @@ const CalorieCalculatorComponent = () => {
     }
 
     function handlePopUpConfirm() {
-        setShowDeletePopUp(false);
+        setShowSetGoalPopUp(false);
     }
 
     function pageTitle() {
@@ -347,7 +347,7 @@ const CalorieCalculatorComponent = () => {
                                         </button>
                                     </div>
                                 )}
-                                {showDeletePopUp && (
+                                {showSetGoalPopUp && (
                                     <div className="modal show" style={{ display: 'block' }} onClick={handlePopUpConfirm}>
                                         <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
                                             <div className="modal-content">
