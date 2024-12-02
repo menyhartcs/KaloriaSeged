@@ -197,12 +197,10 @@ const ListFoodComponent = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            <ul>
-                                                <li><b className="nutritionText energy">Energia:</b> {food.calorie} kcal</li>
-                                                <li><b className="nutritionText protein">Fehérje:</b> {food.protein} g</li>
-                                                <li><b className="nutritionText carbohydrate">Szénhidrát:</b> {food.carbohydrate} g</li>
-                                                <li><b className="nutritionText fat">Zsír:</b> {food.fat} g</li>
-                                            </ul>
+                                            <b className="nutritionText energy">Energia:</b> {food.calorie} kcal<br/>
+                                            <b className="nutritionText protein">Fehérje:</b> {food.protein} g<br/>
+                                            <b className="nutritionText carbohydrate">Szénhidrát:</b> {food.carbohydrate} g<br/>
+                                            <b className="nutritionText fat">Zsír:</b> {food.fat} g
                                         </td>
                                         <td>
                                             {showUserButtons(food)}
