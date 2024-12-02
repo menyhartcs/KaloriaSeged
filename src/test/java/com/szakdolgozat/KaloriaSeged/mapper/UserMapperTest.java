@@ -1,8 +1,10 @@
 package com.szakdolgozat.KaloriaSeged.mapper;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.dto.UserExerciseLogDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
+import com.szakdolgozat.KaloriaSeged.entity.UserExerciseLog;
 import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ public class UserMapperTest {
 
     private static final Long USER_ID = 2L;
     private static final String USER_EMAIL = "test@mail.com";
+    private static final String USER_ROLE = "testrole";
     private static final String USER_NAME = "name";
     private static final String PASSWORD = "testpw";
     private static final String GENDER = "gender";
@@ -27,7 +30,9 @@ public class UserMapperTest {
     private static final int USER_CARBOHYDRATE = 300;
     private static final int USER_FAT = 60;
     private static final List<UserFoodLog> USER_FOOD_LOGS = new ArrayList<>();
+    private static final List<UserExerciseLog> USER_EXERCISE_LOGS = new ArrayList<>();
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
+    private static final List<UserExerciseLogDto> USER_EXERCISE_LOG_DTOS = new ArrayList<>();
 
     private User user;
     private UserDto userDto;
@@ -35,9 +40,11 @@ public class UserMapperTest {
     @BeforeEach
     void setUp() {
         user = new User(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-                USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_FOOD_LOGS);
+                USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_ROLE,
+                USER_FOOD_LOGS, USER_EXERCISE_LOGS);
         userDto = new UserDto(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-                USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_FOOD_LOG_DTOS);
+                USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_ROLE,
+                USER_FOOD_LOG_DTOS, USER_EXERCISE_LOG_DTOS);
     }
 
     @Test

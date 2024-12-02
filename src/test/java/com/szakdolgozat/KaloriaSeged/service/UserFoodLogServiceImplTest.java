@@ -2,9 +2,11 @@ package com.szakdolgozat.KaloriaSeged.service;
 
 import com.szakdolgozat.KaloriaSeged.dto.FoodDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.dto.UserExerciseLogDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.entity.Food;
 import com.szakdolgozat.KaloriaSeged.entity.User;
+import com.szakdolgozat.KaloriaSeged.entity.UserExerciseLog;
 import com.szakdolgozat.KaloriaSeged.entity.UserFoodLog;
 import com.szakdolgozat.KaloriaSeged.exception.ResourceNotFoundException;
 import com.szakdolgozat.KaloriaSeged.repository.FoodRepository;
@@ -35,6 +37,7 @@ public class UserFoodLogServiceImplTest {
     private static final int PROTEIN = 1;
     private static final Long USER_ID = 2L;
     private static final String USER_EMAIL = "test@mail.com";
+    private static final String USER_ROLE = "testrole";
     private static final String USER_NAME = "name";
     private static final String PASSWORD = "testpw";
     private static final String GENDER = "gender";
@@ -46,13 +49,17 @@ public class UserFoodLogServiceImplTest {
     private static final int USER_CARBOHYDRATE = 300;
     private static final int USER_FAT = 60;
     private static final List<UserFoodLog> USER_FOOD_LOGS = new ArrayList<>();
+    private static final List<UserExerciseLog> USER_EXERCISE_LOGS = new ArrayList<>();
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
+    private static final List<UserExerciseLogDto> USER_EXERCISE_LOG_DTOS = new ArrayList<>();
     private static final LocalDate DATE = LocalDate.of(2024, 11, 18);
     private static final int AMOUNT = 100;
     private static final User USER = new User(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-            USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_FOOD_LOGS);
+            USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_ROLE,
+            USER_FOOD_LOGS, USER_EXERCISE_LOGS);
     private static final UserDto USER_DTO = new UserDto(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-            USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_FOOD_LOG_DTOS);
+            USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_ROLE,
+            USER_FOOD_LOG_DTOS, USER_EXERCISE_LOG_DTOS);
     private static final Food FOOD = new Food(FOOD_ID, FOOD_NAME, CALORIE, FAT, CARBOHYDRATE, PROTEIN, USER_FOOD_LOGS);
     private static final FoodDto FOOD_DTO = new FoodDto(FOOD_ID, FOOD_NAME, CALORIE, FAT, CARBOHYDRATE, PROTEIN, USER_FOOD_LOG_DTOS);
 

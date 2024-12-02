@@ -2,6 +2,7 @@ package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.FoodDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.dto.UserExerciseLogDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.service.UserFoodLogService;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,10 +24,12 @@ public class UserFoodLogControllerTest {
 
     // INIT UserFoodLogDto
     private static final List<UserFoodLogDto> EMPTY_USER_FOOD_LOG_DTOS = new ArrayList<>();
+    private static final List<UserExerciseLogDto> EMPTY_USER_EXERCISE_LOG_DTOS = new ArrayList<>();
     // INIT UserDto for UserFoodLogDto
     private static final Long USER_FOOD_LOG_ID = 1L;
     private static final Long USER_ID = 1L;
     private static final String USER_EMAIL = "test@mail.com";
+    private static final String USER_ROLE = "testrole";
     private static final String USER_NAME = "name";
     private static final String PASSWORD = "testpw";
     private static final String GENDER = "gender";
@@ -39,7 +42,8 @@ public class UserFoodLogControllerTest {
     private static final int USER_FAT = 60;
     private static final UserDto USER_DTO1 =
             new UserDto(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-                    USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, EMPTY_USER_FOOD_LOG_DTOS);
+                    USER_CALORIE, USER_PROTEIN, USER_CARBOHYDRATE, USER_FAT, USER_ROLE,
+                    EMPTY_USER_FOOD_LOG_DTOS, EMPTY_USER_EXERCISE_LOG_DTOS);
     // INIT FoodDto1 for UserFoodLogDto
     private static final Long FOOD_ID = 1L;
     private static final String FOOD_NAME = "Apple";

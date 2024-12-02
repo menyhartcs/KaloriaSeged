@@ -1,6 +1,7 @@
 package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
+import com.szakdolgozat.KaloriaSeged.dto.UserExerciseLogDto;
 import com.szakdolgozat.KaloriaSeged.dto.UserFoodLogDto;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
 import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
@@ -21,9 +22,11 @@ import static org.mockito.Mockito.*;
 public class UserControllerTest {
 
     private static final List<UserFoodLogDto> USER_FOOD_LOG_DTOS = new ArrayList<>();
+    private static final List<UserExerciseLogDto> USER_EXERCISE_LOG_DTOS = new ArrayList<>();
     // INIT UserDto1
     private static final Long USER_ID = 1L;
     private static final String USER_EMAIL = "test@mail.com";
+    private static final String USER_ROLE = "testrole";
     private static final String USER_NAME = "name";
     private static final String PASSWORD = "testpw";
     private static final String GENDER = "gender";
@@ -37,6 +40,7 @@ public class UserControllerTest {
     // INIT UserDto2
     private static final Long USER_ID2 = 2L;
     private static final String USER_EMAIL2 = "test2@mail.com";
+    private static final String USER_ROLE2 = "testrole2";
     private static final String USER_NAME2 = "name2";
     private static final String PASSWORD2 = "testpw2";
     private static final String GENDER2 = "gender2";
@@ -50,10 +54,10 @@ public class UserControllerTest {
     // INIT UserDtos
     private static final UserDto USER_DTO1 =
             new UserDto(USER_ID, USER_NAME, USER_EMAIL, PASSWORD, GENDER, HEIGHT, WEIGHT, AGE,
-                    CALORIE, PROTEIN, CARBOHYDRATE, FAT, USER_FOOD_LOG_DTOS);
+                    CALORIE, PROTEIN, CARBOHYDRATE, FAT,USER_ROLE, USER_FOOD_LOG_DTOS, USER_EXERCISE_LOG_DTOS);
     private static final UserDto USER_DTO2 =
             new UserDto(USER_ID2, USER_NAME2, USER_EMAIL2, PASSWORD2, GENDER2, HEIGHT2, WEIGHT2, AGE2,
-                    CALORIE2, PROTEIN2, CARBOHYDRATE2, FAT2, USER_FOOD_LOG_DTOS);
+                    CALORIE2, PROTEIN2, CARBOHYDRATE2, FAT2,USER_ROLE2, USER_FOOD_LOG_DTOS, USER_EXERCISE_LOG_DTOS);
     private static final List<UserDto> USERS = Arrays.asList(USER_DTO1, USER_DTO2);
 
     @Mock
