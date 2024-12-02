@@ -91,7 +91,7 @@ const ListFoodComponent = () => {
 
         let prompt = `Adj tanácsot, hogy mit egyek ma, az alábbi lista áll rendelkezésedre: ${getSimpleFoodList()}
         ebben megtalálod az ételek nevét és a hozzájuk tartozó makrotápanyagokat, 
-        válassz ki belőle párat, 
+        válassz ki belőle hármat, 
         amit mára ajánlanál`
 
         setAnalysisResult("Elemzés folyamatban....");

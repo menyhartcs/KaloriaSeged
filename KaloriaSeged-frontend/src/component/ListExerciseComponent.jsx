@@ -88,7 +88,7 @@ const ListExerciseComponent = () => {
         }
 
         let prompt = `Adj tanácsot, hogy mit mozogjak ma, az alábbi lista áll rendelkezésedre: ${getSimpleExerciseList()}
-        ebben megtalálod a mozgásformák nevét, válassz ki belőle párat, amit mára ajánlanál`
+        ebben megtalálod a mozgásformák nevét, válassz ki belőle kettőt, amit mára ajánlanál`
 
         setAnalysisResult("Elemzés folyamatban....");
         analyze(prompt).then(response => {
