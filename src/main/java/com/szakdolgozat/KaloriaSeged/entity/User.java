@@ -51,4 +51,6 @@ public class User {
     private String role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFoodLog> foodLogs = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserExerciseLog> exerciseLogs = new ArrayList<>();
 }

@@ -13,6 +13,9 @@ import UserSignUpComponent from "./component/UserSignUpComponent.jsx";
 import UserLogOutComponent from "./component/UserLogOutComponent.jsx";
 import UserProfileComponent from "./component/UserProfileComponent.jsx";
 import CalorieCalculatorComponent from "./component/CalorieCalculatorComponent.jsx";
+import ListExerciseComponent from "./component/ListExerciseComponent.jsx";
+import ExerciseComponent from "./component/ExerciseComponent.jsx";
+import UserExerciseLogComponent from "./component/UserExerciseLogComponent.jsx";
 
 function App() {
 
@@ -40,6 +43,15 @@ function App() {
                         <Route path="/userFoodLog/searchByUserIdAndDate" element = { <ListUserFoodLogComponent/> }></Route>
                         <Route path="/add-userFoodLog/:id" element = { <UserFoodLogComponent/> }></Route>
                         <Route path="/edit-userFoodLog/:id" element = { <UserFoodLogComponent/> }></Route>
+
+                        <Route path="/Exercises" element = { <ListExerciseComponent/> }></Route>
+                        <Route path="/add-exercise" element = { <ExerciseComponent/> }></Route>
+                        <Route path="/edit-exercise/:id" element = { <ExerciseComponent/> }></Route>
+
+                        <Route path="/UserExerciseLogs" element = { <ListUserFoodLogComponent/> }></Route>
+                        <Route path="/userExerciseLog/searchByUserIdAndDate" element = { <ListUserFoodLogComponent/> }></Route>
+                        <Route path="/add-userExerciseLog/:id" element = { <UserExerciseLogComponent/> }></Route>
+                        <Route path="/edit-userExerciseLog/:id" element = { <UserExerciseLogComponent/> }></Route>
                     </Routes>
                 <FooterComponent/>
             </BrowserRouter>

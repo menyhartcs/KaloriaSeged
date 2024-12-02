@@ -31,4 +31,5 @@ public class UserDto {
     private Integer fat;
     private String role;
     private List<UserFoodLogDto> foodLogs;
+    private List<UserExerciseLogDto> exerciseLogs;
 }

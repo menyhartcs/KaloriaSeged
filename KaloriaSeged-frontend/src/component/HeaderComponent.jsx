@@ -34,6 +34,7 @@ const HeaderComponent = () => {
             return (
                 <>
                     <a className="navbar-toggler" href="/Users">Felhasználók</a>
+                    <a className="navbar-toggler" href="/Exercises">Tevékenységek</a>
                     <a className="navbar-toggler" href="/Foods">Ételek</a>
                     <a className="navbar-brand">{name}</a>
                     <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
@@ -51,8 +52,9 @@ const HeaderComponent = () => {
         if (!isNullOrUndef(email) && !isNullOrUndef(token) && email !== "admin@mail.com") {
             return (
                 <>
-                    <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
+                    <a className="navbar-toggler" href="/Exercises">Tevékenységek</a>
                     <a className="navbar-toggler" href="/Foods">Ételek</a>
+                    <a className="navbar-toggler" href="/UserFoodLogs">Napló</a>
                     <a className="navbar-toggler" href="/CalorieCalculator">Kalória kalkulátor</a>
                     <a className="navbar-brand" href="/UserProfile">{name}</a>
                     <a className="navbar-toggler" href="/UserLogOut">Kijelentkezés</a>
@@ -63,7 +65,7 @@ const HeaderComponent = () => {
 
     return (
         <div>
-            <header>
+        <header>
                 <nav className="navbar navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">Kalória Segéd</a>
                     {showAdminPanel()}
