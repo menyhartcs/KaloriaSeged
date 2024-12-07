@@ -73,7 +73,7 @@ public class ValidationServiceTest {
 
         // WHEN & THEN
         LoginException exception = assertThrows(LoginException.class, () -> validationService.loginUser(loginRequest));
-        assertEquals("Hibás adatok!", exception.getMessage());
+        assertEquals("Az alábbi email cím nincs regisztrálva!", exception.getMessage());
     }
 
     @Test
