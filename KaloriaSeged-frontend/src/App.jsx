@@ -48,7 +48,6 @@ function App() {
                         <Route path="/add-exercise" element = { <ExerciseComponent/> }></Route>
                         <Route path="/edit-exercise/:id" element = { <ExerciseComponent/> }></Route>
 
-                        <Route path="/UserExerciseLogs" element = { <ListUserLogsComponent/> }></Route>
                         <Route path="/userExerciseLog/searchByUserIdAndDate" element = { <ListUserLogsComponent/> }></Route>
                         <Route path="/add-userExerciseLog/:id" element = { <UserExerciseLogComponent/> }></Route>
                         <Route path="/edit-userExerciseLog/:id" element = { <UserExerciseLogComponent/> }></Route>

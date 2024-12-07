@@ -87,14 +87,14 @@ const UserExerciseLogComponent = () => {
             if (currentUrl === "edit-userExerciseLog") {
                 updateUserExerciseLog(id, userExerciseLog).then((response) => {
                     console.log(response.data);
-                    navigator("/UserExerciseLogs");
+                    navigator("/UserLogs");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
                 createUserExerciseLog(userExerciseLog).then((response) => {
                     console.log(response.data)
-                    navigator("/UserExerciseLogs")
+                    navigator("/UserLogs")
                 }).catch(error => {
                     console.error(error);
                 })
