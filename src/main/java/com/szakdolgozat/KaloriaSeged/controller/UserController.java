@@ -64,6 +64,7 @@ public class UserController {
 //        return ResponseEntity.ok(userDto);
 //    }
 
+    // Handles the PUT request for update User.
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateUser(@PathVariable("id") Long userId,
@@ -74,10 +75,12 @@ public class UserController {
         if (!currentUserEmail.equals(requestedUserEmail) && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nincs jogosultságod módosítani más felhasználó adatait");
         }
-        UserDto userDto = userService.updateUser(userId, updatedUser);
-        if (updatedUser == null) {
+        if (requestedUserEmail == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Felhasználó nem található");
         }
+
+        UserDto userDto = userService.updateUser(userId, updatedUser);
+
         return ResponseEntity.ok(userDto);
     }
 
