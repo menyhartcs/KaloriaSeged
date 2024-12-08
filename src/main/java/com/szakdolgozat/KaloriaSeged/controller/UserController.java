@@ -70,6 +70,7 @@ public class UserController {
                                                       @RequestBody UserDto updatedUser, Authentication authentication) {
         String currentUserEmail = authentication.getName();
         String requestedUserEmail = userService.getUserById(userId).getEmail();
+
         if (!currentUserEmail.equals(requestedUserEmail) && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nincs jogosultságod módosítani más felhasználó adatait");
         }
@@ -82,8 +83,15 @@ public class UserController {
 
     // Handles the DELETE request for delete User.
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId) {
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId, Authentication authentication) {
+        String currentUserEmail = authentication.getName();
+        String requestedUserEmail = userService.getUserById(userId).getEmail();
+
+        if (!currentUserEmail.equals(requestedUserEmail) && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nincs jogosultságod törölni más felhasználókat!");
+        }
         userService.deleteUser(userId);
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.ok("Felhasználó sikeresen törölve!");
     }
 }
