@@ -3,10 +3,14 @@ package com.szakdolgozat.KaloriaSeged.controller;
 import com.szakdolgozat.KaloriaSeged.dto.UserDto;
 import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.service.UserService;
+import com.szakdolgozat.KaloriaSeged.service.impl.MyUserDetailsService;
 import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,10 +57,26 @@ public class UserController {
     }
 
     // Handles the PUT request for update User.
+//    @PutMapping("{id}")
+//    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+//                                                      @RequestBody UserDto updatedUser) {
+//        UserDto userDto = userService.updateUser(userId, updatedUser);
+//        return ResponseEntity.ok(userDto);
+//    }
+
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
-                                                      @RequestBody UserDto updatedUser) {
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long userId,
+                                                      @RequestBody UserDto updatedUser, Authentication authentication) {
+        String currentUserEmail = authentication.getName();
+        String requestedUserEmail = userService.getUserById(userId).getEmail();
+        if (!currentUserEmail.equals(requestedUserEmail) && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nincs jogosultságod módosítani más felhasználó adatait");
+        }
         UserDto userDto = userService.updateUser(userId, updatedUser);
+        if (updatedUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Felhasználó nem található");
+        }
         return ResponseEntity.ok(userDto);
     }
 
