@@ -2,6 +2,7 @@ package com.szakdolgozat.KaloriaSeged.controller;
 
 import com.szakdolgozat.KaloriaSeged.service.impl.OpenAIService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ public class OpenAIController {
 
     // Handles the POST request for OpenAI Completion API.
     @PostMapping("/complete")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Mono<String> getCompletion(@RequestBody String prompt) {
         return openAIService.getCompletion(prompt);
     }
