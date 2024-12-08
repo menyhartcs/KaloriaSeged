@@ -52,10 +52,10 @@ public class Configuration {
             request.requestMatchers(
                     "/registration/register*",
                     "/api/login*",
-                    "/complete",
-                    "/user*").permitAll();
+                    "/complete").permitAll();
             request.anyRequest().authenticated();
         });
+
 
         // Setting the form login permission.
 //        http.formLogin(formLogin -> formLogin.loginPage("/login")
