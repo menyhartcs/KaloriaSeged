@@ -67,7 +67,7 @@ public class Configuration {
         http.logout(logOut -> logOut.logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID","Idea-2e8e7cee")
+                .deleteCookies("JSESSIONID","Idea-2e8e7cee", "jwt")
                 .logoutSuccessUrl("/login"));
 
 
