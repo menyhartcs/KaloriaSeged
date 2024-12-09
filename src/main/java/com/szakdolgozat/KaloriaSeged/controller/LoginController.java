@@ -6,8 +6,12 @@ import com.szakdolgozat.KaloriaSeged.service.impl.ValidationService;
 import com.szakdolgozat.KaloriaSeged.util.AuthResponse;
 import com.szakdolgozat.KaloriaSeged.util.JWTUtil;
 import com.szakdolgozat.KaloriaSeged.util.LoginRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +40,16 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
         String token = jwtUtil.generateToken(user);
-        return ResponseEntity.ok(new AuthResponse(token));
+        ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(7 * 24 * 60 * 60) // 7 nap
+                .build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(new AuthResponse(token));
     }
 
 }
