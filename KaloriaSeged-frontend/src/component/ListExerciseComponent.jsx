@@ -14,10 +14,12 @@ const ListExerciseComponent = () => {
     const [showCard, setShowCard] = useState(false);
     const [analysisResult, setAnalysisResult] = useState("");
     const currentEmail = localStorage.getItem("email");
+    const [role, setRole] = useState();
 
     useEffect(() => {
         checkLoginStatus(currentEmail).then((response) => {
             if (!isNullOrUndef(response.data.role)) {
+                setRole(response.data.role)
                 getAllExercises();
             }
         }).catch(() => {
@@ -113,7 +115,7 @@ const ListExerciseComponent = () => {
     }
 
     function showInfoPanel() {
-        if ("admin@mail.com" === currentEmail) { return; }
+        if (role === "ROLE_ADMIN") { return; }
         return (
             <>
                 <div className="col-md-4">
@@ -137,7 +139,7 @@ const ListExerciseComponent = () => {
     }
 
     function showAdminButtons(exerciseId) {
-        if ("admin@mail.com" === currentEmail) {
+        if (role === "ROLE_ADMIN") {
             return (
                 <>
                     <button className="btn btn-warning m-1"
@@ -152,7 +154,7 @@ const ListExerciseComponent = () => {
     }
 
     function showUserButtons(exercise) {
-        if ("admin@mail.com" !== currentEmail) {
+        if (role === "ROLE_USER") {
             return (
                 <>
                     <button className="btn btn-success m-1"

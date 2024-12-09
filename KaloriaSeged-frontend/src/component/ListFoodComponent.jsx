@@ -14,10 +14,12 @@ const ListFoodComponent = () => {
     const [showCard, setShowCard] = useState(false);
     const [analysisResult, setAnalysisResult] = useState("");
     const currentEmail = localStorage.getItem("email");
+    const [role, setRole] = useState();
 
     useEffect(() => {
         checkLoginStatus(currentEmail).then((response) => {
             if (!isNullOrUndef(response.data.role)) {
+                setRole(response.data.role)
                 getAllFoods();
             }
         }).catch(() => {
@@ -117,7 +119,7 @@ const ListFoodComponent = () => {
     }
 
     function showInfoPanel() {
-        if ("admin@mail.com" === currentEmail) { return; }
+        if (role === "ROLE_ADMIN") { return; }
         return (
             <>
                 <div className="col-md-4">
@@ -141,7 +143,7 @@ const ListFoodComponent = () => {
     }
 
     function showAdminButtons(foodId) {
-        if ("admin@mail.com" === currentEmail) {
+        if (role === "ROLE_ADMIN") {
             return (
                 <>
                     <button className="btn btn-warning m-1"
@@ -156,7 +158,7 @@ const ListFoodComponent = () => {
     }
 
     function showUserButtons(food) {
-        if ("admin@mail.com" !== currentEmail) {
+        if (role === "ROLE_USER") {
             return (
                 <>
                     <button className="btn btn-success m-1"
