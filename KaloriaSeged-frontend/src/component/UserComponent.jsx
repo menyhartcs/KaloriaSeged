@@ -16,6 +16,7 @@ const UserComponent = () => {
     const [protein, setProtein] = useState([])
     const [carbohydrate, setCarbohydrate] = useState([])
     const [fat, setFat] = useState([])
+    const [role, setRole] = useState([])
 
     const {id} = useParams();
 
@@ -40,7 +41,8 @@ const UserComponent = () => {
         calorie: "",
         protein: "",
         carbohydrate: "",
-        fat: ""
+        fat: "",
+        role: ""
     })
 
     const navigator = useNavigate();
@@ -59,6 +61,7 @@ const UserComponent = () => {
                 setProtein(response.data.protein);
                 setCarbohydrate(response.data.carbohydrate);
                 setFat(response.data.fat);
+                setRole(response.data.role);
                 console.log(response.data)
             }).catch(error => {
                 console.error(error)
@@ -83,7 +86,8 @@ const UserComponent = () => {
                 calorie,
                 protein,
                 carbohydrate,
-                fat
+                fat,
+                role
             }
             console.log(user)
 

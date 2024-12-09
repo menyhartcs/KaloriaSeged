@@ -11,10 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -59,6 +61,8 @@ public class UserControllerTest {
             new UserDto(USER_ID2, USER_NAME2, USER_EMAIL2, PASSWORD2, GENDER2, HEIGHT2, WEIGHT2, AGE2,
                     CALORIE2, PROTEIN2, CARBOHYDRATE2, FAT2,USER_ROLE2, USER_FOOD_LOG_DTOS, USER_EXERCISE_LOG_DTOS);
     private static final List<UserDto> USERS = Arrays.asList(USER_DTO1, USER_DTO2);
+
+    final Authentication authentication = new TestingAuthenticationToken(USER_EMAIL, null, "USER_ROLE");
 
     @Mock
     private UserService userService;
@@ -135,10 +139,11 @@ public class UserControllerTest {
     @Test
     void testUpdateUser() {
         // GIVEN
+        when(userService.getUserById(USER_ID)).thenReturn(USER_DTO1);
         when(userService.updateUser(USER_ID, USER_DTO1)).thenReturn(USER_DTO1);
 
         // WHEN
-        ResponseEntity<UserDto> response = userController.updateUser(USER_ID, USER_DTO1);
+        ResponseEntity<?> response = userController.updateUser(USER_ID, USER_DTO1, authentication);
 
         // THEN
         assertEquals(200, response.getStatusCodeValue());
@@ -149,11 +154,12 @@ public class UserControllerTest {
     @Test
     void testDeleteUser() {
         // WHEN
-        ResponseEntity<String> response = userController.deleteUser(USER_ID);
+        when(userService.getUserById(USER_ID)).thenReturn(USER_DTO1);
+        ResponseEntity<String> response = userController.deleteUser(USER_ID, authentication);
 
         // THEN
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals("User deleted successfully", response.getBody());
+        assertEquals("Felhasználó sikeresen törölve!", response.getBody());
         verify(userService, times(1)).deleteUser(USER_ID);
     }
 }

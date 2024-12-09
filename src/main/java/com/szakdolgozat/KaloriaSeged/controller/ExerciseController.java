@@ -6,6 +6,7 @@ import com.szakdolgozat.KaloriaSeged.service.ExerciseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class ExerciseController {
 
     // Handles the POST request for create Exercise.
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ExerciseDto> createExercise(@RequestBody ExerciseDto exerciseDto) {
         ExerciseDto savedExercise = exerciseService.createExercise(exerciseDto);
         return new ResponseEntity<>(savedExercise, HttpStatus.CREATED);
@@ -30,6 +32,7 @@ public class ExerciseController {
 
     // Handles the GET request for find Exercise by id.
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ExerciseDto> getExerciseById(@PathVariable("id") Long exerciseId) {
         ExerciseDto exerciseDto = exerciseService.getExerciseById(exerciseId);
         return ResponseEntity.ok(exerciseDto);
@@ -37,6 +40,7 @@ public class ExerciseController {
 
     // Handles the GET request for find Exercise by name.
     @GetMapping("/name/{name}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ExerciseDto> getExerciseById(@PathVariable("name") String name) {
         ExerciseDto exerciseDto = exerciseService.getExerciseByName(name);
         return ResponseEntity.ok(exerciseDto);
@@ -44,6 +48,7 @@ public class ExerciseController {
 
     // Handles the GET request for find all Exercises.
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<ExerciseDto>> getAllExercises() {
         List<ExerciseDto> exercises = exerciseService.getAllExercises();
         return ResponseEntity.ok(exercises);
@@ -51,6 +56,7 @@ public class ExerciseController {
 
     // Handles the PUT request for update Exercise.
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ExerciseDto> updateExercise(@PathVariable("id") Long exerciseId,
                                                       @RequestBody ExerciseDto updatedExercise) {
         ExerciseDto exerciseDto = exerciseService.updateExercise(exerciseId, updatedExercise);
@@ -59,6 +65,7 @@ public class ExerciseController {
 
     // Handles the DELETE request for delete Exercise.
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteExercise(@PathVariable("id") Long exerciseId) {
         exerciseService.deleteExercise(exerciseId);
         return ResponseEntity.ok("Exercise deleted successfully");

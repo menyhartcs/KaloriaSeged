@@ -8,8 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doThrow;
@@ -19,6 +23,8 @@ public class MyUserDetailsServiceTest {
 
     private static final String EMAIL = "test@mail.com";
     private static final String PASSWORD = "testpw";
+    private static final String ROLE = "ROLE_USER";
+    List<GrantedAuthority> AUTHORITIES = List.of(new SimpleGrantedAuthority("ROLE_USER"));
 
     private User user;
 
@@ -34,6 +40,7 @@ public class MyUserDetailsServiceTest {
         user = new User();
         user.setEmail(EMAIL);
         user.setPassword(PASSWORD);
+        user.setRole(ROLE);
     }
 
     @Test
@@ -48,6 +55,7 @@ public class MyUserDetailsServiceTest {
         assertNotNull(userDetails);
         assertEquals(EMAIL, userDetails.getUsername());
         assertEquals(PASSWORD, userDetails.getPassword());
+        assertIterableEquals(AUTHORITIES, userDetails.getAuthorities());
     }
 
     @Test

@@ -3,12 +3,14 @@ package com.szakdolgozat.KaloriaSeged.service.impl;
 import com.szakdolgozat.KaloriaSeged.entity.User;
 import com.szakdolgozat.KaloriaSeged.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The {@link MyUserDetailsService} class provides user data for the Spring security.
@@ -25,17 +27,18 @@ public class MyUserDetailsService implements UserDetailsService {
     // Loads the user details for the Spring security.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user;
-        try {
-            user = userRepository.findByEmail(email);
-        } catch (Exception e) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
             throw new UsernameNotFoundException("Felhasználó nem található: " + email);
         }
+
+        // Add user roles to Spring Security.
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole()));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                new ArrayList<>()
+                authorities
         );
     }
 }
