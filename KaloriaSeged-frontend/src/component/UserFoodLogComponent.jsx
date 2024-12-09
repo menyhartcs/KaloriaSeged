@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {createUserFoodLog, getUserFoodLog, updateUserFoodLog} from "../service/UserFoodLogService.js";
 import moment from "moment/moment.js";
-import {getUserByEmail} from "../service/UserService.js";
+import {checkLoginStatus, getUserByEmail} from "../service/UserService.js";
 import {getFoodById} from "../service/FoodService.js";
-import {isNullOrUndef} from "chart.js/helpers";
 
 const UserFoodLogComponent = () => {
 
@@ -17,11 +16,14 @@ const UserFoodLogComponent = () => {
     const navigator = useNavigate();
     const {id} = useParams();
     const amountMultiplier =  amount / 100;
+    const currentEmail = localStorage.getItem("email")
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(currentEmail).then(() => {
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

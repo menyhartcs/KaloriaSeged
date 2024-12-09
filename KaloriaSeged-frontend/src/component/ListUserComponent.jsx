@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {deleteUser, listUsers} from "../service/UserService.js";
+import {checkLoginStatus, deleteUser, listUsers} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
@@ -9,25 +9,20 @@ const ListUserComponent = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const navigator = useNavigate();
+    const currentEmail = localStorage.getItem("email")
 
     useEffect(() => {
-        let email = localStorage.getItem("email")
-        if (isNullOrUndef(email) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_ADMIN") {
+                getAllUsers();
+            }
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_USER") {
+                navigator("/UserLogs")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
-        if ("admin@mail.com" === email) {
-            getAllUsers();
-        } else {
-            navigator("/UserLogs")
-        }
-    }, []);
-
-    useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
-            navigator("/UserLogIn");
-        } else {
-            getAllUsers();
-        }
+        })
     }, []);
 
     function getAllUsers() {

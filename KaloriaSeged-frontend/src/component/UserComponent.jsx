@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createUser, getUserById, updateUser} from "../service/UserService.js";
+import {checkLoginStatus, createUser, getUserById, updateUser} from "../service/UserService.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
@@ -17,17 +17,18 @@ const UserComponent = () => {
     const [carbohydrate, setCarbohydrate] = useState([])
     const [fat, setFat] = useState([])
     const [role, setRole] = useState([])
-
+    const currentEmail = localStorage.getItem("email")
     const {id} = useParams();
 
     useEffect(() => {
-        let email = localStorage.getItem("email")
-        if (isNullOrUndef(email) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_USER") {
+                navigator("/UserLogs")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
-        if ("admin@mail.com" !== email) {
-            navigator("/UserLogs")
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {createFood, getFoodById, updateFood} from "../service/FoodService.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
+import {checkLoginStatus} from "../service/UserService.js";
 
 const FoodComponent = () => {
 
@@ -14,9 +15,11 @@ const FoodComponent = () => {
     const {id} = useParams();
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(localStorage.getItem("email")).then(() => {
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

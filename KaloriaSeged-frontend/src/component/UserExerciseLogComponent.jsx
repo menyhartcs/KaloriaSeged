@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {createUserExerciseLog, getUserExerciseLog, updateUserExerciseLog} from "../service/UserExerciseLogService.js";
 import moment from "moment/moment.js";
-import {getUserByEmail} from "../service/UserService.js";
+import {checkLoginStatus, getUserByEmail} from "../service/UserService.js";
 import {getExerciseById} from "../service/ExerciseService.js";
-import {isNullOrUndef} from "chart.js/helpers";
 
 const UserExerciseLogComponent = () => {
 
@@ -17,11 +16,14 @@ const UserExerciseLogComponent = () => {
     const navigator = useNavigate();
     const {id} = useParams();
     const durationMultiplier =  duration;
+    const currentEmail = localStorage.getItem("email")
 
     useEffect(() => {
-        if (isNullOrUndef(localStorage.getItem("email")) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(currentEmail).then(() => {
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

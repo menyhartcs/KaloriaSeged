@@ -1,36 +1,39 @@
 import React, {useEffect, useState} from "react";
 import {isNullOrUndef} from "chart.js/helpers";
-import {getUserByEmail} from "../service/UserService.js";
+import {checkLoginStatus, getUserByEmail} from "../service/UserService.js";
 
 const HeaderComponent = () => {
     const [email, setEmail] = useState(localStorage.getItem("email"));
     const [name, setName] = useState();
-    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [role, setRole] = useState();
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             const newEmail = localStorage.getItem("email");
-            const newToken = localStorage.getItem("token");
 
             if (newEmail !== email) setEmail(newEmail);
-            if (newToken !== token) setToken(newToken);
         }, 100);
 
         return () => clearInterval(intervalId);
-    }, [email, token]);
+    }, [email]);
 
 
     useEffect(() => {
         if (email) {
-            getUserByEmail(email).then((response) => {
-                setName(response.data.name);
-            });
+            checkLoginStatus(email).then((response) => {
+                if (!isNullOrUndef(response.data.role)) {
+                    setName(response.data.name);
+                    setRole(response.data.role);
+                }
+            }).catch(() => {
+                console.log("ISMERETLEN FELHASZNÁLÓ")
+            })
         }
     }, [email]);
 
     function showAdminPanel() {
 
-        if (!isNullOrUndef(email) && !isNullOrUndef(token) && email === "admin@mail.com") {
+        if (!isNullOrUndef(email) && role === "ROLE_ADMIN") {
             return (
                 <>
                     <a className="navbar-toggler" href="/Users">Felhasználók</a>
@@ -45,11 +48,11 @@ const HeaderComponent = () => {
 
     function showLoginOrLogoutMenu() {
 
-        if (isNullOrUndef(email) && isNullOrUndef(token)) {
+        if (isNullOrUndef(email)) {
             return <a className="navbar-toggler" href="/UserLogIn">Bejelentkezés/Regisztráció</a>
         }
 
-        if (!isNullOrUndef(email) && !isNullOrUndef(token) && email !== "admin@mail.com") {
+        if (!isNullOrUndef(email) && role === "ROLE_USER") {
             return (
                 <>
                     <a className="navbar-toggler" href="/Exercises">Tevékenységek</a>

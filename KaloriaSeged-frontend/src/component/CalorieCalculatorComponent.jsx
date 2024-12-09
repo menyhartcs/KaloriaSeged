@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getUserByEmail, updateUser} from "../service/UserService.js";
+import {checkLoginStatus, getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
@@ -24,17 +24,18 @@ const CalorieCalculatorComponent = () => {
     const [showResult, setShowResult] = useState(false)
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
-    const currentToken = localStorage.getItem("token");
     const [showSetGoalPopUp, setShowSetGoalPopUp] = useState(false);
 
 
     useEffect(() => {
-        if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_ADMIN") {
+                navigator("/Users")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
-        if (!isNullOrUndef(currentEmail) && !isNullOrUndef(currentToken) && currentEmail === "admin@mail.com") {
-            navigator("/Users")
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

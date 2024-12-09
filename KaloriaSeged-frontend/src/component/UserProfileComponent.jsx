@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {deleteUser, getUserByEmail, updateUser} from "../service/UserService.js";
+import {checkLoginStatus, deleteUser, getUserByEmail, updateUser} from "../service/UserService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
@@ -20,17 +20,18 @@ const UserProfileComponent = () => {
     const [fat, setFat] = useState([])
     const navigator = useNavigate();
     const currentEmail = localStorage.getItem("email");
-    const currentToken = localStorage.getItem("token");
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
     const [showUpdateProfilePopUp, setShowUpdateProfilePopUp] = useState(false);
 
     useEffect(() => {
-        if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_ADMIN") {
+                navigator("/Users")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
-        if (!isNullOrUndef(currentEmail) && !isNullOrUndef(currentToken) && currentEmail === "admin@mail.com") {
-            navigator("/Users")
-        }
+        })
     }, []);
 
     const [errors, setErrors] = useState({

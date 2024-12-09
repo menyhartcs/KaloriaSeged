@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 import {
     deleteUserFoodLog,
-    listUserFoodLogs,
     listUserFoodLogsByDate,
     listUserFoodLogsByUserIdAndDate
 } from "../service/UserFoodLogService.js";
@@ -13,7 +12,7 @@ import CalorieChart from "./charts/CalorieChart.jsx";
 import '../style/Charts.css';
 import moment from 'moment';
 import {isNullOrUndef} from "chart.js/helpers";
-import {getUserByEmail} from "../service/UserService.js";
+import {checkLoginStatus, getUserByEmail} from "../service/UserService.js";
 import {analyze} from "../service/AnalyzerService.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {deleteUserExerciseLog, listUserExerciseLogsByUserIdAndDate} from "../service/UserExerciseLogService.js";
@@ -34,15 +33,16 @@ const ListUserLogsComponent = () => {
     const navigator = useNavigate();
     const [showCard, setShowCard] = useState(false);
     const currentEmail = localStorage.getItem("email");
-    const currentToken = localStorage.getItem("token");
 
     useEffect(() => {
-        if (isNullOrUndef(currentEmail) && isNullOrUndef(currentToken)) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role) && response.data.role === "ROLE_ADMIN") {
+                navigator("/Users")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        }
-        if (!isNullOrUndef(currentEmail) && !isNullOrUndef(currentToken) && currentEmail === "admin@mail.com") {
-            navigator("/Users")
-        }
+        })
     }, []);
 
     useEffect(() => {

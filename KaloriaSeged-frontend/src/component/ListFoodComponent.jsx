@@ -3,6 +3,7 @@ import {deleteFood, listFoods} from "../service/FoodService.js";
 import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 import {analyze} from "../service/AnalyzerService.js";
+import {checkLoginStatus} from "../service/UserService.js";
 
 const ListFoodComponent = () => {
 
@@ -15,11 +16,14 @@ const ListFoodComponent = () => {
     const currentEmail = localStorage.getItem("email");
 
     useEffect(() => {
-        if (isNullOrUndef(currentEmail) && isNullOrUndef(localStorage.getItem("token"))) {
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role)) {
+                getAllFoods();
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
             navigator("/UserLogIn");
-        } else {
-            getAllFoods();
-        }
+        })
     }, []);
 
 

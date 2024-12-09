@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {createUser} from "../service/UserService.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {checkLoginStatus, createUser} from "../service/UserService.js";
+import {useNavigate} from "react-router-dom";
 import {isNullOrUndef} from "chart.js/helpers";
 
 const UserSignUpComponent = () => {
@@ -8,11 +8,17 @@ const UserSignUpComponent = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const currentEmail = localStorage.getItem("email")
 
     useEffect(() => {
-        if (!isNullOrUndef(localStorage.getItem("email")) && !isNullOrUndef(localStorage.getItem("token"))) {
-            navigator("/UserLogs");
-        }
+        checkLoginStatus(currentEmail).then((response) => {
+            if (!isNullOrUndef(response.data.role)) {
+                navigator("/UserLogs")
+            }
+        }).catch(() => {
+            console.log("ISMERETLEN FELHASZNÁLÓ")
+            navigator("/UserLogIn");
+        })
     }, []);
 
     const [errors, setErrors] = useState({
