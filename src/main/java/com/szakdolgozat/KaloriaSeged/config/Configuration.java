@@ -57,12 +57,6 @@ public class Configuration {
         });
 
 
-        // Setting the form login permission.
-//        http.formLogin(formLogin -> formLogin.loginPage("/login")
-//                .usernameParameter("email").permitAll()
-//                .defaultSuccessUrl("/", true)
-//                .failureUrl("/login"));
-
         // Setting the logout.
         http.logout(logOut -> logOut.logoutUrl("/logout")
                 .clearAuthentication(true)
