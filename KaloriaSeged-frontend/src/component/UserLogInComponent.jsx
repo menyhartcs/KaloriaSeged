@@ -38,16 +38,13 @@ const UserLogInComponent = () => {
             };
 
             const response = await loginUser(user);
-            const token = response.data.token;
 
-            localStorage.setItem("token", token);
             localStorage.setItem("email", user.email);
 
             console.log("Successful login");
             navigator("/UserLogs");
         } catch (error) {
             if (error.response && error.response.data) {
-                // Backend error message handling
                 const backendError = error.response.data;
                 setErrors((prevErrors) => ({ ...prevErrors, email: backendError }));
             } else {
@@ -59,7 +56,7 @@ const UserLogInComponent = () => {
     function validateForm() {
         let valid = true;
 
-        const errorsCopy = { email: "", password: "" }; // Initialize error object
+        const errorsCopy = { email: "", password: "" };
 
         if (!email.trim()) {
             errorsCopy.email = "Email cím megadása kötelező!";
@@ -70,7 +67,7 @@ const UserLogInComponent = () => {
                 errorsCopy.email = "Az email cím formátuma érvénytelen!";
                 valid = false;
             } else {
-                errorsCopy.email = ""; // Clearing error
+                errorsCopy.email = "";
             }
         }
 
@@ -88,11 +85,11 @@ const UserLogInComponent = () => {
                 errorsCopy.password = "A jelszónak tartalmaznia kell legalább egy betűt és egy számot!";
                 valid = false;
             } else {
-                errorsCopy.password = ""; // Clearing error
+                errorsCopy.password = "";
             }
         }
 
-        setErrors(errorsCopy); // Update errors
+        setErrors(errorsCopy);
         return valid;
     }
 

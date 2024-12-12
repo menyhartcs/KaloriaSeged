@@ -77,10 +77,8 @@ const ListFoodComponent = () => {
         if (showCard === true) {
             setAnalysisResult("");
         }
-        // HTTP kérés küldése az axios segítségével
         setAnalysisResult("Elemzés folyamatban....");
         analyze(prompt).then(response => {
-            // Eredmény frissítése
             setAnalysisResult(response.data);
         })
             .catch(error => {
